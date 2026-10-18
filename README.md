@@ -1,42 +1,54 @@
-# Automated Last-Mile Delivery Management Platform — Claude Code Planning Pack
+# Automated Last-Mile Delivery Management Platform
 
-This is the approved planning baseline for a semester DevOps project. The pack contains six planning documents, persistent repository instructions for Claude Code, a high-autonomy execution prompt, and a checklist of actions that require the developer's account, machine privileges, or decisions.
+*LastMile Ops* — a semester DevOps project: a Spring Boot web application for recording, assigning,
+searching and tracking last-mile deliveries, delivered through a Jenkins → Docker → local registry →
+Ansible pipeline with Selenium quality gates and rollback.
 
-**No application code or infrastructure has been implemented by preparing this pack.** Implementation begins only when the developer places these files in the intended project repository and launches Claude Code with `MASTER_PROMPT_CLAUDE_CODE.md`.
+> Learning/demo system with fictional data. Not a production logistics platform.
 
-## Contents
+## Status
 
-1. `docs/PRD.md` — problem statement, stakeholders, MVP scope, roles and acceptance criteria.
-2. `docs/TRD.md` — application architecture, approved stack, APIs, security, deployment topology and compatibility gates.
-3. `docs/UI_UX_Design.md` — code-first visual system, screens, interaction and accessibility requirements. No Stitch dependency.
-4. `docs/App_Flow.md` — user journeys, delivery status machine, errors and commit-to-release workflow.
-5. `docs/Backend_Schema.md` — entities, relationships, role permissions, validations and API contracts.
-6. `docs/Implementation_Plan.md` — 15 teacher-aligned phases, exit gates, evidence plan, risks and reporting templates.
-7. `CLAUDE.md` — concise persistent repository rules loaded by Claude Code.
-8. `MASTER_PROMPT_CLAUDE_CODE.md` — complete high-autonomy instruction to inspect, plan, implement, test, document and progress through the 15 phases.
-9. `USER_SETUP_CHECKLIST.md` — prerequisites, authentication and tasks that may require direct user action.
+Progress is tracked phase by phase in [docs/IMPLEMENTATION_LOG.md](docs/IMPLEMENTATION_LOG.md);
+open user/teacher actions are in [docs/BLOCKERS.md](docs/BLOCKERS.md). Nothing is marked complete
+without recorded evidence ([docs/evidence/](docs/evidence/README.md)).
 
-## Approved decisions
+## Stack
 
-- **Application:** Java 21 LTS, Spring Boot, Spring MVC/Thymeleaf, Bootstrap, Spring Security, Spring Data JPA, PostgreSQL and Flyway.
-- **Build/test:** Maven Wrapper, JUnit 5 and Selenium WebDriver.
-- **CI/CD:** Jenkins Pipeline-as-Code (`Jenkinsfile`).
-- **Runtime:** Docker/Compose, a local Docker Registry and Nginx.
-- **Configuration management:** Ansible controlled from Ubuntu under WSL2 and applied to an isolated Ubuntu Linux target.
-- **Developer workstation:** Windows 10/11 with WSL2/Ubuntu recommended for Claude Code and Ansible, Docker Desktop using WSL2 integration, and Git.
-- **UI/UX:** Code-first implementation and iteration in Thymeleaf/Bootstrap. Google Stitch is not part of the plan.
-- **Autonomy:** Claude Code should automatically continue through passing phase gates, pausing only for meaningful blockers, missing access/credentials, destructive or externally consequential actions requiring confirmation, or decisions not supported by the approved requirements.
+Java 21 (Temurin) · Spring Boot 4.1.1 (MVC, Thymeleaf, Security, Data JPA) · PostgreSQL 17 · Flyway ·
+Bootstrap 5 · Maven Wrapper · JUnit 6 · Selenium 4 · Jenkins Pipeline-as-Code · Docker/Compose ·
+local Docker Registry · Nginx · Ansible. Exact versions and sources: [docs/VERSIONS.md](docs/VERSIONS.md).
 
-## Key environment note
+## Quick start (tests and build)
 
-Windows is the host workstation, not the target for Linux-specific Ansible tasks. Use an isolated Ubuntu LTS VM reachable over SSH as the preferred provisioning target; an appropriately isolated WSL2 target is a fallback only if it satisfies the teacher's requirements. The local image registry must stay off untrusted networks. Phase 3 must prove that Jenkins can push and the target can pull the exact same image reference.
+```powershell
+. .\scripts\use-jdk21.ps1
+.\mvnw.cmd -B verify
+```
 
-## Recommended start
+Details, Ubuntu/WSL commands and configuration: [docs/SETUP.md](docs/SETUP.md).
 
-1. Complete `USER_SETUP_CHECKLIST.md` and install/authorize Claude Code.
-2. Put this pack in the new or intended project repository. Do not overwrite an existing project without checking its current Git status.
-3. Launch Claude Code from the repository root.
-4. Paste the contents of `MASTER_PROMPT_CLAUDE_CODE.md` as the first task.
-5. Let Claude inspect the environment, build a setup/blocker report, and continue with all work that does not depend on unavailable credentials or machine prerequisites.
+## Documentation
 
-The prompt favors high autonomy but does not disable security prompts, fabricate evidence, expose secrets, or perform destructive Git operations.
+| Topic | Document |
+|---|---|
+| Problem, scope, acceptance criteria | [docs/PROBLEM_SCOPE.md](docs/PROBLEM_SCOPE.md), [docs/PRD.md](docs/PRD.md) |
+| Backlog, board, user stories, DoD | [docs/backlog.md](docs/backlog.md), [docs/project-board.md](docs/project-board.md), [docs/user-stories.md](docs/user-stories.md) |
+| Architecture, API, topologies | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/TRD.md](docs/TRD.md) |
+| Data model and API contracts | [docs/Backend_Schema.md](docs/Backend_Schema.md) |
+| UI and application flow | [docs/UI_UX_Design.md](docs/UI_UX_Design.md), [docs/App_Flow.md](docs/App_Flow.md) |
+| Git workflow | [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md), [CONTRIBUTING.md](CONTRIBUTING.md) |
+| DevOps workflow | [docs/DEVOPS_WORKFLOW.md](docs/DEVOPS_WORKFLOW.md) |
+| 15-phase plan | [docs/Implementation_Plan.md](docs/Implementation_Plan.md) |
+| Decisions and blockers | [docs/DECISIONS_LOG.md](docs/DECISIONS_LOG.md), [docs/BLOCKERS.md](docs/BLOCKERS.md) |
+
+## Planning pack
+
+The project started from an approved planning pack, kept in the repository as the source of truth:
+the six documents in `docs/` (PRD, TRD, UI/UX design, App flow, Backend schema, Implementation plan),
+[CLAUDE.md](CLAUDE.md) (persistent repository rules for Claude Code),
+[MASTER_PROMPT_CLAUDE_CODE.md](MASTER_PROMPT_CLAUDE_CODE.md) (execution instruction) and
+[USER_SETUP_CHECKLIST.md](USER_SETUP_CHECKLIST.md) (actions that need the developer's account,
+machine privileges or decisions).
+
+Key environment note: Windows is the workstation, not the Ansible target. The target is an isolated
+Ubuntu node reachable over SSH. The local image registry stays off untrusted networks.
