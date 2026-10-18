@@ -18,6 +18,23 @@ unclassified:
   location:
     url: "http://localhost:8090/"
 
+# Deployment secrets, injected from ci/jenkins/.env. Pipelines read them with withCredentials, so
+# Jenkins masks them in console output.
+credentials:
+  system:
+    domainCredentials:
+      - credentials:
+          - string:
+              scope: GLOBAL
+              id: "lastmile-db-password"
+              description: "PostgreSQL password for the deployed LastMile stack"
+              secret: "${LASTMILE_DB_PASSWORD}"
+          - string:
+              scope: GLOBAL
+              id: "lastmile-demo-password"
+              description: "Password of the fictional demo accounts (demo profile only)"
+              secret: "${LASTMILE_DEMO_PASSWORD}"
+
 # Multibranch pipeline over the public GitHub repository. Branches with a Jenkinsfile get a job.
 # There is no inbound webhook (Jenkins is not exposed): the folder re-scans every 2 minutes and
 # builds branches whose head commit changed — SCM polling in multibranch form.

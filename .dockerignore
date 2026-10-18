@@ -1,0 +1,4 @@
+# Allow-list: the application image needs only the tested JAR. Keeps sources, .env files,
+# credentials, test data and Git metadata out of the build context.
+*
+!target/lastmile-delivery.jar
