@@ -28,7 +28,8 @@ services:
     image: ${LASTMILE_IMAGE:-localhost:5000/lastmile-delivery}:${LASTMILE_IMAGE_TAG:?LASTMILE_IMAGE_TAG must be set}
     restart: unless-stopped
     environment:
-      LASTMILE_DB_URL: jdbc:postgresql://db:5432/${LASTMILE_DB_NAME:-lastmile}
+      # LASTMILE_DB_HOST defaults to the stack's own database service.
+      LASTMILE_DB_URL: jdbc:postgresql://${LASTMILE_DB_HOST:-db}:5432/${LASTMILE_DB_NAME:-lastmile}
       LASTMILE_DB_USER: ${LASTMILE_DB_USER:-lastmile}
       LASTMILE_DB_PASSWORD: ${LASTMILE_DB_PASSWORD:?LASTMILE_DB_PASSWORD must be set}
       SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
