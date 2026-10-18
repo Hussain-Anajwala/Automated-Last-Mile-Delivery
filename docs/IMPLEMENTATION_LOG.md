@@ -272,3 +272,33 @@ FIX: .gitleaks.toml (default rules + one-path allowlist for that file); scripts/
   random key → staged exit 1, tree exit 1; removed → exit 0. Tree mode ignores only git-ignored files
   (ci/jenkins/.env legitimately holds the local Jenkins password).
 ```
+
+```text
+PHASE: 8 — Pipeline as code and server deployment
+STATUS: PASS
+OBJECTIVE / SCOPE: Jenkinsfile with checkout, parameter validation, build/test, image packaging, deployment and
+  verification; ≥1 parameter; Nginx reverse proxy; runtime secrets; local deployed URL.
+FILES CHANGED: Jenkinsfile, Dockerfile, .dockerignore, deploy/compose.yaml, deploy/nginx/{Dockerfile,default.conf},
+  ci/jenkins/casc.yaml (credentials), scripts/jenkins-init-env.ps1, docs/DEPLOYMENT.md, docs/CI_JENKINS.md
+DECISIONS MADE AND SOURCES: Images built from the tested JAR (build once, promote); Nginx config baked into an
+  image (Docker-outside-of-Docker bind mounts resolve on the host); deploy only on listed branches; verification
+  from inside the Nginx container because the published port is bound to the Windows host loopback.
+COMMANDS EXECUTED WITH EXIT CODES: local image build (0); compose config checks (0; guards fail as designed);
+  Jenkins recreate with credentials (0); builds #5 SUCCESS, #6 FAILURE (intended), #7 SUCCESS.
+TESTS AND EXACT RESULTS: build #5: 86/86, all three containers healthy, readiness UP via Nginx, deployed
+  revision == commit 3af9df95d0b1. Host: readiness 200, login 200, redirect keeps port 8088.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-08-deploy/ (logs, screenshots, deploy-evidence.md);
+  local URL http://127.0.0.1:8088 (not public)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline 3af9df9 (pushed)
+KNOWN ISSUES / SECURITY NOTES: deployment target is Docker Desktop on the workstation; the isolated Ubuntu
+  target comes in Phases 13–14. Rollback automation comes in Phases 12/14.
+USER ACTIONS REQUIRED: none for this phase
+EXIT CRITERIA:
+  - Jenkinsfile with checkout/build/test/package/deploy/health stages: PASS
+  - ≥1 parameterized environment setting with validation: PASS (HTTP_PORT, DEPLOY_PROFILE, DEPLOY; #6/#7)
+  - Deployed behind Nginx, app port private, secrets at runtime: PASS
+  - Health/readiness verified and deployed version captured: PASS
+  - Failed build/tests do not deploy: PASS (#6 skipped all later stages, running app unchanged);
+    test-failure-specific proof follows in Phase 10 (Selenium gate)
+AUTO-ADVANCE: YES → Phase 10 (Phase 9 already PASS)
+```

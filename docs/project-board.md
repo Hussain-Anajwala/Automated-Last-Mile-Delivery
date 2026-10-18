@@ -46,8 +46,8 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T7.1 | Jenkins container with persistent volume, plugins | T3.5 | Done | Jenkins console |
 | T7.2 | Pipeline job from SCM with polling | T7.1 | Done | poll log |
 | T7.3 | Archive JAR + JUnit reports; failing build demo | T7.2 | Done | build logs |
-| T8.1 | `Jenkinsfile` stages + parameter | T7 | Backlog | pipeline log |
-| T8.2 | Compose deploy (Nginx → app → PostgreSQL) + health stage | T8.1, T11 | Backlog | health output |
+| T8.1 | `Jenkinsfile` stages + parameter | T7 | Done | pipeline log |
+| T8.2 | Compose deploy (Nginx → app → PostgreSQL) + health stage | T8.1, T11 | Done | health output |
 | T9.1 | Selenium test plan (5 journeys) | T6 | Done | `docs/SELENIUM_TEST_PLAN.md` |
 | T9.2 | Selenium suite + screenshot-on-failure + report | T9.1 | Done | report |
 | T10.1 | Selenium stage in Jenkins, publish reports always | T8, T9 | Backlog | Jenkins report |

@@ -46,6 +46,7 @@ Details, Ubuntu/WSL commands and configuration: [docs/SETUP.md](docs/SETUP.md).
 | Data model and API contracts | [docs/Backend_Schema.md](docs/Backend_Schema.md) |
 | UI and application flow | [docs/UI_UX_Design.md](docs/UI_UX_Design.md), [docs/App_Flow.md](docs/App_Flow.md) |
 | Selenium test plan | [docs/SELENIUM_TEST_PLAN.md](docs/SELENIUM_TEST_PLAN.md) |
+| Deployment | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) |
 | Jenkins CI/CD | [docs/CI_JENKINS.md](docs/CI_JENKINS.md) |
 | Git workflow | [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md), [CONTRIBUTING.md](CONTRIBUTING.md) |
 | DevOps workflow | [docs/DEVOPS_WORKFLOW.md](docs/DEVOPS_WORKFLOW.md) |
