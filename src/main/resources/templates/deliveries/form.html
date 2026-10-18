@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="~{fragments/layout :: head('Create delivery')}"></head>
+<head th:replace="~{fragments/layout :: head(${editing} ? 'Edit delivery' : 'Create delivery')}"></head>
 <body>
 <header th:replace="~{fragments/layout :: nav}"></header>
 <main id="main" class="container app-main">
-    <h1 class="page-title">Create delivery</h1>
-    <p class="text-secondary">Delivery code, status and timestamps are set by the system.</p>
+    <h1 class="page-title" th:text="${editing} ? 'Edit ' + ${editing.deliveryCode()} : 'Create delivery'">Create delivery</h1>
+    <p class="text-secondary" th:text="${editing} ? 'Only recipient, address and reference details can be edited. Status and assignment are changed from the delivery page.' : 'Delivery code, status and timestamps are set by the system.'">
+        Delivery code, status and timestamps are set by the system.</p>
 
-    <form th:action="@{/deliveries/new}" th:object="${deliveryForm}" method="post" novalidate data-once
-          class="app-form" data-testid="delivery-form">
+    <form th:action="${editing} ? @{/deliveries/{id}/edit(id=${editing.id()})} : @{/deliveries/new}"
+          th:object="${deliveryForm}" method="post" novalidate data-once class="app-form" data-testid="delivery-form">
+        <input type="hidden" name="version" th:if="${editing}" th:value="${editing.version()}">
         <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger" role="alert"
              data-testid="form-error-summary" tabindex="-1">
             Please correct the highlighted fields.
@@ -56,7 +58,7 @@
         </fieldset>
 
         <fieldset class="app-section">
-            <legend>Reference and assignment</legend>
+            <legend th:text="${editing} ? 'Reference' : 'Reference and assignment'">Reference and assignment</legend>
             <div class="row g-3">
                 <div class="col-md-6">
                     <label for="referenceNumber" class="form-label">Order / reference number</label>
@@ -64,7 +66,7 @@
                            aria-describedby="referenceNumber-error" data-testid="referenceNumber">
                     <div id="referenceNumber-error" class="invalid-feedback" th:errors="*{referenceNumber}"></div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-6" th:unless="${editing}">
                     <label for="assignedAgentId" class="form-label">Assign to agent (optional)</label>
                     <select th:field="*{assignedAgentId}" class="form-select" th:errorclass="is-invalid"
                             aria-describedby="assignedAgentId-error" data-testid="assignedAgentId">
@@ -78,7 +80,8 @@
 
         <div class="d-flex gap-2">
             <button type="submit" class="btn btn-primary" data-testid="save-delivery">Save delivery</button>
-            <a th:href="@{/}" class="btn btn-outline-secondary" data-testid="cancel">Cancel</a>
+            <a th:href="${editing} ? @{/deliveries/{id}(id=${editing.id()})} : @{/deliveries}" class="btn btn-outline-secondary"
+               data-testid="cancel">Cancel</a>
         </div>
     </form>
 </main>

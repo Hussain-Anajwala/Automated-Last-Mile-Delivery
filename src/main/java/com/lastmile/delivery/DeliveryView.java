@@ -22,6 +22,7 @@ public record DeliveryView(
         Instant createdAt,
         Instant updatedAt,
         Instant deliveredAt,
+        long version,
         List<HistoryEntry> history) {
 
     public record HistoryEntry(
@@ -46,7 +47,7 @@ public record DeliveryView(
                 agent == null ? null : agent.getFullName(),
                 d.getCreatedBy().getFullName(),
                 d.getStatus(), d.getFailureReason(),
-                d.getCreatedAt(), d.getUpdatedAt(), d.getDeliveredAt(),
+                d.getCreatedAt(), d.getUpdatedAt(), d.getDeliveredAt(), d.getVersion(),
                 history.stream().map(HistoryEntry::from).toList());
     }
 }

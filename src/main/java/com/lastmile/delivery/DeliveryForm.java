@@ -41,13 +41,13 @@ public class DeliveryForm {
                 referenceNumber == null || referenceNumber.isBlank() ? null : referenceNumber.trim());
     }
 
-    public static DeliveryForm from(Delivery delivery) {
+    public static DeliveryForm from(DeliveryView delivery) {
         DeliveryForm form = new DeliveryForm();
-        form.recipientName = delivery.getRecipientName();
-        form.recipientPhone = delivery.getRecipientPhone();
-        form.deliveryAddress = delivery.getDeliveryAddress();
-        form.deliveryCity = delivery.getDeliveryCity();
-        form.referenceNumber = delivery.getReferenceNumber();
+        form.recipientName = delivery.recipientName();
+        form.recipientPhone = delivery.recipientPhone();
+        form.deliveryAddress = delivery.deliveryAddress();
+        form.deliveryCity = delivery.deliveryCity();
+        form.referenceNumber = delivery.referenceNumber();
         return form;
     }
 
