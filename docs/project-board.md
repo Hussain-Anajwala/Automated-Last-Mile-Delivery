@@ -17,15 +17,15 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T2.2 | Board, sprint plan, DoD | T2.1 | Done | this file |
 | T2.3 | Git workflow and PR policy | T2.1 | Done | `docs/GIT_WORKFLOW.md` |
 | T2.4 | DevOps workflow diagram | T2.1 | Done | `docs/DEVOPS_WORKFLOW.md` |
-| T3.1 | SRS summary, use-case, architecture, ERD, API list | T2 | Ready | `docs/ARCHITECTURE.md` |
-| T3.2 | Verify and pin versions from official sources | T2 | Ready | `docs/VERSIONS.md` |
-| T3.3 | JDK 21 + Maven Wrapper spike | T3.2 | Ready | build log |
+| T3.1 | SRS summary, use-case, architecture, ERD, API list | T2 | Done | `docs/ARCHITECTURE.md` |
+| T3.2 | Verify and pin versions from official sources | T2 | Done | `docs/VERSIONS.md` |
+| T3.3 | JDK 21 + Maven Wrapper spike | T3.2 | Done | build log |
 | T3.4 | Docker / Compose spike | T3.2 | Blocked (B2) | `docker run hello-world` log |
 | T3.5 | Jenkins topology spike (container + Docker access) | T3.4 | Blocked (B2) | Jenkins version + `docker ps` from Jenkins |
-| T3.6 | Headless Selenium spike | T3.3 | Ready | headless Chrome run log |
+| T3.6 | Headless Selenium spike | T3.3 | Done | headless Chrome run log |
 | T3.7 | Local registry push/pull spike | T3.4 | Blocked (B2) | push + pull log |
 | T3.8 | WSL2 Ansible control node + SSH target spike | — | Blocked (B3, B4) | `ansible -m ping` |
-| T3.9 | Port, memory, disk inventory | — | Ready | environment log |
+| T3.9 | Port, memory, disk inventory | — | Done | environment log |
 | T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Backlog | `mvnw verify` log |
 | T4.2 | Issue / PR templates, CONTRIBUTING | T2.3 | Backlog | `.github/` |
 | T4.3 | Secret scan and push to origin; create `develop` | T4.1 | Backlog | scan output, remote refs |

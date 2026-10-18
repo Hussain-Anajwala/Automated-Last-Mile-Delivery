@@ -57,3 +57,29 @@ Format: ID — date — context — options — decision — rationale — conse
 
 - **Decision:** On `FAILED → ASSIGNED`, `deliveries.failure_reason` is cleared; the original reason remains in `delivery_status_history`. `delivered_at` is set only on `→ DELIVERED`.
 - **Rationale:** Backend_Schema §4 asks for a documented clear/retain policy; history already preserves the reason.
+
+## D9 — 2026-10-19 — API authentication
+
+- **Decision:** `/api/**` accepts the browser session or HTTP Basic, and ignores CSRF (stateless clients cannot carry the token). All other routes use form login with CSRF.
+- **Rationale:** Keeps documented JSON endpoints scriptable for tests/health without weakening CSRF for browser forms (TRD §6 forbids disabling CSRF globally).
+- **Consequences:** Basic credentials must only travel over the local/trusted network; documented as an MVP limitation.
+
+## D10 — 2026-10-19 — Jenkins topology: container on Docker Desktop
+
+- **Options:** native Windows service vs. container.
+- **Decision:** Custom image `FROM jenkins/jenkins:2.580.1-lts-jdk21` with Docker CLI, Compose and Chromium, bound to `127.0.0.1:8090`, Docker socket mounted, SCM polling.
+- **Rationale:** Reproducible as code, Linux toolchain parity with the deploy target, no Windows service install (no admin).
+- **Consequences:** Socket mount is root-equivalent; acceptable only because Jenkins is local and single-user. Execution blocked until Docker runs (B2).
+
+## D11 — 2026-10-19 — Integration and Selenium tests use embedded PostgreSQL
+
+- **Context:** TRD §1 allows Testcontainers "only if justified and workable on the target workstation". Docker is not running (B2), and Jenkins-in-Docker would need Docker-in-Docker for Testcontainers.
+- **Decision:** `io.zonky.test:embedded-postgres` 2.2.2 with PostgreSQL 17.11 binaries for tests; runtime uses `postgres:17.11-alpine`.
+- **Rationale:** Real PostgreSQL (same version) without Docker; proven in the Phase 3 spike (G3).
+- **Consequences:** Tests need ~30 MB of binaries per OS. Embedded PostgreSQL cannot run as root (Jenkins runs as the `jenkins` user, so this is fine).
+
+## D12 — 2026-10-19 — Continue Phases 4–6 while Phase 3 infrastructure gates are blocked
+
+- **Context:** Implementation_Plan §8 says a BLOCKED phase does not authorize dependent phases without an explicit user exception. Phase 3 gates G5–G9 are blocked on user actions B2–B4.
+- **Decision:** The user's continuation directive (2026-10-19) explicitly instructs continuing all independent work, including source code and tests, while infrastructure is unavailable. Phases 4–6 depend only on G1–G4 (passed). Phases 7, 8, 10–14 remain blocked until their gates pass.
+- **Consequences:** Phase 3 is recorded as `PARTIAL / BLOCKED (infrastructure)`, never as PASS, until G5–G9 are proven.

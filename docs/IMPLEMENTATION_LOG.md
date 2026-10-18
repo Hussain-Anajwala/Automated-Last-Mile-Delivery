@@ -77,3 +77,32 @@ EXIT CRITERIA:
   - DevOps workflow diagram: PASS (Mermaid)
 AUTO-ADVANCE: YES
 ```
+
+```text
+PHASE: 3 — Requirements, architecture and technology setup
+STATUS: BLOCKED (partial) — software toolchain PASS; Docker/Jenkins/registry/Ansible gates blocked on B2–B4
+OBJECTIVE / SCOPE: SRS summary, use-case and architecture diagrams, ERD reference, route/API list,
+  verified and pinned versions, compatibility spike, single Jenkins and deployment topology, security review.
+FILES CHANGED: docs/ARCHITECTURE.md, docs/VERSIONS.md, docs/evidence/phase-03-setup/compatibility-gate.md (new);
+  docs/DECISIONS_LOG.md (D9–D12); docs/project-board.md; docs/IMPLEMENTATION_LOG.md
+DECISIONS MADE AND SOURCES: D9 API auth; D10 Jenkins container; D11 embedded PostgreSQL tests; D12 continue 4–6.
+  Version sources listed in docs/VERSIONS.md.
+COMMANDS EXECUTED WITH EXIT CODES: Maven Central/Spring API/Docker Hub/PyPI/Jenkins update-center queries (0);
+  wrapper SHA-1 + Maven SHA-512 verification (match); spike `mvnw.cmd -B verify` (0); `mvnw.cmd -v` (0);
+  port/memory check (0); `docker version` (server unreachable).
+TESTS AND EXACT RESULTS: Spike: Tests run: 2, Failures: 0, Errors: 0, Skipped: 0; BUILD SUCCESS.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-03-setup/compatibility-gate.md
+GIT BRANCH / COMMITS / PR / TAG: docs/phase-03-architecture (merged to main --no-ff)
+KNOWN ISSUES / SECURITY NOTES: Docker socket mount for Jenkins is root-equivalent (local only). Low free RAM.
+USER ACTIONS REQUIRED: B2 (Docker), B3 (Ubuntu WSL), B4 (target choice), B5 (gh auth), B6 (teacher)
+EXIT CRITERIA:
+  - SRS, use-case, architecture, data model, API list: PASS (docs/ARCHITECTURE.md)
+  - Versions verified and pinned with sources: PASS (docs/VERSIONS.md)
+  - JDK/Maven/Spring/Flyway/PostgreSQL/Selenium spike: PASS (G1–G4)
+  - One Jenkins topology and one deployment topology selected: PASS (D10, ARCHITECTURE §6)
+  - Docker/Compose, Jenkins-Docker, registry push/pull: BLOCKED (B2)
+  - WSL2 Ansible + SSH target: BLOCKED (B3, B4)
+  - Ports/disk/memory recorded: PASS
+AUTO-ADVANCE: NO for infrastructure-dependent phases (7, 8, 10–14). YES for Phases 4–6 under D12
+  (they depend only on G1–G4, and the user directed continued independent work).
+```
