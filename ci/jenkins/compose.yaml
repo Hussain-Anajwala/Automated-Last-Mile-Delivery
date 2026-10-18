@@ -1,0 +1,25 @@
+# Local Jenkins (decision D10).  Start:  docker compose -f ci/jenkins/compose.yaml up -d --build
+# Requires ci/jenkins/.env (git-ignored) with JENKINS_ADMIN_ID and JENKINS_ADMIN_PASSWORD;
+# create it with scripts/jenkins-init-env.ps1.
+name: lastmile-ci
+
+services:
+  jenkins:
+    build: .
+    image: lastmile-jenkins:2.580.1
+    container_name: lastmile-jenkins
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:8090:8080"   # UI on localhost only; no agent port published
+    env_file: .env
+    # Docker Desktop's socket is root:root 0660. Membership of group 0 grants Docker access, which is
+    # root-equivalent on the Docker VM; acceptable only because this Jenkins is local and single-user.
+    group_add:
+      - "0"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    mem_limit: 3g
+
+volumes:
+  jenkins_home:
