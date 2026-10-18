@@ -26,9 +26,9 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T3.7 | Local registry push/pull spike | T3.4 | Blocked (B2) | push + pull log |
 | T3.8 | WSL2 Ansible control node + SSH target spike | — | Blocked (B3, B4) | `ansible -m ping` |
 | T3.9 | Port, memory, disk inventory | — | Done | environment log |
-| T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Backlog | `mvnw verify` log |
-| T4.2 | Issue / PR templates, CONTRIBUTING | T2.3 | Backlog | `.github/` |
-| T4.3 | Secret scan and push to origin; create `develop` | T4.1 | Backlog | scan output, remote refs |
+| T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Done | `mvnw verify` log |
+| T4.2 | Issue / PR templates, CONTRIBUTING | T2.3 | Done | `.github/` |
+| T4.3 | Secret scan and push to origin; create `develop` | T4.1 | Done | scan output, remote refs |
 | T5.1 | Issue: delivery creation | T4 | Backlog | issue URL (B5) |
 | T5.2 | Migration V1 + entities + repositories | T4 | Backlog | migration test |
 | T5.3 | Creation service + validation + code generator | T5.2 | Backlog | unit/integration tests |

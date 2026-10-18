@@ -106,3 +106,32 @@ EXIT CRITERIA:
 AUTO-ADVANCE: NO for infrastructure-dependent phases (7, 8, 10–14). YES for Phases 4–6 under D12
   (they depend only on G1–G4, and the user directed continued independent work).
 ```
+
+```text
+PHASE: 4 — Git/GitHub repository initialization
+STATUS: PASS (GitHub Issues mirror pending B5)
+OBJECTIVE / SCOPE: Maven skeleton + wrapper, .gitignore/.gitattributes/.env.example, issue/PR templates,
+  CONTRIBUTING, README, setup guide, develop branch, first push after secret scan.
+FILES CHANGED: pom.xml, mvnw, mvnw.cmd, .mvn/wrapper/maven-wrapper.properties, .gitattributes, .gitignore,
+  .env.example, .github/*, CONTRIBUTING.md, README.md, docs/SETUP.md, scripts/use-jdk21.ps1,
+  src/main/java/com/lastmile/{LastMileApplication,health/HealthController}.java,
+  src/main/resources/application.properties, src/test/java/com/lastmile/{support,health}/*
+DECISIONS MADE AND SOURCES: Base package com.lastmile; JAR name lastmile-delivery.jar; gitleaks 8.30.1
+  (winget, hash verified) as secret scanner; phase branches pushed as history evidence.
+COMMANDS EXECUTED WITH EXIT CODES: see docs/evidence/phase-04-repo/repository-init.md (all 0).
+TESTS AND EXACT RESULTS: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0 (HealthControllerTest x2
+  against embedded PostgreSQL 17.11; HealthControllerUnitTest x1). Fresh-clone build exit 0.
+EVIDENCE PATHS / REAL URLS: https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery ;
+  docs/evidence/phase-04-repo/repository-init.md
+GIT BRANCH / COMMITS / PR / TAG: build/project-skeleton c84ea37 → main 1663370; develop created at 1663370
+KNOWN ISSUES / SECURITY NOTES: Repository is public; commit author metadata includes the configured Git
+  email. No Issues created yet (B5).
+USER ACTIONS REQUIRED: B5 gh auth login (for Issues/PRs)
+EXIT CRITERIA:
+  - Fresh clone contains no secrets: PASS (gitleaks history/staged/tree: no leaks)
+  - Initial skeleton builds with documented commands: PASS (fresh clone mvnw.cmd -B verify exit 0)
+  - README, .gitignore, .gitattributes, issue templates, branch policy: PASS
+  - Repository URL + commit history: PASS (pushed)
+  - GitHub issues: BLOCKED (B5) — templates + Git board used meanwhile
+AUTO-ADVANCE: YES (exit gate criteria pass; issue mirroring is tracked under B5)
+```
