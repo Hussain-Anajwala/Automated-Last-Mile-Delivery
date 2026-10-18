@@ -26,7 +26,8 @@ public class SecurityConfig {
                         .anyRequest().authenticated())
                 .formLogin(form -> form
                         .loginPage("/login")
-                        .defaultSuccessUrl("/", true)
+                        // Return to the originally requested page when there was one; otherwise home.
+                        .defaultSuccessUrl("/")
                         .permitAll())
                 .logout(logout -> logout
                         .logoutUrl("/logout")
