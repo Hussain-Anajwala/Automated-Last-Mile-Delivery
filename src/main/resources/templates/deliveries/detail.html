@@ -23,7 +23,7 @@
                     <input type="hidden" name="version" th:value="${d.version()}">
                     <th:block th:if="${target.name() == 'FAILED'}">
                         <label for="failure-reason" class="form-label">Failure reason *</label>
-                        <textarea id="failure-reason" name="failureReason" class="form-control mb-2" rows="2" maxlength="500"
+                        <textarea id="failure-reason" name="reason" class="form-control mb-2" rows="2" maxlength="500"
                                   data-testid="failure-reason"></textarea>
                     </th:block>
                     <button type="submit" class="btn"

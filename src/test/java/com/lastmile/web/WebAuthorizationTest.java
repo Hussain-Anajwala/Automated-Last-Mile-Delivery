@@ -130,6 +130,23 @@ class WebAuthorizationTest {
                 .andExpect(content().string(not(containsString("data-testid=\"actions-panel\""))));
     }
 
+    /**
+     * Regression for the Phase 10 defect: the failure form must submit its textarea under the
+     * parameter name the controller reads ("reason"), otherwise agents can never record a failure.
+     */
+    @Test
+    void failureFormSubmitsTheReasonUnderTheParameterTheControllerReads() throws Exception {
+        mvc.perform(post("/deliveries/{id}/status", mine.id()).with(csrf()).with(user(principal(agent)))
+                .param("newStatus", "OUT_FOR_DELIVERY"));
+
+        String html = mvc.perform(get("/deliveries/{id}", mine.id()).with(user(principal(agent))))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+
+        assertThat(html).containsPattern(
+                "(?s)data-testid=\"status-form-failed\".*?<textarea[^>]*\\bname=\"reason\"[^>]*>.*?</form>");
+    }
+
     @Test
     void dashboardForAgentIsScopedAndForStaffIsGlobal() throws Exception {
         mvc.perform(get("/dashboard").with(user(principal(agent))))
