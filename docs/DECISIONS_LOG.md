@@ -37,3 +37,23 @@ Format: ID — date — context — options — decision — rationale — conse
 - **Context:** `docs/BLOCKERS.md` B6 lists questions only the teacher can answer.
 - **Decision:** Until answered: local deployment URL; seeded accounts plus admin-only read-only user list; Dockerized Spring Boot JAR behind Nginx; Ansible target per B4 option A unless the user/teacher chooses B.
 - **Consequences:** Revisit if the teacher answers differently; affected phases will be noted.
+
+## D6 — 2026-10-19 — ADMIN status changes follow the normal state machine
+
+- **Context:** PRD §8 / Backend_Schema §7 allow an ADMIN status change only as "explicit audited override, if allowed".
+- **Options:** (a) build an override that can bypass the state machine; (b) let ADMIN perform the same valid transitions as DISPATCHER, all audited; (c) forbid ADMIN status changes.
+- **Decision:** (b). No bypass of the state machine exists for any role.
+- **Rationale:** Keeps one transition policy, satisfies "audited" (every change writes history), and avoids an un-reviewed override path.
+- **Consequences:** Role matrix tests cover ADMIN = DISPATCHER for transitions.
+
+## D7 — 2026-10-19 — Assignment events and status history
+
+- **Context:** App_Flow §4 says a separate assignment-event table is optional and needs scope approval.
+- **Decision:** No extra table. Assigning a `CREATED` or `FAILED` delivery performs the `→ ASSIGNED` transition and writes a history row (reason records the agent). Reassigning an already `ASSIGNED` delivery updates `assigned_agent_id` only and writes a history row `ASSIGNED → ASSIGNED` with reason `Reassigned to <agent>`, so reassignment is still audited. Reassignment is not allowed for `OUT_FOR_DELIVERY` or `DELIVERED`.
+- **Rationale:** Uses only the approved three tables while keeping every operational change auditable.
+- **Consequences:** History rows may have `previous_status = new_status = ASSIGNED`; the transition policy treats this as an assignment record, not a state change.
+
+## D8 — 2026-10-19 — Failure metadata on retry
+
+- **Decision:** On `FAILED → ASSIGNED`, `deliveries.failure_reason` is cleared; the original reason remains in `delivery_status_history`. `delivered_at` is set only on `→ DELIVERED`.
+- **Rationale:** Backend_Schema §4 asks for a documented clear/retain policy; history already preserves the reason.

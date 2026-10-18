@@ -7,13 +7,13 @@ Source audit: `docs/evidence/phase-00-audit/environment-audit.md` (2026-10-19).
 
 ---
 
-## B1 — JDK 21 LTS not installed — OPEN (Claude can self-resolve)
+## B1 — JDK 21 LTS not installed — RESOLVED 2026-10-19 (automatable)
 
 - **Missing:** Only Oracle JDK 22.0.2 is installed. The approved stack is Java 21 LTS; JDK 22 is a non-LTS release that no longer receives updates.
 - **Who acts:** Claude Code, unless the user objects. No administrator rights are needed.
 - **Plan:** In Phase 3, download the official Eclipse Temurin 21 LTS Windows x64 ZIP into a user-owned folder (proposed `D:\tools\jdk-21`), verify its checksum, and point `JAVA_HOME` at it for project builds only. The existing JDK 22 is left untouched.
 - **Success signal:** `& "D:\tools\jdk-21\bin\java.exe" -version` reports `21.0.x`, and `mvnw.cmd -v` reports Java 21.
-- **Continues meanwhile:** Phases 1–2.
+- **Resolution:** Temurin `jdk-21.0.12.1+1` ZIP downloaded from the Adoptium GitHub release; SHA-256 `f9d6e191ab098c0d416e7d588a24420a8621cd2f4720dab2459b8b7b2d2d8b4e` matched both the published `.sha256.txt` and the Adoptium API. Extracted to `D:\tools\jdk-21`; `java -version` → `openjdk version "21.0.12.1" 2026-08-18 LTS`. Global `JAVA_HOME`/PATH not modified.
 
 ## B2 — Docker Desktop not running; limited RAM and C: disk — OPEN (user)
 
@@ -48,11 +48,12 @@ Source audit: `docs/evidence/phase-00-audit/environment-audit.md` (2026-10-19).
 - **Success signal:** From WSL Ubuntu, `ssh -i ~/.ssh/<key> <deploy-user>@<target> hostname` returns the target hostname without a password prompt.
 - **Continues meanwhile:** All phases through 12; Ansible playbooks can be written and syntax-checked in Phase 13 before the target exists.
 
-## B5 — GitHub CLI not installed/authenticated — OPEN (user)
+## B5 — GitHub CLI not authenticated — OPEN (human action required)
 
-- **Missing:** `gh` is not installed, so issues and pull requests cannot be created from this session. Plain `git push` may work through Git Credential Manager (not yet tested).
+- **Update 2026-10-19:** `gh` 2.102.0 installed by Claude via `winget install --id GitHub.cli -e --scope user` (winget verified the installer hash). `gh auth status` → not logged in.
+- **Missing (original):** `gh` is not installed, so issues and pull requests cannot be created from this session. Plain `git push` may work through Git Credential Manager (not yet tested).
 - **Why user:** Installation may need approval; `gh auth login` is a browser OAuth flow the user must complete.
-- **Steps (PowerShell):** `winget install --id GitHub.cli -e`, open a new terminal, then `gh auth login` (GitHub.com → HTTPS → browser login).
+- **Steps (PowerShell, new terminal so PATH refreshes):** `gh auth login` → GitHub.com → HTTPS → *Login with a web browser*; answer **Yes** to "Authenticate Git with your GitHub credentials".
 - **Success signal:** `gh auth status` shows the account as logged in to github.com.
 - **Continues meanwhile:** Local branches and commits; pushes once credentials work. PR creation (Phase 5/6) waits for this.
 
