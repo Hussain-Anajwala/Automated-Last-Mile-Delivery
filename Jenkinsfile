@@ -1,6 +1,6 @@
 // LastMile Ops pipeline (pipeline as code). docs/CI_JENKINS.md describes every stage.
 //
-// Deployment runs only for branches listed in DEPLOY_BRANCHES and only after every earlier stage
+// Quality gates in order: unit/integration tests, then Selenium journeys. Deployment runs only for branches listed in DEPLOY_BRANCHES and only after every earlier stage
 // has passed: a failed build or test can never reach the deployment stage.
 def DEPLOY_BRANCHES = ['main', 'develop', 'ci/jenkins-pipeline']
 
@@ -56,6 +56,26 @@ pipeline {
         stage('Build and unit/integration tests') {
             steps {
                 sh './mvnw -B -ntp clean verify'
+            }
+        }
+
+        stage('Selenium quality gate') {
+            steps {
+                // Browser journeys against the real app (random port, embedded PostgreSQL) in the
+                // container's Chromium. --no-sandbox: Chromium's sandbox cannot start inside this
+                // unprivileged container; the browser only visits the local test application.
+                sh '''
+                    ./mvnw -B -ntp verify -Pselenium                         -Dtest=NoSuchTest -Dsurefire.failIfNoSpecifiedTests=false                         -Dselenium.chrome.binary=/usr/bin/chromium                         -Dselenium.chromedriver=/usr/bin/chromedriver                         -Dselenium.noSandbox=true
+                '''
+            }
+            post {
+                always {
+                    junit allowEmptyResults: true, testResults: 'target/failsafe-reports/*.xml'
+                    publishHTML(target: [reportName: 'Selenium report', reportDir: 'target/reports',
+                                         reportFiles: 'failsafe.html', keepAll: true,
+                                         alwaysLinkToLastBuild: true, allowMissing: true])
+                    archiveArtifacts artifacts: 'target/selenium-artifacts/**', allowEmptyArchive: true
+                }
             }
         }
 
