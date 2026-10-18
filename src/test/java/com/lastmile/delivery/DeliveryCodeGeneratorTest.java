@@ -11,7 +11,7 @@ class DeliveryCodeGeneratorTest {
     @Test
     void formatsUtcDateAndZeroPaddedSequence() {
         assertThat(DeliveryCodeGenerator.format(Instant.parse("2026-10-19T23:30:00Z"), 42))
-                .isEqualTo("LMD-20261019-000042");
+                .isEqualTo("LMD-20261019-000043"); // DELIBERATELY WRONG: Phase 7 red-build demonstration
     }
 
     @Test
