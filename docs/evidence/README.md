@@ -17,3 +17,4 @@ map will be `docs/evidence/INDEX.md` (Phase 15).
 |---|---|
 | 0 — Audit | [phase-00-audit/environment-audit.md](phase-00-audit/environment-audit.md) |
 | 3 — Setup | [phase-03-setup/compatibility-gate.md](phase-03-setup/compatibility-gate.md) |
+| 4 — Repository | [phase-04-repo/repository-init.md](phase-04-repo/repository-init.md) |
