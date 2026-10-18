@@ -27,6 +27,7 @@
         <selenium.headless>true</selenium.headless>
         <selenium.chrome.binary></selenium.chrome.binary>
         <selenium.noSandbox>false</selenium.noSandbox>
+        <selenium.chromedriver></selenium.chromedriver>
     </properties>
 
     <dependencyManagement>
@@ -152,6 +153,7 @@
                                 <selenium.headless>${selenium.headless}</selenium.headless>
                                 <selenium.chrome.binary>${selenium.chrome.binary}</selenium.chrome.binary>
                                 <selenium.noSandbox>${selenium.noSandbox}</selenium.noSandbox>
+                                <selenium.chromedriver>${selenium.chromedriver}</selenium.chromedriver>
                                 <selenium.artifacts>${project.build.directory}/selenium-artifacts</selenium.artifacts>
                             </systemPropertyVariables>
                         </configuration>
