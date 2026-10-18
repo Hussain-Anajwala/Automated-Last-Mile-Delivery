@@ -34,15 +34,15 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T5.3 | Creation service + validation + code generator | T5.2 | Done | unit/integration tests |
 | T5.4 | Create form/controller + detail stub | T5.3 | Done | controller tests |
 | T5.5 | PR, self-review checklist, merge | T5.4 | Blocked (B5) | PR URL (B5) |
-| T6.1 | Security: login/logout, roles, seeded dev accounts | T5 | Backlog | security tests |
-| T6.2 | List/search/filter/pagination | T5 | Backlog | repository/controller tests |
-| T6.3 | Edit permitted fields | T5 | Backlog | tests |
-| T6.4 | Assignment + transition policy + history | T6.1 | Backlog | transition tests |
-| T6.5 | Dashboard aggregation | T6.4 | Backlog | count tests |
-| T6.6 | REST API v1 + health endpoints | T6.4 | Backlog | API tests |
-| T6.7 | UI shell, tokens, responsive pass, admin user list | T6.1 | Backlog | screenshots |
-| T6.8 | Isolated merge-conflict demonstration | T6.2 | Backlog | conflict transcript |
-| T6.9 | Release tag `v0.1.0` | T6.1–T6.8 | Backlog | tag |
+| T6.1 | Security: login/logout, roles, seeded dev accounts | T5 | Done | security tests |
+| T6.2 | List/search/filter/pagination | T5 | Done | repository/controller tests |
+| T6.3 | Edit permitted fields | T5 | Done | tests |
+| T6.4 | Assignment + transition policy + history | T6.1 | Done | transition tests |
+| T6.5 | Dashboard aggregation | T6.4 | Done | count tests |
+| T6.6 | REST API v1 + health endpoints | T6.4 | Done | API tests |
+| T6.7 | UI shell, tokens, responsive pass, admin user list | T6.1 | Done | screenshots |
+| T6.8 | Isolated merge-conflict demonstration | T6.2 | Done | conflict transcript |
+| T6.9 | Release tag `v0.1.0` | T6.1–T6.8 | Blocked (B5) | tag |
 | T7.1 | Jenkins container with persistent volume, plugins | T3.5 | Backlog | Jenkins console |
 | T7.2 | Pipeline job from SCM with polling | T7.1 | Backlog | poll log |
 | T7.3 | Archive JAR + JUnit reports; failing build demo | T7.2 | Backlog | build logs |
