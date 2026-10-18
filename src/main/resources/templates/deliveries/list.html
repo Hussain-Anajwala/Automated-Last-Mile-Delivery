@@ -68,13 +68,13 @@
             </thead>
             <tbody>
             <tr th:each="d : ${results.content}" data-testid="delivery-row" th:attr="data-code=${d.deliveryCode()}">
-                <td><a th:href="@{/deliveries/{id}(id=${d.id()})}" th:text="${d.deliveryCode()}"
+                <td class="code-cell"><a th:href="@{/deliveries/{id}(id=${d.id()})}" th:text="${d.deliveryCode()}"
                        data-testid="delivery-link">LMD</a></td>
                 <td th:text="${d.recipientName()}">Name</td>
                 <td th:text="${d.deliveryCity()}">City</td>
                 <td th:text="${d.referenceNumber() ?: '—'}">Ref</td>
                 <td th:text="${d.assignedAgentName() ?: 'Unassigned'}">Agent</td>
-                <td><span th:replace="~{fragments/layout :: status(${d.status()})}"></span></td>
+                <td class="status-cell"><span th:replace="~{fragments/layout :: status(${d.status()})}"></span></td>
                 <td><time th:datetime="${d.createdAt()}" th:text="${#temporals.format(d.createdAt(), 'dd MMM yyyy')}">date</time></td>
             </tr>
             </tbody>

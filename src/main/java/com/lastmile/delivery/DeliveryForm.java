@@ -15,7 +15,8 @@ public class DeliveryForm {
     private String recipientName;
 
     @NotBlank(message = "Phone number is required.")
-    @Pattern(regexp = "^\\s*\\+?[0-9]{7,15}\\s*$", message = "Enter 7 to 15 digits, optionally starting with +.")
+    // Empty input is left to @NotBlank so the user sees one message, not two.
+    @Pattern(regexp = "^$|^\\s*\\+?[0-9]{7,15}\\s*$", message = "Enter 7 to 15 digits, optionally starting with +.")
     private String recipientPhone;
 
     @NotBlank(message = "Delivery address is required.")

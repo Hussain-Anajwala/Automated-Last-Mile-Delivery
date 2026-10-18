@@ -34,7 +34,7 @@
                 </form>
             </div>
             <div class="col-md-6" th:if="${actions.canAssign()}">
-                <h3 class="h6" th:text="${d.assignedAgentName() != null and d.status().name() == 'ASSIGNED'} ? 'Reassign agent' : 'Assign agent'">Assign agent</h3>
+                <h3 class="h6" th:text="${d.status().name() == 'ASSIGNED'} ? 'Reassign agent' : (${d.status().name() == 'FAILED'} ? 'Retry: assign an agent' : 'Assign agent')">Assign agent</h3>
                 <form th:action="@{/deliveries/{id}/assignment(id=${d.id()})}" method="post" data-once data-testid="assignment-form">
                     <input type="hidden" name="version" th:value="${d.version()}">
                     <label for="agentId" class="form-label">Agent</label>

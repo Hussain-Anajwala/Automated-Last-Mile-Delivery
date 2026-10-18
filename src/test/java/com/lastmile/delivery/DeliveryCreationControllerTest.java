@@ -103,6 +103,19 @@ class DeliveryCreationControllerTest {
     }
 
     @Test
+    void blankPhoneShowsExactlyOneMessage() throws Exception {
+        var result = mvc.perform(post("/deliveries/new").with(csrf()).with(user(TestData.principal(dispatcher)))
+                        .param("recipientName", "A").param("recipientPhone", "")
+                        .param("deliveryAddress", "B").param("deliveryCity", "C"))
+                .andExpect(status().isOk())
+                .andReturn();
+        var errors = ((org.springframework.validation.BindingResult) result.getModelAndView().getModel()
+                .get("org.springframework.validation.BindingResult.deliveryForm")).getFieldErrors("recipientPhone");
+        assertThat(errors).singleElement()
+                .satisfies(e -> assertThat(e.getDefaultMessage()).isEqualTo("Phone number is required."));
+    }
+
+    @Test
     void systemManagedFieldsSuppliedByTheClientAreIgnored() throws Exception {
         UserAccount other = data.user("Other Dispatcher", Role.DISPATCHER);
 
