@@ -227,3 +227,35 @@ EXIT CRITERIA:
 AUTO-ADVANCE: Phase 10 requires Jenkins (B2) → BLOCKED. Continue with independent Phase 11/12/13 preparation
   (Dockerfile, Compose, Jenkinsfile, Ansible files) that can be written and statically checked without Docker.
 ```
+
+```text
+PHASE: 3 — (update) infrastructure gates re-checked after user set up Docker and Ubuntu
+STATUS: BLOCKED (partial) — G5, G6, G8 now PASS; G7 pending Phase 12; G9 blocked on B4 (target choice)
+EVIDENCE: docs/evidence/phase-03-setup/compatibility-gate.md (updated rows G5–G9)
+
+PHASE: 7 — Jenkins installation and continuous integration job
+STATUS: PASS
+OBJECTIVE / SCOPE: Jenkins in the D10 topology, configured as code; repository connected; SCM-polling trigger;
+  build + unit/integration tests; archived JAR and JUnit results; deliberate red build.
+FILES CHANGED: ci/jenkins/{Dockerfile,plugins.txt,casc.yaml,compose.yaml}, Jenkinsfile,
+  scripts/jenkins-init-env.ps1, docs/CI_JENKINS.md, docs/BLOCKERS.md (B2/B3 resolved, B7 added), mvnw (+x)
+DECISIONS MADE AND SOURCES: multibranch job with 2-minute periodic scan as the SCM-polling trigger (no webhook,
+  Jenkins is localhost-only); plugin pins from the 2.580.1 update center.
+COMMANDS EXECUTED WITH EXIT CODES: docker compose build (1, 1 — WSL VM restarts; 0 on third attempt);
+  docker compose up -d (0); curl checks 403/200; builds via branch indexing (see evidence).
+TESTS AND EXACT RESULTS: Jenkins ci/jenkins-pipeline #1 SUCCESS 86/86; ci/demo-failing-build #1 FAILURE
+  (85 passed, 1 failed, exit code 1); ci/jenkins-pipeline #2 SUCCESS 86/86.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-07-jenkins/jenkins-evidence.md + logs; Jenkins UI at
+  http://127.0.0.1:8090 (local only, not a public URL)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline bf988b0, d21fe6c, 99f1369 (pushed); ci/demo-failing-build dd773f6
+KNOWN ISSUES / SECURITY NOTES: Docker socket = root-equivalent (local only). Commit-limit exhaustion (B7).
+  Built-in node executes builds (no separate agent) — acceptable for a single-user local CI.
+USER ACTIONS REQUIRED: B7 (memory) recommended; B5 for PRs.
+EXIT CRITERIA:
+  - Jenkins installed in the selected topology with reproducible config: PASS
+  - Known commit detected by Jenkins and builds successfully, repeatably: PASS (#1 d21fe6c, #2 99f1369)
+  - Build + unit/integration tests + package; artifact and reports archived: PASS
+  - Deliberately failing build exits non-zero: PASS (exit code 1, FAILURE, no artifact)
+  - No credentials in console logs: PASS (checked)
+AUTO-ADVANCE: YES → Phase 8
+```

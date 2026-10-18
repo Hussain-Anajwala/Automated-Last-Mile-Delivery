@@ -20,4 +20,5 @@ map will be `docs/evidence/INDEX.md` (Phase 15).
 | 4 — Repository | [phase-04-repo/repository-init.md](phase-04-repo/repository-init.md) |
 | 5 — First feature | [phase-05-feature/feature-evidence.md](phase-05-feature/feature-evidence.md), [pull-request.md](phase-05-feature/pull-request.md) |
 | 6 — MVP | [phase-06-mvp/acceptance.md](phase-06-mvp/acceptance.md), [merge-conflict-transcript.md](phase-06-mvp/merge-conflict-transcript.md), [screenshots/](phase-06-mvp/screenshots/) |
+| 7 — Jenkins CI | [phase-07-jenkins/jenkins-evidence.md](phase-07-jenkins/jenkins-evidence.md) |
 | 9 — Selenium | [phase-09-selenium/selenium-evidence.md](phase-09-selenium/selenium-evidence.md) |

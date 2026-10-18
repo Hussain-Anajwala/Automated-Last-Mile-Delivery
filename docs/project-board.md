@@ -20,8 +20,8 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T3.1 | SRS summary, use-case, architecture, ERD, API list | T2 | Done | `docs/ARCHITECTURE.md` |
 | T3.2 | Verify and pin versions from official sources | T2 | Done | `docs/VERSIONS.md` |
 | T3.3 | JDK 21 + Maven Wrapper spike | T3.2 | Done | build log |
-| T3.4 | Docker / Compose spike | T3.2 | Blocked (B2) | `docker run hello-world` log |
-| T3.5 | Jenkins topology spike (container + Docker access) | T3.4 | Blocked (B2) | Jenkins version + `docker ps` from Jenkins |
+| T3.4 | Docker / Compose spike | T3.2 | Done | `docker run hello-world` log |
+| T3.5 | Jenkins topology spike (container + Docker access) | T3.4 | Done | Jenkins version + `docker ps` from Jenkins |
 | T3.6 | Headless Selenium spike | T3.3 | Done | headless Chrome run log |
 | T3.7 | Local registry push/pull spike | T3.4 | Blocked (B2) | push + pull log |
 | T3.8 | WSL2 Ansible control node + SSH target spike | — | Blocked (B3, B4) | `ansible -m ping` |
@@ -43,9 +43,9 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T6.7 | UI shell, tokens, responsive pass, admin user list | T6.1 | Done | screenshots |
 | T6.8 | Isolated merge-conflict demonstration | T6.2 | Done | conflict transcript |
 | T6.9 | Release tag `v0.1.0` | T6.1–T6.8 | Blocked (B5) | tag |
-| T7.1 | Jenkins container with persistent volume, plugins | T3.5 | Backlog | Jenkins console |
-| T7.2 | Pipeline job from SCM with polling | T7.1 | Backlog | poll log |
-| T7.3 | Archive JAR + JUnit reports; failing build demo | T7.2 | Backlog | build logs |
+| T7.1 | Jenkins container with persistent volume, plugins | T3.5 | Done | Jenkins console |
+| T7.2 | Pipeline job from SCM with polling | T7.1 | Done | poll log |
+| T7.3 | Archive JAR + JUnit reports; failing build demo | T7.2 | Done | build logs |
 | T8.1 | `Jenkinsfile` stages + parameter | T7 | Backlog | pipeline log |
 | T8.2 | Compose deploy (Nginx → app → PostgreSQL) + health stage | T8.1, T11 | Backlog | health output |
 | T9.1 | Selenium test plan (5 journeys) | T6 | Done | `docs/SELENIUM_TEST_PLAN.md` |
