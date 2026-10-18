@@ -25,3 +25,4 @@ map will be `docs/evidence/INDEX.md` (Phase 15).
 | 9 — Selenium | [phase-09-selenium/selenium-evidence.md](phase-09-selenium/selenium-evidence.md) |
 | 10 — Quality gate | [phase-10-quality-gate/quality-gate-evidence.md](phase-10-quality-gate/quality-gate-evidence.md) |
 | 11 — Docker | [phase-11-docker/lifecycle-transcript.md](phase-11-docker/lifecycle-transcript.md) |
+| 12 — Registry/CD | [phase-12-registry/registry-evidence.md](phase-12-registry/registry-evidence.md) |

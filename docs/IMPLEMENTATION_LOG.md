@@ -352,3 +352,29 @@ EXIT CRITERIA:
   - Clean image starts and reaches readiness with documented configuration: PASS
 AUTO-ADVANCE: YES → Phase 12
 ```
+
+```text
+PHASE: 12 — Jenkins-Docker continuous deployment with a local registry
+STATUS: PASS for the workstation deployment target; target-node pull pending Phase 14 (B4)
+OBJECTIVE / SCOPE: versioned images pushed to a local registry only after all gates, digest-verified, deployed by
+  explicit tag pulled from the registry, last-known-good recorded, automatic rollback on unhealthy candidates.
+FILES CHANGED: infra/registry/compose.yaml, Jenkinsfile (publish + deploy + rollback + FAULT_INJECTION),
+  deploy/compose.yaml (LASTMILE_DB_HOST), ci/jenkins/compose.yaml (registry network), docs/REGISTRY.md, evidence
+DECISIONS MADE AND SOURCES: identity by digest because registry names differ per namespace (risk R2);
+  rollback restores the release that was running before the deploy (immutable tag in the registry).
+COMMANDS EXECUTED WITH EXIT CODES: registry up (0); daemon push to localhost:5000 (0); Jenkins builds #13 SUCCESS,
+  #14 ABORTED (deliberate), #15 FAILURE with ROLLBACK SUCCEEDED (deliberate drill).
+TESTS AND EXACT RESULTS: see docs/evidence/phase-12-registry/registry-evidence.md
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-12-registry/ (registry served only on http://127.0.0.1:5000)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline e13d79d, 881a67f
+KNOWN ISSUES / SECURITY NOTES: registry has no auth/TLS — loopback only. Rollback restores the image and its
+  configuration but not database contents (forward-only migrations; see Phase 14 notes).
+USER ACTIONS REQUIRED: B4 (target) for the target-side pull
+EXIT CRITERIA:
+  - Versioned image built and pushed only after mandatory tests: PASS
+  - Registry push + pull of the exact tag, digest verified: PASS (workstation daemon); target node: BLOCKED (B4)
+  - Deploy by explicit immutable tag; last known good retained: PASS
+  - Health check after deploy; failed candidate restored to previous release: PASS (#15)
+  - Registry local/private, never publicly exposed: PASS (127.0.0.1:5000 only)
+AUTO-ADVANCE: YES → Phase 13 authoring and static checks; execution against the target BLOCKED (B4)
+```

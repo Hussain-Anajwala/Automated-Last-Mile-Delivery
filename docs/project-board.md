@@ -23,7 +23,7 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T3.4 | Docker / Compose spike | T3.2 | Done | `docker run hello-world` log |
 | T3.5 | Jenkins topology spike (container + Docker access) | T3.4 | Done | Jenkins version + `docker ps` from Jenkins |
 | T3.6 | Headless Selenium spike | T3.3 | Done | headless Chrome run log |
-| T3.7 | Local registry push/pull spike | T3.4 | Blocked (B2) | push + pull log |
+| T3.7 | Local registry push/pull spike | T3.4 | Done (workstation); target pull in T14 | push + pull log |
 | T3.8 | WSL2 Ansible control node + SSH target spike | — | Blocked (B3, B4) | `ansible -m ping` |
 | T3.9 | Port, memory, disk inventory | — | Done | environment log |
 | T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Done | `mvnw verify` log |
@@ -54,8 +54,8 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T10.2 | Deliberate defect → red; fix + regression → green | T10.1 | Done | two runs |
 | T11.1 | Multi-stage non-root Dockerfile + healthcheck | T6 | Done | Dockerfile |
 | T11.2 | Container lifecycle transcript | T11.1, B2 | Done | transcript |
-| T12.1 | Local registry service | T3.7 | Backlog | catalog |
-| T12.2 | Pipeline: tag by SHA, push after tests, deploy by tag | T10, T12.1 | Backlog | pipeline log |
+| T12.1 | Local registry service | T3.7 | Done | catalog |
+| T12.2 | Pipeline: tag by SHA, push after tests, deploy by tag | T10, T12.1 | Done | pipeline log |
 | T13.1 | Config spec, inventory, vars, templates | T3.8 | Backlog | playbook |
 | T13.2 | Syntax check, check mode, first run | T13.1 | Backlog | run log |
 | T14.1 | Second run idempotency | T13.2 | Backlog | run log |
