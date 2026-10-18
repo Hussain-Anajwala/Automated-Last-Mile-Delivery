@@ -24,7 +24,7 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T3.5 | Jenkins topology spike (container + Docker access) | T3.4 | Done | Jenkins version + `docker ps` from Jenkins |
 | T3.6 | Headless Selenium spike | T3.3 | Done | headless Chrome run log |
 | T3.7 | Local registry push/pull spike | T3.4 | Done (workstation); target pull in T14 | push + pull log |
-| T3.8 | WSL2 Ansible control node + SSH target spike | — | Blocked (B3, B4) | `ansible -m ping` |
+| T3.8 | WSL2 Ansible control node + SSH target spike | — | Partial: control node done; target Blocked (B4) | `ansible -m ping` |
 | T3.9 | Port, memory, disk inventory | — | Done | environment log |
 | T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Done | `mvnw verify` log |
 | T4.2 | Issue / PR templates, CONTRIBUTING | T2.3 | Done | `.github/` |
@@ -56,10 +56,10 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T11.2 | Container lifecycle transcript | T11.1, B2 | Done | transcript |
 | T12.1 | Local registry service | T3.7 | Done | catalog |
 | T12.2 | Pipeline: tag by SHA, push after tests, deploy by tag | T10, T12.1 | Done | pipeline log |
-| T13.1 | Config spec, inventory, vars, templates | T3.8 | Backlog | playbook |
-| T13.2 | Syntax check, check mode, first run | T13.1 | Backlog | run log |
-| T14.1 | Second run idempotency | T13.2 | Backlog | run log |
-| T14.2 | Health + rollback to previous tag | T14.1, T12 | Backlog | rollback log |
+| T13.1 | Config spec, inventory, vars, templates | T3.8 | Done (authoring + static checks) | playbook |
+| T13.2 | Syntax check, check mode, first run | T13.1 | Blocked (B4) | run log |
+| T14.1 | Second run idempotency | T13.2 | Blocked (B4) | run log |
+| T14.2 | Health + rollback to previous tag | T14.1, T12 | Blocked (B4) | rollback log |
 | T15.1 | Full end-to-end run | T1–T14 | Backlog | logs |
 | T15.2 | Final docs, troubleshooting, security, limitations | T15.1 | Backlog | docs |
 | T15.3 | Evidence INDEX, demo runbook, viva Q&A | T15.2 | Backlog | `docs/evidence/INDEX.md` |
