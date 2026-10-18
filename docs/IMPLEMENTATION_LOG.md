@@ -135,3 +135,32 @@ EXIT CRITERIA:
   - GitHub issues: BLOCKED (B5) — templates + Git board used meanwhile
 AUTO-ADVANCE: YES (exit gate criteria pass; issue mirroring is tracked under B5)
 ```
+
+```text
+PHASE: 5 — First feature with branching (delivery creation)
+STATUS: BLOCKED (PR/review/merge only) — implementation, tests and live run PASS
+OBJECTIVE / SCOPE: V1 schema, login, delivery creation with validation/code generation/history,
+  create form + detail page, focused tests, branch + push + PR.
+FILES CHANGED: see commits ba96a34, aa9b1ab (pom.xml, V1__core_schema.sql, user/security/delivery/
+  workflow/web packages, templates, static css/js, tests, DevApplication, scripts/smoke_create.py, docs)
+DECISIONS MADE AND SOURCES: D13 stacked branches while PR blocked; codes LMD-<UTC yyyyMMdd>-<seq>
+  from a PostgreSQL sequence; CHECK constraints mirror the state rules at DB level.
+COMMANDS EXECUTED WITH EXIT CODES: mvnw.cmd -B verify (1 then 0 after assertion fix; 0 after review fix);
+  LoginTest without/with fix (1 / 0); spring-boot:test-run DevApplication (ran, health 200);
+  smoke_create.py (0); gitleaks staged (0); git push feature/delivery-create (0); gh auth status (1).
+TESTS AND EXACT RESULTS: Tests run: 36, Failures: 0, Errors: 0, Skipped: 0. Live smoke: valid create 302
+  -> detail 200 CREATED + 1 history row; invalid create 200 with errors and preserved input; agent 403 on
+  form, 404 on unassigned delivery; wrong password -> /login?error.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-05-feature/{feature-evidence.md,pull-request.md,*.png};
+  branch https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery/tree/feature/delivery-create
+GIT BRANCH / COMMITS / PR / TAG: feature/delivery-create ba96a34, aa9b1ab (pushed). PR: NOT OPENED (B5).
+KNOWN ISSUES / SECURITY NOTES: No login rate limiting. Code date is UTC.
+USER ACTIONS REQUIRED: B5 gh auth login; B6.2 whether a second-person review is required.
+EXIT CRITERIA:
+  - Fresh local run creates a valid record and rejects invalid input: PASS (live smoke)
+  - Tests for valid creation, invalid fields, generated/unique code: PASS
+  - Issue + feature branch + push: branch PASS; GitHub issue BLOCKED (B5)
+  - PR, review, merge: BLOCKED (B5); self-review finding fixed with regression test
+AUTO-ADVANCE: YES for Phase 6 implementation under D12/D13 (stacked); Phase 5 remains BLOCKED until
+  the PR is opened, reviewed as required and merged.
+```

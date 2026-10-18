@@ -29,11 +29,11 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Done | `mvnw verify` log |
 | T4.2 | Issue / PR templates, CONTRIBUTING | T2.3 | Done | `.github/` |
 | T4.3 | Secret scan and push to origin; create `develop` | T4.1 | Done | scan output, remote refs |
-| T5.1 | Issue: delivery creation | T4 | Backlog | issue URL (B5) |
-| T5.2 | Migration V1 + entities + repositories | T4 | Backlog | migration test |
-| T5.3 | Creation service + validation + code generator | T5.2 | Backlog | unit/integration tests |
-| T5.4 | Create form/controller + detail stub | T5.3 | Backlog | controller tests |
-| T5.5 | PR, self-review checklist, merge | T5.4 | Backlog | PR URL (B5) |
+| T5.1 | Issue: delivery creation | T4 | Blocked (B5) | issue URL (B5) |
+| T5.2 | Migration V1 + entities + repositories | T4 | Done | migration test |
+| T5.3 | Creation service + validation + code generator | T5.2 | Done | unit/integration tests |
+| T5.4 | Create form/controller + detail stub | T5.3 | Done | controller tests |
+| T5.5 | PR, self-review checklist, merge | T5.4 | Blocked (B5) | PR URL (B5) |
 | T6.1 | Security: login/logout, roles, seeded dev accounts | T5 | Backlog | security tests |
 | T6.2 | List/search/filter/pagination | T5 | Backlog | repository/controller tests |
 | T6.3 | Edit permitted fields | T5 | Backlog | tests |
