@@ -114,6 +114,23 @@ class WebAuthorizationTest {
     }
 
     @Test
+    void failedDeliveryOffersStaffTheRetryAssignmentAndAgentsNothing() throws Exception {
+        mvc.perform(post("/deliveries/{id}/status", mine.id()).with(csrf()).with(user(principal(agent)))
+                .param("newStatus", "OUT_FOR_DELIVERY"));
+        mvc.perform(post("/deliveries/{id}/status", mine.id()).with(csrf()).with(user(principal(agent)))
+                .param("newStatus", "FAILED").param("reason", "Gate locked"));
+        assertThat(data.status(mine.id())).isEqualTo("FAILED");
+
+        mvc.perform(get("/deliveries/{id}", mine.id()).with(user(principal(dispatcher))))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("Retry: assign an agent")))
+                .andExpect(content().string(containsString("Gate locked")));
+        mvc.perform(get("/deliveries/{id}", mine.id()).with(user(principal(agent))))
+                .andExpect(status().isOk())
+                .andExpect(content().string(not(containsString("data-testid=\"actions-panel\""))));
+    }
+
+    @Test
     void dashboardForAgentIsScopedAndForStaffIsGlobal() throws Exception {
         mvc.perform(get("/dashboard").with(user(principal(agent))))
                 .andExpect(status().isOk())
