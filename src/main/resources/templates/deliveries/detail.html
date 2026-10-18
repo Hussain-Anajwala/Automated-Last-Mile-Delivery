@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${delivery.deliveryCode()})}"></head>
+<body>
+<header th:replace="~{fragments/layout :: nav}"></header>
+<main id="main" class="container app-main" th:with="d=${delivery}">
+    <div th:replace="~{fragments/layout :: flash}"></div>
+
+    <div class="d-flex flex-wrap align-items-center gap-3 mb-3">
+        <h1 class="page-title mb-0" data-testid="delivery-code" th:text="${d.deliveryCode()}">LMD-00000000-000000</h1>
+        <span th:replace="~{fragments/layout :: status(${d.status()})}"></span>
+    </div>
+
+    <div class="row g-4">
+        <section class="col-lg-7" aria-labelledby="details-heading">
+            <div class="app-card">
+                <h2 id="details-heading" class="h5">Details</h2>
+                <dl class="row mb-0 app-dl">
+                    <dt class="col-sm-4">Recipient</dt>
+                    <dd class="col-sm-8" data-testid="detail-recipient" th:text="${d.recipientName()}">Name</dd>
+                    <dt class="col-sm-4">Phone</dt>
+                    <dd class="col-sm-8" th:text="${d.recipientPhone()}">Phone</dd>
+                    <dt class="col-sm-4">Address</dt>
+                    <dd class="col-sm-8" th:text="${d.deliveryAddress()}">Address</dd>
+                    <dt class="col-sm-4">City</dt>
+                    <dd class="col-sm-8" th:text="${d.deliveryCity()}">City</dd>
+                    <dt class="col-sm-4">Reference</dt>
+                    <dd class="col-sm-8" data-testid="detail-reference" th:text="${d.referenceNumber() ?: '—'}">—</dd>
+                    <dt class="col-sm-4">Assigned agent</dt>
+                    <dd class="col-sm-8" data-testid="detail-agent" th:text="${d.assignedAgentName() ?: 'Not assigned'}">—</dd>
+                    <dt class="col-sm-4" th:if="${d.failureReason()}">Failure reason</dt>
+                    <dd class="col-sm-8" th:if="${d.failureReason()}" th:text="${d.failureReason()}">Reason</dd>
+                    <dt class="col-sm-4">Created</dt>
+                    <dd class="col-sm-8">
+                        <time th:datetime="${d.createdAt()}" th:text="${#temporals.format(d.createdAt(), 'dd MMM yyyy HH:mm') + ' UTC'}">time</time>
+                        by <span th:text="${d.createdByName()}">user</span>
+                    </dd>
+                    <dt class="col-sm-4" th:if="${d.deliveredAt()}">Delivered</dt>
+                    <dd class="col-sm-8" th:if="${d.deliveredAt()}"
+                        th:text="${#temporals.format(d.deliveredAt(), 'dd MMM yyyy HH:mm') + ' UTC'}">time</dd>
+                </dl>
+            </div>
+        </section>
+
+        <section class="col-lg-5" aria-labelledby="history-heading">
+            <div class="app-card">
+                <h2 id="history-heading" class="h5">Status history</h2>
+                <ol class="app-timeline" data-testid="status-history">
+                    <li th:each="h : ${d.history()}" data-testid="history-entry">
+                        <div>
+                            <span th:if="${h.previousStatus()}" th:text="${h.previousStatus().label()} + ' → '">Prev →</span>
+                            <strong th:text="${h.newStatus().label()}">New</strong>
+                        </div>
+                        <div class="small text-secondary">
+                            <span th:text="${h.changedByName()}">Actor</span> ·
+                            <time th:datetime="${h.changedAt()}"
+                                  th:text="${#temporals.format(h.changedAt(), 'dd MMM yyyy HH:mm') + ' UTC'}">time</time>
+                        </div>
+                        <div class="small" th:if="${h.reason()}" th:text="${h.reason()}">Reason</div>
+                    </li>
+                </ol>
+            </div>
+        </section>
+    </div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

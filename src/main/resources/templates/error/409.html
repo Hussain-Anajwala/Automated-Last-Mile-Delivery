@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Action not allowed')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: nav}"></header>
+<main id="main" class="container app-main">
+    <div class="app-card" data-testid="error-page" data-error="409">
+        <h1 class="page-title">Action not allowed</h1>
+        <p>This action conflicts with the current state of the record. Reload the page and try again.</p>
+        <a class="btn btn-outline-secondary" th:href="@{/}">Back to home</a>
+    </div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

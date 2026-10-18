@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Sign in')}"></head>
+<body class="app-login">
+<main id="main" class="login-card">
+    <h1 class="h4 mb-1">LastMile Ops</h1>
+    <p class="text-secondary mb-4">Sign in to manage deliveries.</p>
+
+    <div th:if="${param.error}" class="alert alert-danger" role="alert" data-testid="login-error">
+        Invalid email or password.
+    </div>
+    <div th:if="${param.logout}" class="alert alert-info" role="status" data-testid="logout-message">
+        You have been signed out.
+    </div>
+
+    <form th:action="@{/login}" method="post" data-once>
+        <div class="mb-3">
+            <label for="username" class="form-label">Email</label>
+            <input type="email" id="username" name="username" class="form-control" autocomplete="username"
+                   required autofocus data-testid="login-email">
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" id="password" name="password" class="form-control"
+                   autocomplete="current-password" required data-testid="login-password">
+        </div>
+        <button type="submit" class="btn btn-primary w-100" data-testid="login-submit">Sign in</button>
+    </form>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>
