@@ -1,0 +1,8 @@
+# Secrets are read from the control node's environment at run time (never stored in Git):
+#   export LASTMILE_DB_PASSWORD=...   LASTMILE_DEMO_PASSWORD=...
+# or supplied from a git-ignored ansible-vault file with the same variable names.
+lastmile_app_db_password: "{{ lookup('ansible.builtin.env', 'LASTMILE_DB_PASSWORD') }}"
+lastmile_app_demo_password: "{{ lookup('ansible.builtin.env', 'LASTMILE_DEMO_PASSWORD') }}"
+
+lastmile_app_compose_source: "{{ playbook_dir }}/../deploy/compose.yaml"
+lastmile_app_wait_timeout: 180
