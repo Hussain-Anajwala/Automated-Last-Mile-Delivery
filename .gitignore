@@ -1,0 +1,28 @@
+# Build output
+target/
+*.class
+
+# Local configuration and secrets — never commit
+.env
+*.env.local
+/secrets/
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+ansible/inventory/*.local.yml
+ansible/group_vars/*/vault*.yml
+
+# IDE / OS
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+.DS_Store
+Thumbs.db
+
+# Logs and test artefacts
+*.log
+selenium-screenshots/
