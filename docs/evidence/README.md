@@ -23,3 +23,4 @@ map will be `docs/evidence/INDEX.md` (Phase 15).
 | 7 — Jenkins CI | [phase-07-jenkins/jenkins-evidence.md](phase-07-jenkins/jenkins-evidence.md) |
 | 8 — Deployment | [phase-08-deploy/deploy-evidence.md](phase-08-deploy/deploy-evidence.md) |
 | 9 — Selenium | [phase-09-selenium/selenium-evidence.md](phase-09-selenium/selenium-evidence.md) |
+| 10 — Quality gate | [phase-10-quality-gate/quality-gate-evidence.md](phase-10-quality-gate/quality-gate-evidence.md) |

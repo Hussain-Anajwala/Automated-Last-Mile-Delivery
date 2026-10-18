@@ -40,13 +40,21 @@ contains a `Jenkinsfile`. Builds started this way show `Branch indexing` as thei
 SCM polling; a GitHub webhook would need Jenkins to be reachable from the internet, which is
 deliberately avoided.
 
-## Pipeline stages (current)
+## Pipeline stages
 
-1. **Checkout** — `checkout scm`, records the commit SHA and JDK version.
-2. **Build and unit/integration tests** — `./mvnw -B -ntp clean verify` (embedded PostgreSQL; no DB service needed).
-3. **Post** — JUnit results always recorded; `target/lastmile-delivery.jar` archived with a fingerprint on success.
+1. **Checkout** — `checkout scm`; records the commit SHA (image tag = first 12 characters).
+2. **Validate parameters** — `HTTP_PORT` must be 1024–65535; fails the build before anything runs.
+3. **Build and unit/integration tests** — `./mvnw -B -ntp clean verify` (embedded PostgreSQL).
+4. **Selenium quality gate** — five browser journeys in Chromium; JUnit + HTML report + failure screenshots always published.
+5. **Package images** — `lastmile-delivery:<sha>` from the tested JAR and `lastmile-nginx:<sha>`.
+6. **Deploy** (deployment branches, `DEPLOY=true`) — `docker compose up -d --wait` with credentials injected.
+7. **Verify deployment** — readiness through Nginx and deployed revision == commit.
+8. **Post** — JUnit always; JAR archived on success; container status and app logs on failure.
 
-Later phases add the Selenium gate, image build/publish and deployment stages.
+Any failure in stages 2–4 skips 5–7, so nothing untested is packaged or deployed
+(proven in builds #6 and #9 — see `docs/evidence/phase-08-deploy/` and `phase-10-quality-gate/`).
+
+Parameters: `DEPLOY_PROFILE` (`demo`/`prod`), `HTTP_PORT` (default `8088`), `DEPLOY` (default true).
 
 ## Resource note
 

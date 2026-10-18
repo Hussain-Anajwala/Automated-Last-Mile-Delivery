@@ -302,3 +302,28 @@ EXIT CRITERIA:
     test-failure-specific proof follows in Phase 10 (Selenium gate)
 AUTO-ADVANCE: YES → Phase 10 (Phase 9 already PASS)
 ```
+
+```text
+PHASE: 10 — Continuous testing in Jenkins
+STATUS: PASS
+OBJECTIVE / SCOPE: Selenium stage in the pipeline with published reports; failed Selenium blocks deployment;
+  deliberate defect → red; fix with regression test → green.
+FILES CHANGED: Jenkinsfile (Selenium quality gate stage), templates/deliveries/detail.html (defect + fix),
+  WebAuthorizationTest (regression), docs/CI_JENKINS.md, evidence
+DECISIONS MADE AND SOURCES: --no-sandbox for Chromium inside the unprivileged Jenkins container (browser visits
+  only the local test app); defect chosen to be invisible to MockMvc so only the browser gate can catch it.
+COMMANDS EXECUTED WITH EXIT CODES: Jenkins builds #8 SUCCESS, #9 FAILURE (intended), #10 SUCCESS;
+  local regression test with defect exit 1, after fix mvnw verify exit 0 (87 tests).
+TESTS AND EXACT RESULTS: see docs/evidence/phase-10-quality-gate/quality-gate-evidence.md
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-10-quality-gate/
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline 62d40a3, 7f3a6e4 (defect), eb87044 (fix)
+KNOWN ISSUES / SECURITY NOTES: Jenkins HTML publisher applies its default CSP, so the report renders unstyled.
+USER ACTIONS REQUIRED: none
+EXIT CRITERIA:
+  - Selenium suite runs in Jenkins with published reports: PASS (#8, #10)
+  - Reports/screenshots archived even on failure: PASS (#9 artifacts)
+  - Failed Selenium test stops deployment: PASS (#9 skipped package/deploy; deployment unchanged)
+  - Deliberate defect, failed gate, fix with regression test, green rerun: PASS
+  - Defect removed before release: PASS (eb87044)
+AUTO-ADVANCE: YES → Phase 11
+```

@@ -50,8 +50,8 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T8.2 | Compose deploy (Nginx → app → PostgreSQL) + health stage | T8.1, T11 | Done | health output |
 | T9.1 | Selenium test plan (5 journeys) | T6 | Done | `docs/SELENIUM_TEST_PLAN.md` |
 | T9.2 | Selenium suite + screenshot-on-failure + report | T9.1 | Done | report |
-| T10.1 | Selenium stage in Jenkins, publish reports always | T8, T9 | Backlog | Jenkins report |
-| T10.2 | Deliberate defect → red; fix + regression → green | T10.1 | Backlog | two runs |
+| T10.1 | Selenium stage in Jenkins, publish reports always | T8, T9 | Done | Jenkins report |
+| T10.2 | Deliberate defect → red; fix + regression → green | T10.1 | Done | two runs |
 | T11.1 | Multi-stage non-root Dockerfile + healthcheck | T6 | Backlog | Dockerfile |
 | T11.2 | Container lifecycle transcript | T11.1, B2 | Backlog | transcript |
 | T12.1 | Local registry service | T3.7 | Backlog | catalog |
