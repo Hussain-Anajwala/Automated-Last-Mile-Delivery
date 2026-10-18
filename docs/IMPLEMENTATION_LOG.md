@@ -259,3 +259,16 @@ EXIT CRITERIA:
   - No credentials in console logs: PASS (checked)
 AUTO-ADVANCE: YES → Phase 8
 ```
+
+```text
+INCIDENT 2026-10-19 03:32 IST — secret-scan step did not gate a push
+WHAT HAPPENED: Commit 9ee4a53 was committed and pushed although gitleaks reported "leaks found: 23". The command
+  piped gitleaks into `tail`, so the pipeline returned tail's exit status (0) and the `&&` chain continued.
+IMPACT: None — all 23 findings were reviewed: public Jenkins plugin identifiers in
+  docs/evidence/phase-07-jenkins/installed-plugins.txt (form `<name>-api:<version>.v<build-hash>`) matching the
+  generic-api-key rule. No credential was committed or pushed. Full-history scan with the reviewed allowlist: 0 findings.
+FIX: .gitleaks.toml (default rules + one-path allowlist for that file); scripts/secret-scan.sh returns gitleaks'
+  exit status and is used as `scripts/secret-scan.sh staged && git commit …` without pipes. Verified: planted
+  random key → staged exit 1, tree exit 1; removed → exit 0. Tree mode ignores only git-ignored files
+  (ci/jenkins/.env legitimately holds the local Jenkins password).
+```
