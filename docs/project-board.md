@@ -52,8 +52,8 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T9.2 | Selenium suite + screenshot-on-failure + report | T9.1 | Done | report |
 | T10.1 | Selenium stage in Jenkins, publish reports always | T8, T9 | Done | Jenkins report |
 | T10.2 | Deliberate defect → red; fix + regression → green | T10.1 | Done | two runs |
-| T11.1 | Multi-stage non-root Dockerfile + healthcheck | T6 | Backlog | Dockerfile |
-| T11.2 | Container lifecycle transcript | T11.1, B2 | Backlog | transcript |
+| T11.1 | Multi-stage non-root Dockerfile + healthcheck | T6 | Done | Dockerfile |
+| T11.2 | Container lifecycle transcript | T11.1, B2 | Done | transcript |
 | T12.1 | Local registry service | T3.7 | Backlog | catalog |
 | T12.2 | Pipeline: tag by SHA, push after tests, deploy by tag | T10, T12.1 | Backlog | pipeline log |
 | T13.1 | Config spec, inventory, vars, templates | T3.8 | Backlog | playbook |

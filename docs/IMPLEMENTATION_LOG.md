@@ -327,3 +327,28 @@ EXIT CRITERIA:
   - Defect removed before release: PASS (eb87044)
 AUTO-ADVANCE: YES → Phase 11
 ```
+
+```text
+PHASE: 11 — Docker image and container lifecycle
+STATUS: PASS
+OBJECTIVE / SCOPE: Secure multi-stage Dockerfile, non-root, healthcheck, .dockerignore, runtime configuration,
+  build/tag/run/inspect/logs/stop/start/restart/remove with a real transcript.
+FILES CHANGED: Dockerfile, .dockerignore (Phase 8 commit 3af9df9), scripts/docker-lifecycle-demo.sh, docs/DOCKER.md,
+  docs/evidence/phase-11-docker/lifecycle-transcript.md
+DECISIONS MADE AND SOURCES: package the tested JAR (build once, promote); layered extraction; JRE Alpine base;
+  readiness-based HEALTHCHECK (TRD §2: no misleading "healthy").
+COMMANDS EXECUTED WITH EXIT CODES: bash scripts/docker-lifecycle-demo.sh → exit 0 (all steps in transcript).
+TESTS AND EXACT RESULTS: container healthy after run/start/restart; readiness 200; with DB stopped readiness 503
+  and liveness 200; inspect: user 10001:10001, read-only rootfs, CapDrop ALL, port 127.0.0.1:18081, revision label
+  = commit; image 435da907d9bc, 405MB on disk; demo resources removed, deployed stack untouched.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-11-docker/lifecycle-transcript.md
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline (this commit)
+KNOWN ISSUES / SECURITY NOTES: image size dominated by the JRE base (~212MB); jlink-trimmed runtime is future work.
+USER ACTIONS REQUIRED: none
+EXIT CRITERIA:
+  - Secure, maintainable Dockerfile (multi-stage, non-root, healthcheck, .dockerignore): PASS
+  - Traceable tag; runtime config, no secrets in layers: PASS
+  - Build/tag/run/inspect/logs/stop/start/restart/remove demonstrated: PASS
+  - Clean image starts and reaches readiness with documented configuration: PASS
+AUTO-ADVANCE: YES → Phase 12
+```
