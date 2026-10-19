@@ -2,7 +2,8 @@
 # git-ignored) and never stored here.
 jenkins:
   systemMessage: "LastMile Ops CI (local only, bound to 127.0.0.1)"
-  numExecutors: 2
+  # One executor: builds run one at a time (the workstation is memory-constrained, BLOCKERS B7).
+  numExecutors: 1
   mode: NORMAL
   securityRealm:
     local:
