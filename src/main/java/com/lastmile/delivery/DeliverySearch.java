@@ -2,6 +2,7 @@ package com.lastmile.delivery;
 
 import java.util.Locale;
 
+import com.lastmile.web.BusinessRuleException;
 import org.springframework.data.jpa.domain.Specification;
 
 /**
@@ -12,6 +13,14 @@ public record DeliverySearch(String q, DeliveryStatus status, Long agentId) {
 
     public static final int DEFAULT_PAGE_SIZE = 10;
     public static final int MAX_PAGE_SIZE = 50;
+    public static final int MAX_QUERY_LENGTH = 100;
+
+    /** The form limits the field, but crafted URLs and API calls must be bounded on the server too. */
+    public DeliverySearch {
+        if (q != null && q.length() > MAX_QUERY_LENGTH) {
+            throw new BusinessRuleException("q", "Search text must be at most " + MAX_QUERY_LENGTH + " characters.");
+        }
+    }
 
     public String normalizedQuery() {
         return q == null || q.isBlank() ? null : q.trim();

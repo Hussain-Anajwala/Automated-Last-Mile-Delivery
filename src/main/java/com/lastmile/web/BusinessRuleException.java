@@ -1,9 +1,13 @@
 package com.lastmile.web;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.ResponseStatus;
+
 /**
  * Input is well-formed but violates a business rule (HTTP 400). {@code field} names the form
  * field to attach the message to, or is null for a form-level error.
  */
+@ResponseStatus(HttpStatus.BAD_REQUEST)
 public class BusinessRuleException extends RuntimeException {
 
     private final String field;

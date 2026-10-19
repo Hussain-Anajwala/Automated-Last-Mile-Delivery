@@ -134,6 +134,18 @@ class DeliveryApiTest {
     }
 
     @Test
+    void overlongSearchTextIs400InApiAndWeb() throws Exception {
+        String q = "x".repeat(101);
+        mvc.perform(get("/api/v1/deliveries").param("q", q).with(as(dispatcher)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.fieldErrors[0].field").value("q"));
+        mvc.perform(get("/deliveries").param("q", q)
+                        .with(org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors
+                                .user(TestData.principal(dispatcher))))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void staleExpectedVersionIs409() throws Exception {
         DeliveryView own = data.delivery(dispatcher, agent);
         mvc.perform(patch("/api/v1/deliveries/{id}/status", own.id()).with(as(agent)).contentType(MediaType.APPLICATION_JSON)

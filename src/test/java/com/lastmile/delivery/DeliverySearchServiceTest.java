@@ -58,6 +58,15 @@ class DeliverySearchServiceTest {
     }
 
     @Test
+    void overlongSearchTextIsRejected() {
+        String q = "x".repeat(DeliverySearch.MAX_QUERY_LENGTH + 1);
+        org.assertj.core.api.Assertions.assertThatThrownBy(() -> new DeliverySearch(q, null, null))
+                .isInstanceOf(com.lastmile.web.BusinessRuleException.class)
+                .extracting("field").isEqualTo("q");
+        assertThat(codes(new DeliverySearch("x".repeat(DeliverySearch.MAX_QUERY_LENGTH), null, null), dispatcher)).isEmpty();
+    }
+
+    @Test
     void statusAndAgentFiltersCombine() {
         assertThat(codes(new DeliverySearch(null, DeliveryStatus.CREATED, null), dispatcher))
                 .containsExactly(unassigned.deliveryCode());
