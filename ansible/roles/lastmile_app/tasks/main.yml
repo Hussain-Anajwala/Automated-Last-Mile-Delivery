@@ -1,0 +1,111 @@
+- name: Require deployment secrets from the control node environment or vault
+  ansible.builtin.assert:
+    that:
+      - lastmile_app_db_password | length >= 12
+      - lastmile_profile != 'demo' or (lastmile_app_demo_password | length >= 12)
+    fail_msg: "Set LASTMILE_DB_PASSWORD (and LASTMILE_DEMO_PASSWORD for the demo profile) on the control node"
+    quiet: true
+  no_log: true
+
+- name: Create the application group
+  ansible.builtin.group:
+    name: "{{ lastmile_app_group }}"
+    system: true
+
+# The account only owns application files. It is deliberately NOT in the docker group (that would be
+# root-equivalent); Compose is driven by Ansible with become.
+- name: Create the application user (no login shell, no password, no docker group)
+  ansible.builtin.user:
+    name: "{{ lastmile_app_user }}"
+    group: "{{ lastmile_app_group }}"
+    system: true
+    shell: /usr/sbin/nologin
+    create_home: false
+
+- name: Create application directories
+  ansible.builtin.file:
+    path: "{{ item.path }}"
+    state: directory
+    owner: root
+    group: "{{ lastmile_app_group }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - { path: "{{ lastmile_base_dir }}", mode: "0750" }
+    - { path: "{{ lastmile_base_dir }}/releases", mode: "0750" }
+
+- name: Install the Compose definition (same file the Jenkins pipeline uses)
+  ansible.builtin.copy:
+    src: "{{ lastmile_app_compose_source }}"
+    dest: "{{ lastmile_base_dir }}/compose.yaml"
+    owner: root
+    group: "{{ lastmile_app_group }}"
+    mode: "0640"
+
+- name: Write runtime configuration including secrets
+  ansible.builtin.template:
+    src: lastmile.env.j2
+    dest: "{{ lastmile_base_dir }}/.env"
+    owner: root
+    group: root
+    mode: "0600"
+  no_log: true
+
+- name: Read the currently deployed release
+  ansible.builtin.slurp:
+    src: "{{ lastmile_base_dir }}/releases/current"
+  register: lastmile_app_current_release
+  failed_when: false
+
+- name: Remember the current release
+  ansible.builtin.set_fact:
+    # Empty when no release has been recorded yet (first run).
+    lastmile_app_current_tag: "{{ lastmile_app_current_release.content | default('') | b64decode | trim }}"
+
+- name: Pull the release images from the registry (exact tag)
+  ansible.builtin.command:
+    cmd: docker compose --env-file .env -f compose.yaml pull app nginx
+    chdir: "{{ lastmile_base_dir }}"
+  register: lastmile_app_pull
+  # Compose prints "Pulled" even when nothing new was downloaded. Pulling changes no configuration;
+  # a new image is reported as a change by the "up" task below (containers recreated).
+  changed_when: false
+
+- name: Start or update the stack and wait until every service is healthy
+  ansible.builtin.command:
+    cmd: docker compose --env-file .env -f compose.yaml up -d --remove-orphans --wait --wait-timeout {{ lastmile_app_wait_timeout }}
+    chdir: "{{ lastmile_base_dir }}"
+  register: lastmile_app_up
+  changed_when: lastmile_app_up.stderr is regex('(Recreated|Created|Started)')
+
+- name: Verify readiness through Nginx on the target
+  ansible.builtin.uri:
+    url: "http://127.0.0.1:{{ lastmile_http_port }}/api/v1/health/ready"
+    return_content: true
+  register: lastmile_app_readiness
+  until: lastmile_app_readiness.status == 200 and lastmile_app_readiness.json.status == 'UP'
+  retries: 20
+  delay: 3
+  changed_when: false
+
+- name: Verify the deployed revision matches the requested image tag
+  ansible.builtin.command: docker inspect --format '{{ '{{' }}index .Config.Labels "org.opencontainers.image.revision"{{ '}}' }}' lastmile-app-1
+  register: lastmile_app_revision
+  changed_when: false
+  failed_when: not lastmile_app_revision.stdout.startswith(lastmile_image_tag)
+
+- name: Record the previous release (only when the release changes)
+  ansible.builtin.copy:
+    dest: "{{ lastmile_base_dir }}/releases/previous"
+    content: "{{ lastmile_app_current_tag }}\n"
+    mode: "0640"
+  when: lastmile_app_current_tag | length > 0 and lastmile_app_current_tag != lastmile_image_tag
+
+- name: Record the current release
+  ansible.builtin.copy:
+    dest: "{{ lastmile_base_dir }}/releases/current"
+    content: "{{ lastmile_image_tag }}\n"
+    mode: "0640"
+
+- name: Report the deployed release
+  ansible.builtin.debug:
+    msg: "LastMile {{ lastmile_image_tag }} healthy on {{ inventory_hostname }} (previous: {{ lastmile_app_current_tag | default('none', true) }})"

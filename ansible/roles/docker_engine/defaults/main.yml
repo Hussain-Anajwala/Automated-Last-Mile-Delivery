@@ -1,0 +1,2 @@
+# Plain-HTTP registries this daemon may pull from (host-only/trusted network only).
+docker_engine_insecure_registries: []

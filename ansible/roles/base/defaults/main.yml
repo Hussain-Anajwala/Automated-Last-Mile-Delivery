@@ -1,0 +1,4 @@
+base_timezone: Etc/UTC
+# Host firewall (ufw). Disable only for targets where the kernel firewall is managed elsewhere.
+base_manage_firewall: true
+base_ssh_port: 22

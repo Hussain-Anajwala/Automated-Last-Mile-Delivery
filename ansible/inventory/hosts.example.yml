@@ -1,0 +1,13 @@
+# Copy to inventory/hosts.local.yml (git-ignored) and fill in the real target.
+# The target must be the isolated Ubuntu node (BLOCKERS B4) — never the Windows workstation.
+all:
+  children:
+    lastmile_targets:
+      hosts:
+        lastmile-target:
+          ansible_host: 192.0.2.10          # placeholder (TEST-NET-1); replace with the target address
+          ansible_port: 22
+          ansible_user: deploy               # non-root user with sudo for provisioning
+          ansible_ssh_private_key_file: ~/.ssh/lastmile_target_ed25519
+          # Registry address as seen FROM THE TARGET (differs from localhost:5000 used by Jenkins).
+          lastmile_registry: 192.0.2.1:5000

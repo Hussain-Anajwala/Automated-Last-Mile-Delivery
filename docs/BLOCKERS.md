@@ -40,15 +40,14 @@ Source audit: `docs/evidence/phase-00-audit/environment-audit.md` (2026-10-19).
 - **Success signal:** `wsl -l -v` lists `Ubuntu-24.04` as version 2; `wsl -d Ubuntu-24.04 -- uname -a` succeeds.
 - **Continues meanwhile:** Everything except Phase 3 Ansible spike and Phases 13–14.
 
-## B4 — No isolated Ubuntu target node for Ansible — OPEN (user + teacher decision)
+## B4 — No isolated Ubuntu target node for Ansible — OPEN (user decision + approval; teacher acceptance)
 
-- **Missing:** No VM software is installed, and Windows 11 Home does not include Hyper-V Manager. RAM is limited (see B2).
-- **Options:**
-  - **A (plan's primary):** install VirtualBox and create an Ubuntu Server 24.04 LTS VM (about 2 GB RAM, 20 GB disk on D:), with a host-only/NAT port-forward for SSH. Heavier on RAM.
-  - **B (plan's fallback):** a second, dedicated WSL2 distro (e.g. `Ubuntu-24.04` imported as `lastmile-target`) used only as the Ansible target, reached over SSH. Lighter, but the teacher must accept it as a "clean node".
-- **Why user:** Choosing a target and confirming teacher acceptance; VM installation needs administrator approval.
-- **Success signal:** From WSL Ubuntu, `ssh -i ~/.ssh/<key> <deploy-user>@<target> hostname` returns the target hostname without a password prompt.
-- **Continues meanwhile:** All phases through 12; Ansible playbooks can be written and syntax-checked in Phase 13 before the target exists.
+- **Status 2026-10-19:** Everything that does not need the target is done: roles written, `--syntax-check` passes, `ansible-lint` passes (production profile), control node ready. Phases 13 (execution) and 14 wait for a target.
+- **Facts checked:** WSL 2.6.3; `VirtualMachinePlatform` and `HypervisorPlatform` enabled (VirtualBox can coexist with Hyper-V); no VM software installed; free commit memory 0.5–3.9 GB during work (B7).
+- **Option A — VirtualBox VM (plan's primary):** Ubuntu Server 24.04, 2 vCPU / 2 GB RAM / 20 GB disk on D:, host-only adapter (registry published only on that host-only interface). Strongest "separate node" story. Needs: VirtualBox install (admin prompt), ~2 GB RAM free (close Brave first), Ubuntu install with an SSH key.
+- **Option B — dedicated WSL2 distro `lastmile-target` (plan's fallback, recommended on this machine's memory):** separate root filesystem, own systemd, sshd and Docker Engine; created by Claude with `wsl --import` (no admin) and removable with `wsl --unregister lastmile-target`. Limits: shares the WSL kernel/network stack with Docker Desktop, so ufw stays off on this target (`base_manage_firewall: false`) and the registry must be reachable from WSL. **Needs teacher acceptance as a "clean node".**
+- **What Claude needs:** a reply choosing A or B. For B, also explicit approval to add a WSL distro (it changes WSL configuration). For A, install VirtualBox and create the VM, or ask Claude for exact click-by-click steps.
+- **Success signal:** `bash scripts/ansible-run.sh ansible -m ansible.builtin.ping lastmile_targets` → `pong`.
 
 ## B5 — GitHub CLI not authenticated — OPEN (human action required)
 

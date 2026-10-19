@@ -378,3 +378,36 @@ EXIT CRITERIA:
   - Registry local/private, never publicly exposed: PASS (127.0.0.1:5000 only)
 AUTO-ADVANCE: YES → Phase 13 authoring and static checks; execution against the target BLOCKED (B4)
 ```
+
+```text
+PHASE: 13 — Ansible configuration management
+STATUS: BLOCKED (execution) — specification, inventory template, roles, syntax check and lint PASS
+FILES CHANGED: ansible/{ansible.cfg,site.yml,group_vars,inventory/hosts.example.yml,roles/*}, scripts/ansible-run.sh,
+  docs/ANSIBLE.md (configuration specification), docs/BLOCKERS.md (B4 options)
+COMMANDS EXECUTED WITH EXIT CODES: ansible-playbook --syntax-check (0); ansible-lint 26.10.1 (Passed, production
+  profile, after fixing 16 findings). No run against any host.
+EXIT CRITERIA:
+  - Configuration specification, inventory, variables, roles/templates/handlers: PASS
+  - Syntax check: PASS; check mode and first real run on the isolated target: BLOCKED (B4)
+AUTO-ADVANCE: NO — Phases 13 (execution) and 14 need the target (B4). Phase 15 can only be partially prepared.
+```
+
+```text
+CHECKPOINT 2026-10-19 ~04:50 IST — where to resume
+STATE:
+  - Phases 1, 2, 4, 7, 8, 9, 10, 11 PASS. Phase 12 PASS (workstation target). Phase 3 partial (G7 target pull, G9 SSH).
+  - Phase 5 and 6: implementation PASS; PRs, merges to develop/main and tag v0.1.0 BLOCKED on B5 (gh auth).
+  - Phase 13: authored and statically checked; execution BLOCKED on B4. Phase 14 BLOCKED on B4. Phase 15 NOT STARTED.
+BRANCH STACK (open PRs in this order once gh is authenticated; each into develop, then develop -> main):
+  feature/delivery-create -> feature/delivery-workflow -> test/selenium-journeys -> ci/jenkins-pipeline
+  -> infra/ansible-provisioning (current HEAD). Not for merging: ci/demo-failing-build, demo/conflict-*.
+RUNNING LOCALLY: Jenkins http://127.0.0.1:8090 (ci/jenkins/compose.yaml), registry 127.0.0.1:5000
+  (infra/registry/compose.yaml), app http://127.0.0.1:8088 = localhost:5000/lastmile-delivery:0ac1a53c836f (healthy).
+NEXT ACTIONS:
+  1. After `gh auth login`: open PRs #1..#5 with docs/evidence/phase-05-feature/pull-request.md as the first body;
+     merge in order when checks are green (and a real reviewer has approved, if the teacher requires one);
+     tag v0.1.0 on main after the MVP PRs merge.
+  2. After the B4 decision: create/provision the target, `ansible -m ping`, `--check --diff`, run 1, run 2
+     (expect changed=0), pull of the exact registry tag on the target, health, rollback to the previous tag.
+  3. Phase 15: end-to-end run, final docs, evidence INDEX, viva material.
+```

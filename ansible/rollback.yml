@@ -1,0 +1,32 @@
+# Roll the target back to the release recorded in /opt/lastmile/releases/previous.
+#   bash scripts/ansible-run.sh ansible-playbook rollback.yml
+# Redeploys the previous immutable tag with the same role (pull exact tag, up --wait, readiness and
+# revision checks). Database contents are not rolled back (forward-only migrations; docs/ANSIBLE.md).
+- name: Roll back LastMile to the previous known-good release
+  hosts: lastmile_targets
+  become: true
+  gather_facts: true
+
+  pre_tasks:
+    - name: Read the previous release tag recorded on the target
+      ansible.builtin.slurp:
+        src: /opt/lastmile/releases/previous
+      register: rollback_previous
+
+    - name: Use it as the release to deploy
+      ansible.builtin.set_fact:
+        lastmile_image_tag: "{{ rollback_previous.content | b64decode | trim }}"
+
+    - name: Refuse anything that is not a recorded commit tag
+      ansible.builtin.assert:
+        that:
+          - lastmile_image_tag | regex_search('^[0-9a-f]{12}$')
+        fail_msg: "No valid previous release recorded on {{ inventory_hostname }}"
+        quiet: true
+
+    - name: Announce the rollback target
+      ansible.builtin.debug:
+        msg: "Rolling back to {{ lastmile_image_tag }}"
+
+  roles:
+    - role: lastmile_app
