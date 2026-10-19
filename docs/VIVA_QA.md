@@ -88,9 +88,19 @@ and a current/previous release record.
 
 **How is idempotency designed and proven?**
 Every command task declares `changed_when`; templates and copies only change when content differs;
-the Docker restart is a handler. Proof requires a second run reporting `changed=0` on the real target —
-**not yet done** because the target is pending (B4). Static checks (syntax, lint production profile,
-read-only template validation with a negative control) pass.
+the Docker restart is a handler. On the WSL2 target, run 1 reported `changed=13` and the identical
+second run `changed=0`, with the containers not restarted (`04-run2-idempotency.log`).
+
+**What did running against a real host teach you?**
+It found a defect that syntax checks and lint did not: `regex_search` returns a string, and
+ansible-core 2.21 rejects non-boolean conditionals. The offline test had checked an equivalent rule
+rather than the exact expression; it now checks the identical one.
+
+**Is the WSL2 target a real separate node?**
+It has its own root filesystem, systemd, SSH server and Docker engine, and cannot see Windows drives,
+but it shares the WSL kernel and network stack with Docker Desktop. That is why its firewall is off and
+it uses its own port and Docker address ranges. Whether that satisfies the "clean node" requirement is
+the teacher's decision, which is still pending.
 
 **Why not run Ansible against Windows or the control node itself?**
 The assignment asks for a managed Linux node. The playbook asserts an Ubuntu target, and the
@@ -109,5 +119,6 @@ The findings were public plugin versions; nothing secret leaked. The gate now fa
 scanner errors or a missing scanner, with a 10-check test.
 
 **What is not finished?**
-Ansible execution, idempotency proof and rollback on the managed target (B4); an independent
-second-person PR review if the teacher requires one; any public hosting (none — local only).
+Teacher confirmation that a WSL2 target is acceptable; an independent second-person PR review if the
+teacher requires one; one continuous end-to-end run of the final commit through to the target; any
+public hosting (none — local only).

@@ -41,10 +41,17 @@ docker inspect lastmile-app-1 --format "{{.Config.Image}} {{.Config.User}} {{ind
 git log -1 --format=%H main          # equals the revision label after a main deployment
 ```
 
-## 4. Ansible (2 min)
+## 4. Ansible (3 min) — Ubuntu/WSL terminal
 
-Today: show `ansible/`, `docs/ANSIBLE.md`, the static checks and the read-only validation run.
-After the target exists (B4): run 1, run 2 (`changed=0`), `rollback.yml`.
+```bash
+# separate window, keeps the target running:  wsl -d lastmile-target -u root -- sleep infinity
+bash scripts/wsl-target/run-ansible.sh ansible -m ansible.builtin.ping lastmile_targets
+bash scripts/wsl-target/run-ansible.sh ansible-playbook site.yml -e lastmile_image_tag=0ac1a53c836f   # already deployed: expect changed=0
+bash scripts/wsl-target/run-ansible.sh ansible-playbook rollback.yml
+```
+
+Then show `docs/evidence/phase-13-ansible/target-run-evidence.md` (run 1 vs run 2, rollback, drill)
+and say that the teacher's acceptance of the WSL2 target is pending.
 
 ## 5. Git (1 min)
 

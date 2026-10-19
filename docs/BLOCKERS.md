@@ -40,14 +40,11 @@ Source audit: `docs/evidence/phase-00-audit/environment-audit.md` (2026-10-19).
 - **Success signal:** `wsl -l -v` lists `Ubuntu-24.04` as version 2; `wsl -d Ubuntu-24.04 -- uname -a` succeeds.
 - **Continues meanwhile:** Everything except Phase 3 Ansible spike and Phases 13–14.
 
-## B4 — No isolated Ubuntu target node for Ansible — OPEN (user decision + approval; teacher acceptance)
+## B4 — Isolated Ubuntu target for Ansible — TECHNICALLY RESOLVED 2026-10-19; academic acceptance OPEN (teacher)
 
-- **Status 2026-10-19:** Everything that does not need the target is done: roles written, `--syntax-check` passes, `ansible-lint` passes (production profile), control node ready. Phases 13 (execution) and 14 wait for a target.
-- **Facts checked:** WSL 2.6.3; `VirtualMachinePlatform` and `HypervisorPlatform` enabled (VirtualBox can coexist with Hyper-V); no VM software installed; free commit memory 0.5–3.9 GB during work (B7).
-- **Option A — VirtualBox VM (plan's primary):** Ubuntu Server 24.04, 2 vCPU / 2 GB RAM / 20 GB disk on D:, host-only adapter (registry published only on that host-only interface). Strongest "separate node" story. Needs: VirtualBox install (admin prompt), ~2 GB RAM free (close Brave first), Ubuntu install with an SSH key.
-- **Option B — dedicated WSL2 distro `lastmile-target` (plan's fallback, recommended on this machine's memory):** separate root filesystem, own systemd, sshd and Docker Engine; created by Claude with `wsl --import` (no admin) and removable with `wsl --unregister lastmile-target`. Limits: shares the WSL kernel/network stack with Docker Desktop, so ufw stays off on this target (`base_manage_firewall: false`) and the registry must be reachable from WSL. **Needs teacher acceptance as a "clean node".**
-- **What Claude needs:** a reply choosing A or B. For B, also explicit approval to add a WSL distro (it changes WSL configuration). For A, install VirtualBox and create the VM, or ask Claude for exact click-by-click steps.
-- **Success signal:** `bash scripts/ansible-run.sh ansible -m ansible.builtin.ping lastmile_targets` → `pong`.
+- **Resolution (technical):** with the user's approval, Option B was built: WSL2 distribution `lastmile-target` (decision D18). All six technical acceptance criteria passed: pong; run 1 `changed=13`; deployment healthy with registry-identical digests; run 2 `changed=0`; rollback to the previous release healthy; failed-candidate drill recovered. Evidence: `docs/evidence/phase-13-ansible/target-run-evidence.md`, PR #17.
+- **Still open:** whether the teacher accepts a WSL2 distribution as the "clean node" (B6 Q3). Until then Phases 13–14 are reported as *technically complete, academic acceptance pending*. If a VM is required, Option A in `docs/ANSIBLE_TARGET_SETUP.md` applies (needs VirtualBox and the user's approval).
+- **Operating note:** WSL stops idle distributions; keep `wsl -d lastmile-target -u root -- sleep infinity` running while using the target. The deployed stack restarts automatically when the distribution starts.
 
 ## B5 — GitHub CLI not authenticated — RESOLVED 2026-10-19
 
@@ -79,5 +76,6 @@ Provisional defaults are used until answered; none of them is treated as teacher
   - Expected effect: WSL can no longer grow past 6 GB, and idle page cache is returned to Windows gradually. The measured workload (~2.8 GB used) fits with room for the 3 GiB Jenkins limit plus the app stack.
   - Trade-off: less file cache inside WSL (slower repeated builds); if a future workload needs more than 6 GB it would hit the cap. Applying it requires `wsl --shutdown`, which stops Docker Desktop, Jenkins, the registry and the app until restarted (volumes are kept).
   - Verify: after restart, `wsl -d Ubuntu-24.04 -- free -m` total ≈ 6 GB; rerun one pipeline while sampling host free commit (should stay higher than 1.1 GB).
+- **Measured mitigation without a configuration change (2026-10-19):** dropping the WSL page cache once (`docker run --rm --privileged alpine:3.22 sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'`) raised host free commit from 1.4 GB to 4.3 GB (`vmmemWSL` 7.3 → 4.3 GB). It was used before heavy steps; `autoMemoryReclaim=gradual` in the `.wslconfig` proposal would do this automatically. With Brave closed, free commit stayed between 3.7 and 6.1 GB during this session's work.
 - **Most effective without any change:** close Brave/other heavy apps during pipeline runs.
 

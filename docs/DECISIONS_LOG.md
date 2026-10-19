@@ -117,3 +117,14 @@ Format: ID — date — context — options — decision — rationale — conse
 
 - **Context:** Two WSL VM crashes from commit-limit exhaustion; two executors could run two heavy pipelines at once.
 - **Decision:** `numExecutors: 1` (JCasC). Jenkins data persisted across the container recreation (job history intact).
+
+## D18 — 2026-10-19 — Option B target configuration (user-approved)
+
+- **Context:** The user approved a dedicated WSL2 distribution `lastmile-target` (no VirtualBox; existing distributions, Docker data, PostgreSQL and Jenkins data preserved). Teacher acceptance of WSL2 as the clean node is still pending (B6 Q3).
+- **Decision:** official Ubuntu 24.04 WSL rootfs (GPG-verified checksum) imported into `D:\WSL\lastmile-target`; minimal bootstrap (deploy user, systemd, SSH 127.0.0.1:2222 key-only, no Windows drives/interop). Because the network stack is shared with Docker Desktop and the control node: Nginx on 8089, ufw off, the target's Docker engine on 10.213.0.0/16. Registry `localhost:5000`, verified from the target itself. Secrets in `~/.config/lastmile/target-secrets.env` (mode 600, outside the repo).
+- **Consequences:** a separate root filesystem, init system, SSH server and Docker engine, but not a separate machine — stated in all evidence.
+
+## D19 — 2026-10-19 — Evidence logs are tracked despite `*.log`
+
+- **Context:** `.gitignore` excluded `*.log`, so 15 raw Jenkins logs referenced by Phase 7–12 evidence were never committed (found while committing the Ansible logs).
+- **Decision:** `!docs/evidence/**/*.log`; every evidence log is checked against all known secret values and gitleaks before commit.

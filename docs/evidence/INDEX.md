@@ -18,9 +18,9 @@ image or command result behind it. Repository: https://github.com/Hussain-Anajwa
 | 10 | Continuous testing in Jenkins | Verified | `phase-10-quality-gate/` — #9 red at Selenium gate with nothing packaged/deployed, fix + regression test, #10 green |
 | 11 | Docker image and lifecycle | Verified | `Dockerfile`, `docs/DOCKER.md`, `phase-11-docker/lifecycle-transcript.md` |
 | 12 | Jenkins→Docker CD with local registry | Verified on the workstation | `phase-12-registry/` — digest match pushed vs registry, deploy by registry tag, fault-injected candidate rolled back automatically. Pull by the isolated target: blocked (B4) |
-| 13 | Ansible configuration management | **Blocked (execution)** | Authored and statically verified: `ansible/`, `docs/ANSIBLE.md`, `phase-13-ansible/static-checks.md` (syntax, lint production profile, read-only template validation with negative control). First run on a managed host: not done (B4) |
-| 14 | Provisioning, idempotency, health, rollback on the target | **Blocked** | Prepared: `rollback.yml`, `docs/ANSIBLE_TARGET_SETUP.md`. No target run, no second-run `changed=0`, no target rollback yet (B4). Pipeline-level rollback on the workstation is verified under task 12 |
-| 15 | End-to-end release, documentation, viva | **In progress** | Docs: `docs/SECURITY.md`, `docs/TROUBLESHOOTING.md`, `docs/DEMO_RUNBOOK.md`, `docs/VIVA_QA.md`, `docs/PRESENTATION_OUTLINE.md`. Full end-to-end run including Ansible: pending B4 |
+| 13 | Ansible configuration management | **Technically verified; academic acceptance pending** | `ansible/`, `docs/ANSIBLE.md`, `phase-13-ansible/target-run-evidence.md`: pre-checks, dry run, pong, run 1 (`changed=13`) on the WSL2 target `lastmile-target`, independent verification of packages, account, files and services. The teacher has not yet confirmed WSL2 as an acceptable target (Q3) |
+| 14 | Provisioning, idempotency, health, rollback on the target | **Technically verified; academic acceptance pending** | `phase-13-ansible/`: the target pulled the exact registry images (digests equal), readiness 200, run 2 **`changed=0`**, upgrade → `rollback.yml` → previous release healthy, data preserved, failed-candidate drill recovered (logs `04`–`08`). Same caveat as task 13 (Q3) |
+| 15 | End-to-end release, documentation, viva | **In progress** | Docs: `docs/SECURITY.md`, `docs/TROUBLESHOOTING.md`, `docs/DEMO_RUNBOOK.md`, `docs/VIVA_QA.md`, `docs/PRESENTATION_OUTLINE.md`. Pieces verified separately (commit → Jenkins → registry → workstation deploy; registry → Ansible target). One continuous end-to-end run of the final release commit through to the target is still to be recorded |
 
 ## Cross-cutting evidence
 
@@ -28,5 +28,6 @@ image or command result behind it. Repository: https://github.com/Hussain-Anajwa
 |---|---|
 | Secret handling | `.gitleaks.toml`, `scripts/secret-scan.sh`, `scripts/safe-push.sh`, `scripts/test-secret-gate.sh`; incident record in `docs/IMPLEMENTATION_LOG.md` (2026-10-19 03:32 IST) |
 | Data persistence | Deployed database kept its 6 deliveries / 15 history rows (created 22:15 UTC) across many app redeploys; Jenkins job history survived container recreation (recorded in the implementation log) |
-| Decisions | `docs/DECISIONS_LOG.md` (D1–D17) |
+| Decisions | `docs/DECISIONS_LOG.md` (D1–D19) |
+| Raw logs | All Jenkins and Ansible console logs are committed under `docs/evidence/**` (they were silently excluded by `*.log` until D19) |
 | Open items | `docs/BLOCKERS.md` |

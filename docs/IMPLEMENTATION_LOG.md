@@ -466,3 +466,33 @@ NEXT: on B4 approval follow docs/ANSIBLE_TARGET_SETUP.md (Option B steps 1–5),
   (changed=0), target pull of localhost:5000/<repo>:<sha>, health, rollback.yml; record in phase-13/14 evidence;
   then the end-to-end run for Phase 15 and tag v1.0.0.
 ```
+
+```text
+PHASE: 13 — Ansible configuration management
+PHASE: 14 — Automated provisioning and reliability validation
+STATUS: TECHNICAL ACCEPTANCE CRITERIA PASS on the user-approved WSL2 target `lastmile-target`;
+        ACADEMIC ACCEPTANCE PENDING (the teacher has not confirmed WSL2 as the clean node — B6 Q3).
+        Not marked fully complete until that is resolved.
+SCOPE: Option B creation (GPG-verified Ubuntu rootfs, wsl --import, bootstrap), pre-checks, dry run, run 1,
+  independent verification, run 2 idempotency, upgrade, rollback, failed-candidate drill.
+FILES CHANGED (PR #17, merged eba80872): scripts/wsl-target/{bootstrap-target.sh,run-ansible.sh},
+  ansible/inventory/wsl-target.yml, docker_engine (bip/address pools, check-mode tolerance), lastmile_app (db host,
+  check-mode skips), site.yml/rollback.yml (boolean tag assertion), tests, docs, .gitignore (D19).
+RESULTS (logs in docs/evidence/phase-13-ansible/):
+  pre-checks: syntax 0, lint 0, validate 0 (ok=10 changed=0), negative control 2
+  --check --diff: ok=21 changed=10 failed=0 (after fixing a real regex_search defect and check-mode handling); target unchanged
+  ping: pong
+  run 1 (0ac1a53c836f): ok=25 changed=13 failed=0; verification: packages; docker/containerd active+enabled; lastmile
+    account not in docker group; /opt/lastmile 0750 root:lastmile; .env 0600 root:root; digests = registry digests;
+    readiness via the target's Nginx 200; revision = tag
+  run 2 (same): ok=24 changed=0 failed=0
+  release B (e3b9d31cae5b): ok=25 changed=4 (env, stack, previous, current)
+  rollback.yml: ok=21 changed=4 failed=0 -> 0ac1a53c836f healthy, readiness 200; DB rows from run 1 preserved
+  failed candidate (bad DB host): failed=1, records unchanged; rollback.yml -e lastmile_rollback_record=current -> healthy
+CI: Jenkins infra/ansible-wsl-target #1 aborted (scheduled while Jenkins was starting), #2 failed at git fetch
+  (transient network right after the container started; ls-remote succeeded minutes later), #3 SUCCESS 89 + 8,
+  deploy skipped.
+OTHER: 15 Jenkins evidence logs from Phases 7–12 had never been committed (*.log ignored) — now tracked (D19).
+  Memory: dropping the WSL page cache freed ~3 GB of host commit; Jenkins and the target were stopped when idle.
+  Unchanged: Ubuntu-24.04 distribution, Docker Desktop data, PostgreSQL 16 service, Jenkins data, workstation release.
+```
