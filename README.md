@@ -8,8 +8,10 @@ Ansible pipeline with Selenium quality gates and rollback.
 
 ## Status
 
-Progress is tracked phase by phase in [docs/IMPLEMENTATION_LOG.md](docs/IMPLEMENTATION_LOG.md);
-open user/teacher actions are in [docs/BLOCKERS.md](docs/BLOCKERS.md). Nothing is marked complete
+All 15 teacher tasks have recorded evidence: [docs/evidence/INDEX.md](docs/evidence/INDEX.md). Releases are
+tagged on `main` and deployed by Jenkins (workstation, `http://127.0.0.1:8088`, local only) and by Ansible to the
+dedicated WSL2 target `lastmile-target`. Limitations: [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).
+Progress log: [docs/IMPLEMENTATION_LOG.md](docs/IMPLEMENTATION_LOG.md). Nothing is marked complete
 without recorded evidence ([docs/evidence/](docs/evidence/README.md)).
 
 ## Stack
@@ -42,6 +44,10 @@ Details, Ubuntu/WSL commands and configuration: [docs/SETUP.md](docs/SETUP.md).
 | Problem, scope, acceptance criteria | [docs/PROBLEM_SCOPE.md](docs/PROBLEM_SCOPE.md), [docs/PRD.md](docs/PRD.md) |
 | Backlog, board, user stories, DoD | [docs/backlog.md](docs/backlog.md), [docs/project-board.md](docs/project-board.md), [docs/user-stories.md](docs/user-stories.md) |
 | Architecture, API, topologies | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/API.md](docs/API.md), [docs/TRD.md](docs/TRD.md) |
+| Security notes | [docs/SECURITY.md](docs/SECURITY.md) |
+| Troubleshooting | [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md) |
+| Demo runbook, viva, presentation | [docs/DEMO_RUNBOOK.md](docs/DEMO_RUNBOOK.md), [docs/VIVA_QA.md](docs/VIVA_QA.md), [docs/PRESENTATION_OUTLINE.md](docs/PRESENTATION_OUTLINE.md) |
+| Ansible | [docs/ANSIBLE.md](docs/ANSIBLE.md), [docs/ANSIBLE_TARGET_SETUP.md](docs/ANSIBLE_TARGET_SETUP.md) |
 | Known limitations | [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) |
 | Data model and API contracts | [docs/Backend_Schema.md](docs/Backend_Schema.md) |
 | UI and application flow | [docs/UI_UX_Design.md](docs/UI_UX_Design.md), [docs/App_Flow.md](docs/App_Flow.md) |

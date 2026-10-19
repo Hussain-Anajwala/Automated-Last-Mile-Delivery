@@ -1,4 +1,4 @@
-# Preparing the Ansible Target (BLOCKERS B4)
+# Preparing the Ansible Target (decisions D18, D20)
 
 **Option B was executed on 2026-10-19** after the user's approval (evidence:
 `docs/evidence/phase-13-ansible/target-run-evidence.md`). The teacher's acceptance of a WSL2 target is still

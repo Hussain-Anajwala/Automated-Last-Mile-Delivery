@@ -24,16 +24,16 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T3.5 | Jenkins topology spike (container + Docker access) | T3.4 | Done | Jenkins version + `docker ps` from Jenkins |
 | T3.6 | Headless Selenium spike | T3.3 | Done | headless Chrome run log |
 | T3.7 | Local registry push/pull spike | T3.4 | Done (workstation); target pull in T14 | push + pull log |
-| T3.8 | WSL2 Ansible control node + SSH target spike | — | Partial: control node done; target Blocked (B4) | `ansible -m ping` |
+| T3.8 | WSL2 Ansible control node + SSH target spike | — | Done (WSL2 target, D20) | `ansible -m ping` |
 | T3.9 | Port, memory, disk inventory | — | Done | environment log |
 | T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Done | `mvnw verify` log |
 | T4.2 | Issue / PR templates, CONTRIBUTING | T2.3 | Done | `.github/` |
 | T4.3 | Secret scan and push to origin; create `develop` | T4.1 | Done | scan output, remote refs |
-| T5.1 | Issue: delivery creation | T4 | Blocked (B5) | issue URL (B5) |
+| T5.1 | Issue: delivery creation | T4 | Done (PR #8) | issue URL (B5) |
 | T5.2 | Migration V1 + entities + repositories | T4 | Done | migration test |
 | T5.3 | Creation service + validation + code generator | T5.2 | Done | unit/integration tests |
 | T5.4 | Create form/controller + detail stub | T5.3 | Done | controller tests |
-| T5.5 | PR, self-review checklist, merge | T5.4 | Blocked (B5) | PR URL (B5) |
+| T5.5 | PR, self-review checklist, merge | T5.4 | Done (PR #8) | PR URL (B5) |
 | T6.1 | Security: login/logout, roles, seeded dev accounts | T5 | Done | security tests |
 | T6.2 | List/search/filter/pagination | T5 | Done | repository/controller tests |
 | T6.3 | Edit permitted fields | T5 | Done | tests |
@@ -42,7 +42,7 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T6.6 | REST API v1 + health endpoints | T6.4 | Done | API tests |
 | T6.7 | UI shell, tokens, responsive pass, admin user list | T6.1 | Done | screenshots |
 | T6.8 | Isolated merge-conflict demonstration | T6.2 | Done | conflict transcript |
-| T6.9 | Release tag `v0.1.0` | T6.1–T6.8 | Blocked (B5) | tag |
+| T6.9 | Release tag `v0.1.0` | T6.1–T6.8 | Done (v0.1.0) | tag |
 | T7.1 | Jenkins container with persistent volume, plugins | T3.5 | Done | Jenkins console |
 | T7.2 | Pipeline job from SCM with polling | T7.1 | Done | poll log |
 | T7.3 | Archive JAR + JUnit reports; failing build demo | T7.2 | Done | build logs |
@@ -57,12 +57,12 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T12.1 | Local registry service | T3.7 | Done | catalog |
 | T12.2 | Pipeline: tag by SHA, push after tests, deploy by tag | T10, T12.1 | Done | pipeline log |
 | T13.1 | Config spec, inventory, vars, templates | T3.8 | Done (authoring + static checks) | playbook |
-| T13.2 | Syntax check, check mode, first run | T13.1 | Blocked (B4) | run log |
-| T14.1 | Second run idempotency | T13.2 | Blocked (B4) | run log |
-| T14.2 | Health + rollback to previous tag | T14.1, T12 | Blocked (B4) | rollback log |
-| T15.1 | Full end-to-end run | T1–T14 | Backlog | logs |
-| T15.2 | Final docs, troubleshooting, security, limitations | T15.1 | Backlog | docs |
-| T15.3 | Evidence INDEX, demo runbook, viva Q&A | T15.2 | Backlog | `docs/evidence/INDEX.md` |
+| T13.2 | Syntax check, check mode, first run | T13.1 | Done | run log |
+| T14.1 | Second run idempotency | T13.2 | Done | run log |
+| T14.2 | Health + rollback to previous tag | T14.1, T12 | Done | rollback log |
+| T15.1 | Full end-to-end run | T1–T14 | Ready | logs |
+| T15.2 | Final docs, troubleshooting, security, limitations | T15.1 | In Progress | docs |
+| T15.3 | Evidence INDEX, demo runbook, viva Q&A | T15.2 | In Progress | `docs/evidence/INDEX.md` |
 
 ## Milestone plan (no calendar dates — supply them to add a timeline)
 
