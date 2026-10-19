@@ -47,7 +47,7 @@ deliberately avoided.
 3. **Build and unit/integration tests** — `./mvnw -B -ntp clean verify` (embedded PostgreSQL).
 4. **Selenium quality gate** — five browser journeys in Chromium; JUnit + HTML report + failure screenshots always published.
 5. **Package images** — `lastmile-delivery:<sha>` from the tested JAR and `lastmile-nginx:<sha>`.
-6. **Deploy** (deployment branches, `DEPLOY=true`) — `docker compose up -d --wait` with credentials injected.
+6. **Deploy** (`main` only, `DEPLOY=true`) — `docker compose up -d --wait` with credentials injected.
 7. **Verify deployment** — readiness through Nginx and deployed revision == commit.
 8. **Post** — JUnit always; JAR archived on success; container status and app logs on failure.
 
