@@ -227,3 +227,154 @@ EXIT CRITERIA:
 AUTO-ADVANCE: Phase 10 requires Jenkins (B2) → BLOCKED. Continue with independent Phase 11/12/13 preparation
   (Dockerfile, Compose, Jenkinsfile, Ansible files) that can be written and statically checked without Docker.
 ```
+
+```text
+PHASE: 3 — (update) infrastructure gates re-checked after user set up Docker and Ubuntu
+STATUS: BLOCKED (partial) — G5, G6, G8 now PASS; G7 pending Phase 12; G9 blocked on B4 (target choice)
+EVIDENCE: docs/evidence/phase-03-setup/compatibility-gate.md (updated rows G5–G9)
+
+PHASE: 7 — Jenkins installation and continuous integration job
+STATUS: PASS
+OBJECTIVE / SCOPE: Jenkins in the D10 topology, configured as code; repository connected; SCM-polling trigger;
+  build + unit/integration tests; archived JAR and JUnit results; deliberate red build.
+FILES CHANGED: ci/jenkins/{Dockerfile,plugins.txt,casc.yaml,compose.yaml}, Jenkinsfile,
+  scripts/jenkins-init-env.ps1, docs/CI_JENKINS.md, docs/BLOCKERS.md (B2/B3 resolved, B7 added), mvnw (+x)
+DECISIONS MADE AND SOURCES: multibranch job with 2-minute periodic scan as the SCM-polling trigger (no webhook,
+  Jenkins is localhost-only); plugin pins from the 2.580.1 update center.
+COMMANDS EXECUTED WITH EXIT CODES: docker compose build (1, 1 — WSL VM restarts; 0 on third attempt);
+  docker compose up -d (0); curl checks 403/200; builds via branch indexing (see evidence).
+TESTS AND EXACT RESULTS: Jenkins ci/jenkins-pipeline #1 SUCCESS 86/86; ci/demo-failing-build #1 FAILURE
+  (85 passed, 1 failed, exit code 1); ci/jenkins-pipeline #2 SUCCESS 86/86.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-07-jenkins/jenkins-evidence.md + logs; Jenkins UI at
+  http://127.0.0.1:8090 (local only, not a public URL)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline bf988b0, d21fe6c, 99f1369 (pushed); ci/demo-failing-build dd773f6
+KNOWN ISSUES / SECURITY NOTES: Docker socket = root-equivalent (local only). Commit-limit exhaustion (B7).
+  Built-in node executes builds (no separate agent) — acceptable for a single-user local CI.
+USER ACTIONS REQUIRED: B7 (memory) recommended; B5 for PRs.
+EXIT CRITERIA:
+  - Jenkins installed in the selected topology with reproducible config: PASS
+  - Known commit detected by Jenkins and builds successfully, repeatably: PASS (#1 d21fe6c, #2 99f1369)
+  - Build + unit/integration tests + package; artifact and reports archived: PASS
+  - Deliberately failing build exits non-zero: PASS (exit code 1, FAILURE, no artifact)
+  - No credentials in console logs: PASS (checked)
+AUTO-ADVANCE: YES → Phase 8
+```
+
+```text
+INCIDENT 2026-10-19 03:32 IST — secret-scan step did not gate a push
+WHAT HAPPENED: Commit 9ee4a53 was committed and pushed although gitleaks reported "leaks found: 23". The command
+  piped gitleaks into `tail`, so the pipeline returned tail's exit status (0) and the `&&` chain continued.
+IMPACT: None — all 23 findings were reviewed: public Jenkins plugin identifiers in
+  docs/evidence/phase-07-jenkins/installed-plugins.txt (form `<name>-api:<version>.v<build-hash>`) matching the
+  generic-api-key rule. No credential was committed or pushed. Full-history scan with the reviewed allowlist: 0 findings.
+FIX: .gitleaks.toml (default rules + one-path allowlist for that file); scripts/secret-scan.sh returns gitleaks'
+  exit status and is used as `scripts/secret-scan.sh staged && git commit …` without pipes. Verified: planted
+  random key → staged exit 1, tree exit 1; removed → exit 0. Tree mode ignores only git-ignored files
+  (ci/jenkins/.env legitimately holds the local Jenkins password).
+```
+
+```text
+PHASE: 8 — Pipeline as code and server deployment
+STATUS: PASS
+OBJECTIVE / SCOPE: Jenkinsfile with checkout, parameter validation, build/test, image packaging, deployment and
+  verification; ≥1 parameter; Nginx reverse proxy; runtime secrets; local deployed URL.
+FILES CHANGED: Jenkinsfile, Dockerfile, .dockerignore, deploy/compose.yaml, deploy/nginx/{Dockerfile,default.conf},
+  ci/jenkins/casc.yaml (credentials), scripts/jenkins-init-env.ps1, docs/DEPLOYMENT.md, docs/CI_JENKINS.md
+DECISIONS MADE AND SOURCES: Images built from the tested JAR (build once, promote); Nginx config baked into an
+  image (Docker-outside-of-Docker bind mounts resolve on the host); deploy only on listed branches; verification
+  from inside the Nginx container because the published port is bound to the Windows host loopback.
+COMMANDS EXECUTED WITH EXIT CODES: local image build (0); compose config checks (0; guards fail as designed);
+  Jenkins recreate with credentials (0); builds #5 SUCCESS, #6 FAILURE (intended), #7 SUCCESS.
+TESTS AND EXACT RESULTS: build #5: 86/86, all three containers healthy, readiness UP via Nginx, deployed
+  revision == commit 3af9df95d0b1. Host: readiness 200, login 200, redirect keeps port 8088.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-08-deploy/ (logs, screenshots, deploy-evidence.md);
+  local URL http://127.0.0.1:8088 (not public)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline 3af9df9 (pushed)
+KNOWN ISSUES / SECURITY NOTES: deployment target is Docker Desktop on the workstation; the isolated Ubuntu
+  target comes in Phases 13–14. Rollback automation comes in Phases 12/14.
+USER ACTIONS REQUIRED: none for this phase
+EXIT CRITERIA:
+  - Jenkinsfile with checkout/build/test/package/deploy/health stages: PASS
+  - ≥1 parameterized environment setting with validation: PASS (HTTP_PORT, DEPLOY_PROFILE, DEPLOY; #6/#7)
+  - Deployed behind Nginx, app port private, secrets at runtime: PASS
+  - Health/readiness verified and deployed version captured: PASS
+  - Failed build/tests do not deploy: PASS (#6 skipped all later stages, running app unchanged);
+    test-failure-specific proof follows in Phase 10 (Selenium gate)
+AUTO-ADVANCE: YES → Phase 10 (Phase 9 already PASS)
+```
+
+```text
+PHASE: 10 — Continuous testing in Jenkins
+STATUS: PASS
+OBJECTIVE / SCOPE: Selenium stage in the pipeline with published reports; failed Selenium blocks deployment;
+  deliberate defect → red; fix with regression test → green.
+FILES CHANGED: Jenkinsfile (Selenium quality gate stage), templates/deliveries/detail.html (defect + fix),
+  WebAuthorizationTest (regression), docs/CI_JENKINS.md, evidence
+DECISIONS MADE AND SOURCES: --no-sandbox for Chromium inside the unprivileged Jenkins container (browser visits
+  only the local test app); defect chosen to be invisible to MockMvc so only the browser gate can catch it.
+COMMANDS EXECUTED WITH EXIT CODES: Jenkins builds #8 SUCCESS, #9 FAILURE (intended), #10 SUCCESS;
+  local regression test with defect exit 1, after fix mvnw verify exit 0 (87 tests).
+TESTS AND EXACT RESULTS: see docs/evidence/phase-10-quality-gate/quality-gate-evidence.md
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-10-quality-gate/
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline 62d40a3, 7f3a6e4 (defect), eb87044 (fix)
+KNOWN ISSUES / SECURITY NOTES: Jenkins HTML publisher applies its default CSP, so the report renders unstyled.
+USER ACTIONS REQUIRED: none
+EXIT CRITERIA:
+  - Selenium suite runs in Jenkins with published reports: PASS (#8, #10)
+  - Reports/screenshots archived even on failure: PASS (#9 artifacts)
+  - Failed Selenium test stops deployment: PASS (#9 skipped package/deploy; deployment unchanged)
+  - Deliberate defect, failed gate, fix with regression test, green rerun: PASS
+  - Defect removed before release: PASS (eb87044)
+AUTO-ADVANCE: YES → Phase 11
+```
+
+```text
+PHASE: 11 — Docker image and container lifecycle
+STATUS: PASS
+OBJECTIVE / SCOPE: Secure multi-stage Dockerfile, non-root, healthcheck, .dockerignore, runtime configuration,
+  build/tag/run/inspect/logs/stop/start/restart/remove with a real transcript.
+FILES CHANGED: Dockerfile, .dockerignore (Phase 8 commit 3af9df9), scripts/docker-lifecycle-demo.sh, docs/DOCKER.md,
+  docs/evidence/phase-11-docker/lifecycle-transcript.md
+DECISIONS MADE AND SOURCES: package the tested JAR (build once, promote); layered extraction; JRE Alpine base;
+  readiness-based HEALTHCHECK (TRD §2: no misleading "healthy").
+COMMANDS EXECUTED WITH EXIT CODES: bash scripts/docker-lifecycle-demo.sh → exit 0 (all steps in transcript).
+TESTS AND EXACT RESULTS: container healthy after run/start/restart; readiness 200; with DB stopped readiness 503
+  and liveness 200; inspect: user 10001:10001, read-only rootfs, CapDrop ALL, port 127.0.0.1:18081, revision label
+  = commit; image 435da907d9bc, 405MB on disk; demo resources removed, deployed stack untouched.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-11-docker/lifecycle-transcript.md
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline (this commit)
+KNOWN ISSUES / SECURITY NOTES: image size dominated by the JRE base (~212MB); jlink-trimmed runtime is future work.
+USER ACTIONS REQUIRED: none
+EXIT CRITERIA:
+  - Secure, maintainable Dockerfile (multi-stage, non-root, healthcheck, .dockerignore): PASS
+  - Traceable tag; runtime config, no secrets in layers: PASS
+  - Build/tag/run/inspect/logs/stop/start/restart/remove demonstrated: PASS
+  - Clean image starts and reaches readiness with documented configuration: PASS
+AUTO-ADVANCE: YES → Phase 12
+```
+
+```text
+PHASE: 12 — Jenkins-Docker continuous deployment with a local registry
+STATUS: PASS for the workstation deployment target; target-node pull pending Phase 14 (B4)
+OBJECTIVE / SCOPE: versioned images pushed to a local registry only after all gates, digest-verified, deployed by
+  explicit tag pulled from the registry, last-known-good recorded, automatic rollback on unhealthy candidates.
+FILES CHANGED: infra/registry/compose.yaml, Jenkinsfile (publish + deploy + rollback + FAULT_INJECTION),
+  deploy/compose.yaml (LASTMILE_DB_HOST), ci/jenkins/compose.yaml (registry network), docs/REGISTRY.md, evidence
+DECISIONS MADE AND SOURCES: identity by digest because registry names differ per namespace (risk R2);
+  rollback restores the release that was running before the deploy (immutable tag in the registry).
+COMMANDS EXECUTED WITH EXIT CODES: registry up (0); daemon push to localhost:5000 (0); Jenkins builds #13 SUCCESS,
+  #14 ABORTED (deliberate), #15 FAILURE with ROLLBACK SUCCEEDED (deliberate drill).
+TESTS AND EXACT RESULTS: see docs/evidence/phase-12-registry/registry-evidence.md
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-12-registry/ (registry served only on http://127.0.0.1:5000)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline e13d79d, 881a67f
+KNOWN ISSUES / SECURITY NOTES: registry has no auth/TLS — loopback only. Rollback restores the image and its
+  configuration but not database contents (forward-only migrations; see Phase 14 notes).
+USER ACTIONS REQUIRED: B4 (target) for the target-side pull
+EXIT CRITERIA:
+  - Versioned image built and pushed only after mandatory tests: PASS
+  - Registry push + pull of the exact tag, digest verified: PASS (workstation daemon); target node: BLOCKED (B4)
+  - Deploy by explicit immutable tag; last known good retained: PASS
+  - Health check after deploy; failed candidate restored to previous release: PASS (#15)
+  - Registry local/private, never publicly exposed: PASS (127.0.0.1:5000 only)
+AUTO-ADVANCE: YES → Phase 13 authoring and static checks; execution against the target BLOCKED (B4)
+```

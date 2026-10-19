@@ -20,4 +20,9 @@ map will be `docs/evidence/INDEX.md` (Phase 15).
 | 4 — Repository | [phase-04-repo/repository-init.md](phase-04-repo/repository-init.md) |
 | 5 — First feature | [phase-05-feature/feature-evidence.md](phase-05-feature/feature-evidence.md), [pull-request.md](phase-05-feature/pull-request.md) |
 | 6 — MVP | [phase-06-mvp/acceptance.md](phase-06-mvp/acceptance.md), [merge-conflict-transcript.md](phase-06-mvp/merge-conflict-transcript.md), [screenshots/](phase-06-mvp/screenshots/) |
+| 7 — Jenkins CI | [phase-07-jenkins/jenkins-evidence.md](phase-07-jenkins/jenkins-evidence.md) |
+| 8 — Deployment | [phase-08-deploy/deploy-evidence.md](phase-08-deploy/deploy-evidence.md) |
 | 9 — Selenium | [phase-09-selenium/selenium-evidence.md](phase-09-selenium/selenium-evidence.md) |
+| 10 — Quality gate | [phase-10-quality-gate/quality-gate-evidence.md](phase-10-quality-gate/quality-gate-evidence.md) |
+| 11 — Docker | [phase-11-docker/lifecycle-transcript.md](phase-11-docker/lifecycle-transcript.md) |
+| 12 — Registry/CD | [phase-12-registry/registry-evidence.md](phase-12-registry/registry-evidence.md) |

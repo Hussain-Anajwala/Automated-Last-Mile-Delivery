@@ -1,7 +1,10 @@
 package com.lastmile.selenium;
 
+import java.io.File;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 /**
@@ -11,8 +14,9 @@ import org.openqa.selenium.chrome.ChromeOptions;
  *   <li>{@code selenium.headless} (default true)</li>
  *   <li>{@code selenium.chrome.binary} — path to Chrome/Chromium when not on the default path</li>
  *   <li>{@code selenium.noSandbox} — needed for Chromium inside some containers</li>
+ *   <li>{@code selenium.chromedriver} — explicit driver path (e.g. Debian's {@code /usr/bin/chromedriver});
+ *       otherwise Selenium Manager resolves a matching driver</li>
  * </ul>
- * The driver binary is resolved by Selenium Manager unless {@code webdriver.chrome.driver} is set.
  */
 final class BrowserFactory {
 
@@ -20,6 +24,14 @@ final class BrowserFactory {
     }
 
     static WebDriver chrome() {
+        String driverPath = System.getProperty("selenium.chromedriver", "");
+        ChromeDriverService service = driverPath.isBlank()
+                ? ChromeDriverService.createDefaultService()
+                : new ChromeDriverService.Builder().usingDriverExecutable(new File(driverPath)).build();
+        return new ChromeDriver(service, options());
+    }
+
+    private static ChromeOptions options() {
         ChromeOptions options = new ChromeOptions();
         if (Boolean.parseBoolean(System.getProperty("selenium.headless", "true"))) {
             options.addArguments("--headless=new");
@@ -33,6 +45,6 @@ final class BrowserFactory {
         if (Boolean.parseBoolean(System.getProperty("selenium.noSandbox", "false"))) {
             options.addArguments("--no-sandbox");
         }
-        return new ChromeDriver(options);
+        return options;
     }
 }

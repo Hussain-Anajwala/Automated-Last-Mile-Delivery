@@ -1,0 +1,7 @@
+# gitleaks configuration: default rules plus a narrow, reviewed allowlist.
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Public Jenkins plugin identifiers (form <name>-api:<version>.v<build-hash>) match generic-api-key; reviewed 2026-10-19, no secrets"
+paths = ['''^docs/evidence/phase-07-jenkins/installed-plugins\.txt$''']

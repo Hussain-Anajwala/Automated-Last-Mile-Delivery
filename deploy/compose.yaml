@@ -1,0 +1,69 @@
+# Application stack: Nginx (published) -> app (internal) -> PostgreSQL (internal).
+#
+# Images are selected by explicit, immutable tags (no "latest"):
+#   LASTMILE_IMAGE / LASTMILE_NGINX_IMAGE   e.g. localhost:5000/lastmile-delivery
+#   LASTMILE_IMAGE_TAG                      e.g. the 12-character commit SHA
+# Secrets come from the environment (Jenkins credentials or a git-ignored .env), never from Git.
+name: lastmile
+
+services:
+  db:
+    image: postgres:17.11-alpine3.24
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${LASTMILE_DB_NAME:-lastmile}
+      POSTGRES_USER: ${LASTMILE_DB_USER:-lastmile}
+      POSTGRES_PASSWORD: ${LASTMILE_DB_PASSWORD:?LASTMILE_DB_PASSWORD must be set}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    networks:
+      - backend
+
+  app:
+    image: ${LASTMILE_IMAGE:-localhost:5000/lastmile-delivery}:${LASTMILE_IMAGE_TAG:?LASTMILE_IMAGE_TAG must be set}
+    restart: unless-stopped
+    environment:
+      # LASTMILE_DB_HOST defaults to the stack's own database service.
+      LASTMILE_DB_URL: jdbc:postgresql://${LASTMILE_DB_HOST:-db}:5432/${LASTMILE_DB_NAME:-lastmile}
+      LASTMILE_DB_USER: ${LASTMILE_DB_USER:-lastmile}
+      LASTMILE_DB_PASSWORD: ${LASTMILE_DB_PASSWORD:?LASTMILE_DB_PASSWORD must be set}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
+      LASTMILE_DEMO_PASSWORD: ${LASTMILE_DEMO_PASSWORD:-}
+    depends_on:
+      db:
+        condition: service_healthy
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 768m
+    networks:
+      - backend
+      - frontend
+
+  nginx:
+    image: ${LASTMILE_NGINX_IMAGE:-localhost:5000/lastmile-nginx}:${LASTMILE_IMAGE_TAG:?LASTMILE_IMAGE_TAG must be set}
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${LASTMILE_HTTP_PORT:-8088}:80"
+    depends_on:
+      app:
+        condition: service_healthy
+    networks:
+      - frontend
+
+networks:
+  frontend: {}
+  backend:
+    internal: true   # the database is never reachable from outside the stack
+
+volumes:
+  pgdata: {}
