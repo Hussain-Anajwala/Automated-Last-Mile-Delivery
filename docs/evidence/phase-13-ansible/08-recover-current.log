@@ -1,0 +1,71 @@
+# 2026-10-19T02:38:13Z ansible-playbook rollback.yml -e lastmile_rollback_record=current
+
+PLAY [Roll back LastMile to the previous known-good release] *******************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lastmile-target]
+
+TASK [Choose which recorded release to restore] ********************************
+ok: [lastmile-target]
+
+TASK [Read the recorded release tag on the target] *****************************
+ok: [lastmile-target]
+
+TASK [Use it as the release to deploy] *****************************************
+ok: [lastmile-target]
+
+TASK [Refuse anything that is not a recorded commit tag] ***********************
+ok: [lastmile-target]
+
+TASK [Announce the rollback target] ********************************************
+ok: [lastmile-target] => 
+    msg: Rolling back to 0ac1a53c836f
+
+TASK [lastmile_app : Require deployment secrets from the control node environment or vault] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Create the application group] *****************************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Create the application user (no login shell, no password, no docker group)] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Create application directories] ***************************
+ok: [lastmile-target] => (item={'path': '/opt/lastmile', 'mode': '0750'})
+ok: [lastmile-target] => (item={'path': '/opt/lastmile/releases', 'mode': '0750'})
+
+TASK [lastmile_app : Install the Compose definition (same file the Jenkins pipeline uses)] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Write runtime configuration including secrets] ************
+changed: [lastmile-target]
+
+TASK [lastmile_app : Read the currently deployed release] **********************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Remember the current release] *****************************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Pull the release images from the registry (exact tag)] ****
+ok: [lastmile-target]
+
+TASK [lastmile_app : Start or update the stack and wait until every service is healthy] ***
+changed: [lastmile-target]
+
+TASK [lastmile_app : Verify readiness through Nginx on the target] *************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Verify the deployed revision matches the requested image tag] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Record the current release] *******************************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Report the deployed release] ******************************
+ok: [lastmile-target] => 
+    msg: 'LastMile 0ac1a53c836f healthy on lastmile-target (previous: 0ac1a53c836f)'
+
+PLAY RECAP *********************************************************************
+lastmile-target            : ok=20   changed=2    unreachable=0    failed=0    skipped=1    rescued=0    ignored=0   
+
+# exit code: 0

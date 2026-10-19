@@ -1,0 +1,681 @@
+Branch indexing
+ > git rev-parse --resolve-git-dir /var/jenkins_home/caches/git-91c2f60bf9931faa0683b9919e6efdd2/.git # timeout=10
+Setting origin to https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git
+ > git config remote.origin.url https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git config --get remote.origin.url # timeout=10
+ > git fetch --no-tags --force --progress -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/build/project-skeleton
+Seen branch in repository origin/ci/demo-failing-build
+Seen branch in repository origin/ci/deploy-from-main
+Seen branch in repository origin/ci/jenkins-pipeline
+Seen branch in repository origin/ci/secret-gate-hardening
+Seen branch in repository origin/demo/conflict-a
+Seen branch in repository origin/demo/conflict-b
+Seen branch in repository origin/demo/conflict-base
+Seen branch in repository origin/develop
+Seen branch in repository origin/docs/environment-audit
+Seen branch in repository origin/docs/phase-01-scope
+Seen branch in repository origin/docs/phase-02-agile
+Seen branch in repository origin/docs/phase-03-architecture
+Seen branch in repository origin/feature/delivery-create
+Seen branch in repository origin/feature/delivery-workflow
+Seen branch in repository origin/infra/ansible-provisioning
+Seen branch in repository origin/main
+Seen branch in repository origin/test/selenium-journeys
+Seen 18 remote branches
+Obtained Jenkinsfile from 7af50fe2d28b8d2edb55e05bbe7384b72505db10
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Still waiting to schedule task
+Waiting for next available executor
+Running on Jenkins in /var/jenkins_home/workspace/lastmile-delivery_develop
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+Cloning the remote Git repository
+Cloning with configured refspecs honoured and without tags
+Cloning repository https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git
+ > git init /var/jenkins_home/workspace/lastmile-delivery_develop # timeout=10
+Fetching upstream changes from https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --no-tags --force --progress -- https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git config remote.origin.url https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git # timeout=10
+ > git config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+Avoid second fetch
+Checking out Revision 7af50fe2d28b8d2edb55e05bbe7384b72505db10 (develop)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 7af50fe2d28b8d2edb55e05bbe7384b72505db10 # timeout=10
+Commit message: "Merge pull request #14 from Hussain-Anajwala/ci/deploy-from-main"
+First time build. Skipping changelog.
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-10-19T01:50:27.794Z] Timeout set to expire in 1 hr 0 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+[2026-10-19T01:50:29.100Z] Selected Git installation does not exist. Using Default
+[2026-10-19T01:50:29.100Z] The recommended git tool is: NONE
+[2026-10-19T01:50:29.100Z] No credentials specified
+[2026-10-19T01:50:29.100Z]  > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/lastmile-delivery_develop/.git # timeout=10
+[2026-10-19T01:50:29.105Z] Fetching changes from the remote Git repository
+[2026-10-19T01:50:29.108Z]  > git config remote.origin.url https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git # timeout=10
+[2026-10-19T01:50:29.113Z] Fetching without tags
+[2026-10-19T01:50:29.113Z] Fetching upstream changes from https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git
+[2026-10-19T01:50:29.113Z]  > git --version # timeout=10
+[2026-10-19T01:50:29.119Z]  > git --version # 'git version 2.47.3'
+[2026-10-19T01:50:29.119Z]  > git fetch --no-tags --force --progress -- https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-10-19T01:50:29.795Z] Checking out Revision 7af50fe2d28b8d2edb55e05bbe7384b72505db10 (develop)
+[2026-10-19T01:50:29.795Z]  > git config core.sparsecheckout # timeout=10
+[2026-10-19T01:50:29.801Z]  > git checkout -f 7af50fe2d28b8d2edb55e05bbe7384b72505db10 # timeout=10
+[2026-10-19T01:50:29.865Z] Commit message: "Merge pull request #14 from Hussain-Anajwala/ci/deploy-from-main"
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-10-19T01:50:31.198Z] + git rev-parse --short=12 HEAD
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] echo
+[2026-10-19T01:50:32.589Z] Building develop at 7af50fe2d28b8d2edb55e05bbe7384b72505db10 (image tag 7af50fe2d28b)
+[Pipeline] sh
+[2026-10-19T01:50:33.122Z] + java -version
+[2026-10-19T01:50:33.122Z] + head -1
+[2026-10-19T01:50:33.122Z] openjdk version "21.0.12.1" 2026-08-18 LTS
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Validate parameters)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-10-19T01:50:35.243Z] Parameters: DEPLOY_PROFILE=demo, HTTP_PORT=8088, DEPLOY=true, FAULT_INJECTION=none
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build and unit/integration tests)
+[Pipeline] sh
+[2026-10-19T01:50:37.481Z] + ./mvnw -B -ntp clean verify
+[2026-10-19T01:50:38.825Z] [INFO] Scanning for projects...
+[2026-10-19T01:50:39.376Z] [INFO] 
+[2026-10-19T01:50:39.376Z] [INFO] -------------------< com.lastmile:lastmile-delivery >-------------------
+[2026-10-19T01:50:39.376Z] [INFO] Building Automated Last-Mile Delivery Management Platform 0.1.0-SNAPSHOT
+[2026-10-19T01:50:39.376Z] [INFO]   from pom.xml
+[2026-10-19T01:50:39.376Z] [INFO] --------------------------------[ jar ]---------------------------------
+[2026-10-19T01:50:39.927Z] [INFO] 
+[2026-10-19T01:50:39.927Z] [INFO] --- clean:3.5.0:clean (default-clean) @ lastmile-delivery ---
+[2026-10-19T01:50:39.927Z] [INFO] 
+[2026-10-19T01:50:39.927Z] [INFO] --- resources:3.5.0:resources (default-resources) @ lastmile-delivery ---
+[2026-10-19T01:50:40.177Z] [INFO] Copying 1 resource from src/main/resources to target/classes
+[2026-10-19T01:50:40.177Z] [INFO] Copying 15 resources from src/main/resources to target/classes
+[2026-10-19T01:50:40.177Z] [INFO] 
+[2026-10-19T01:50:40.177Z] [INFO] --- compiler:3.15.0:compile (default-compile) @ lastmile-delivery ---
+[2026-10-19T01:50:40.177Z] [INFO] Recompiling the module because of changed source code.
+[2026-10-19T01:50:40.177Z] [INFO] Compiling 36 source files with javac [debug parameters release 21] to target/classes
+[2026-10-19T01:50:42.039Z] [INFO] 
+[2026-10-19T01:50:42.040Z] [INFO] --- resources:3.5.0:testResources (default-testResources) @ lastmile-delivery ---
+[2026-10-19T01:50:42.040Z] [INFO] Copying 1 resource from src/test/resources to target/test-classes
+[2026-10-19T01:50:42.040Z] [INFO] 
+[2026-10-19T01:50:42.040Z] [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ lastmile-delivery ---
+[2026-10-19T01:50:42.040Z] [INFO] Recompiling the module because of changed dependency.
+[2026-10-19T01:50:42.040Z] [INFO] Compiling 27 source files with javac [debug parameters release 21] to target/test-classes
+[2026-10-19T01:50:43.902Z] [INFO] 
+[2026-10-19T01:50:43.902Z] [INFO] --- surefire:3.5.6:test (default-test) @ lastmile-delivery ---
+[2026-10-19T01:50:43.902Z] [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[2026-10-19T01:50:43.902Z] [INFO] 
+[2026-10-19T01:50:43.902Z] [INFO] -------------------------------------------------------
+[2026-10-19T01:50:43.902Z] [INFO]  T E S T S
+[2026-10-19T01:50:43.902Z] [INFO] -------------------------------------------------------
+[2026-10-19T01:50:44.813Z] [INFO] Running com.lastmile.api.DeliveryApiTest
+[2026-10-19T01:50:45.364Z] 01:50:44.983 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lastmile.api.DeliveryApiTest]: DeliveryApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:50:45.364Z] 01:50:45.132 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.api.DeliveryApiTest
+[2026-10-19T01:50:45.615Z] 
+[2026-10-19T01:50:45.615Z]   .   ____          _            __ _ _
+[2026-10-19T01:50:45.615Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-19T01:50:45.615Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-19T01:50:45.615Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-19T01:50:45.615Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-19T01:50:45.615Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-19T01:50:45.615Z] 
+[2026-10-19T01:50:45.615Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-19T01:50:45.615Z] 
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.612Z  INFO 9940 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : Detected a Linux x86_64 system
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.628Z  INFO 9940 --- [lastmile-delivery] [           main] .z.t.d.p.e.DefaultPostgresBinaryResolver : Detected distribution: 'Debian'
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.630Z  INFO 9940 --- [lastmile-delivery] [           main] .z.t.d.p.e.DefaultPostgresBinaryResolver : System specific postgres binaries found: 'postgres-linux-x86_64.txz'
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.690Z  INFO 9940 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : Postgres binaries at /tmp/embedded-pg/PG-16c5707c09eef4783fc1cb48f11a526d
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.708Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : The files belonging to this database system will be owned by user "jenkins".
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.708Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : This user must also own the server process.
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.708Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.708Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : The database cluster will be initialized with locale "C.UTF-8".
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.708Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : The default text search configuration will be set to "english".
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.708Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.708Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : Data page checksums are disabled.
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.709Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.709Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : fixing permissions on existing directory /tmp/epg16416273995144908603 ... ok
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.715Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : creating subdirectories ... ok
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.716Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting dynamic shared memory implementation ... posix
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.737Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default "max_connections" ... 100
+[2026-10-19T01:50:45.866Z] 2026-10-19T01:50:45.766Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default "shared_buffers" ... 128MB
+[2026-10-19T01:50:46.116Z] 2026-10-19T01:50:45.796Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default time zone ... Etc/UTC
+[2026-10-19T01:50:46.116Z] 2026-10-19T01:50:45.797Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : creating configuration files ... ok
+[2026-10-19T01:50:46.116Z] 2026-10-19T01:50:46.043Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : running bootstrap script ... ok
+[2026-10-19T01:50:46.667Z] 2026-10-19T01:50:46.558Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : performing post-bootstrap initialization ... ok
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.320Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : syncing data to disk ... ok
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.321Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.321Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : Success. You can now start the database server using:
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.321Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.322Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      :     /tmp/embedded-pg/PG-16c5707c09eef4783fc1cb48f11a526d/bin/pg_ctl -D /tmp/epg16416273995144908603 -l logfile start
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.322Z  INFO 9940 --- [lastmile-delivery] [nitdb:pid(9982)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.322Z  INFO 9940 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : 708faaa6-4c62-417d-8c15-db6d13e87398 initdb completed in 00:00:41.499
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.334Z  INFO 9940 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : 708faaa6-4c62-417d-8c15-db6d13e87398 postmaster started as Process[pid=10084, exitValue="not exited"] on port 33205.  Waiting up to PT10S for server startup to finish.
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.370Z  INFO 9940 --- [lastmile-delivery] [gres:pid(10084)] i.z.t.d.p.embedded.EmbeddedPostgres      : waiting for server to start....2026-10-19 01:51:27.369 UTC [10088] LOG:  starting PostgreSQL 17.11 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0, 64-bit
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.370Z  INFO 9940 --- [lastmile-delivery] [gres:pid(10084)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:51:27.370 UTC [10088] LOG:  listening on IPv6 address "::1", port 33205
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.370Z  INFO 9940 --- [lastmile-delivery] [gres:pid(10084)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:51:27.370 UTC [10088] LOG:  listening on IPv4 address "127.0.0.1", port 33205
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.370Z  INFO 9940 --- [lastmile-delivery] [gres:pid(10084)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:51:27.370 UTC [10088] LOG:  listening on Unix socket "/tmp/.s.PGSQL.33205"
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.372Z  INFO 9940 --- [lastmile-delivery] [gres:pid(10084)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:51:27.372 UTC [10091] LOG:  database system was shut down at 2026-10-19 01:50:46 UTC
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.376Z  INFO 9940 --- [lastmile-delivery] [gres:pid(10084)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:51:27.376 UTC [10088] LOG:  database system is ready to accept connections
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.442Z  INFO 9940 --- [lastmile-delivery] [gres:pid(10084)] i.z.t.d.p.embedded.EmbeddedPostgres      :  done
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.442Z  INFO 9940 --- [lastmile-delivery] [gres:pid(10084)] i.z.t.d.p.embedded.EmbeddedPostgres      : server started
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.540Z  INFO 9940 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : 708faaa6-4c62-417d-8c15-db6d13e87398 postmaster startup finished in 00:00:00.209
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.545Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.api.DeliveryApiTest         : Starting DeliveryApiTest using Java 21.0.12.1 with PID 9940 (started by jenkins in /var/jenkins_home/workspace/lastmile-delivery_develop)
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:27.546Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.api.DeliveryApiTest         : The following 1 profile is active: "test"
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:28.156Z  INFO 9940 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:28.231Z  INFO 9940 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 62 ms. Found 3 JPA repository interfaces.
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.176Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.193Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@4b61e97
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.195Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.223Z  INFO 9940 --- [lastmile-delivery] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:33205/postgres?user=postgres (PostgreSQL 17.11)
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.291Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.295Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.019s)
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.356Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.461Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.476Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - core schema"
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.510Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.018s)
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.639Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:29.693Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:30.112Z  INFO 9940 --- [lastmile-delivery] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:30.186Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+[2026-10-19T01:51:33.310Z] 	Database JDBC URL [jdbc:postgresql://localhost:33205/postgres?user=postgres]
+[2026-10-19T01:51:33.310Z] 	Database driver: PostgreSQL JDBC Driver
+[2026-10-19T01:51:33.310Z] 	Database dialect: PostgreSQLDialect
+[2026-10-19T01:51:33.310Z] 	Database version: 17.11
+[2026-10-19T01:51:33.310Z] 	Default catalog/schema: postgres/public
+[2026-10-19T01:51:33.310Z] 	Autocommit mode: undefined/unknown
+[2026-10-19T01:51:33.310Z] 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+[2026-10-19T01:51:33.310Z] 	JDBC fetch size: none
+[2026-10-19T01:51:33.310Z] 	Pool: DataSourceConnectionProvider
+[2026-10-19T01:51:33.310Z] 	Minimum pool size: undefined/unknown
+[2026-10-19T01:51:33.310Z] 	Maximum pool size: undefined/unknown
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:31.165Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:31.208Z  INFO 9940 --- [lastmile-delivery] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:31.316Z  INFO 9940 --- [lastmile-delivery] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+[2026-10-19T01:51:33.310Z] 2026-10-19T01:51:32.568Z  INFO 9940 --- [lastmile-delivery] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
+[2026-10-19T01:51:33.561Z] 2026-10-19T01:51:33.422Z  INFO 9940 --- [lastmile-delivery] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+[2026-10-19T01:51:33.561Z] 2026-10-19T01:51:33.423Z  INFO 9940 --- [lastmile-delivery] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+[2026-10-19T01:51:33.561Z] 2026-10-19T01:51:33.428Z  INFO 9940 --- [lastmile-delivery] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 5 ms
+[2026-10-19T01:51:33.812Z] 2026-10-19T01:51:33.577Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.api.DeliveryApiTest         : Started DeliveryApiTest in 48.301 seconds (process running for 49.756)
+[2026-10-19T01:51:33.812Z] Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+[2026-10-19T01:51:34.363Z] WARNING: A Java agent has been loaded dynamically (/var/jenkins_home/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.11/byte-buddy-agent-1.18.11.jar)
+[2026-10-19T01:51:34.363Z] WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+[2026-10-19T01:51:34.363Z] WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+[2026-10-19T01:51:34.363Z] WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[2026-10-19T01:51:38.486Z] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 53.03 s -- in com.lastmile.api.DeliveryApiTest
+[2026-10-19T01:51:38.486Z] [INFO] Running com.lastmile.SchemaConstraintsTest
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:37.797Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.SchemaConstraintsTest]: SchemaConstraintsTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:37.805Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.SchemaConstraintsTest
+[2026-10-19T01:51:38.486Z] 
+[2026-10-19T01:51:38.486Z]   .   ____          _            __ _ _
+[2026-10-19T01:51:38.486Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-19T01:51:38.486Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-19T01:51:38.486Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-19T01:51:38.486Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-19T01:51:38.486Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-19T01:51:38.486Z] 
+[2026-10-19T01:51:38.486Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-19T01:51:38.486Z] 
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:37.840Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.SchemaConstraintsTest       : Starting SchemaConstraintsTest using Java 21.0.12.1 with PID 9940 (started by jenkins in /var/jenkins_home/workspace/lastmile-delivery_develop)
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:37.840Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.SchemaConstraintsTest       : The following 1 profile is active: "test"
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.048Z  INFO 9940 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.074Z  INFO 9940 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 21 ms. Found 3 JPA repository interfaces.
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.260Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.272Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@3d26e7ba
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.273Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.275Z  INFO 9940 --- [lastmile-delivery] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:33205/postgres?user=postgres (PostgreSQL 17.11)
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.303Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.010s)
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.321Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 1
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.322Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.353Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.384Z  INFO 9940 --- [lastmile-delivery] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.393Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+[2026-10-19T01:51:38.486Z] 	Database JDBC URL [jdbc:postgresql://localhost:33205/postgres?user=postgres]
+[2026-10-19T01:51:38.486Z] 	Database driver: PostgreSQL JDBC Driver
+[2026-10-19T01:51:38.486Z] 	Database dialect: PostgreSQLDialect
+[2026-10-19T01:51:38.486Z] 	Database version: 17.11
+[2026-10-19T01:51:38.486Z] 	Default catalog/schema: postgres/public
+[2026-10-19T01:51:38.486Z] 	Autocommit mode: undefined/unknown
+[2026-10-19T01:51:38.486Z] 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+[2026-10-19T01:51:38.486Z] 	JDBC fetch size: none
+[2026-10-19T01:51:38.486Z] 	Pool: DataSourceConnectionProvider
+[2026-10-19T01:51:38.486Z] 	Minimum pool size: undefined/unknown
+[2026-10-19T01:51:38.486Z] 	Maximum pool size: undefined/unknown
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.455Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[2026-10-19T01:51:38.486Z] 2026-10-19T01:51:38.467Z  INFO 9940 --- [lastmile-delivery] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2026-10-19T01:51:38.737Z] 2026-10-19T01:51:38.610Z  INFO 9940 --- [lastmile-delivery] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
+[2026-10-19T01:51:38.988Z] 2026-10-19T01:51:38.828Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.SchemaConstraintsTest       : Started SchemaConstraintsTest in 1.014 seconds (process running for 55.007)
+[2026-10-19T01:51:39.539Z] [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.576 s -- in com.lastmile.SchemaConstraintsTest
+[2026-10-19T01:51:39.539Z] [INFO] Running com.lastmile.health.HealthControllerTest
+[2026-10-19T01:51:39.539Z] 2026-10-19T01:51:39.375Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.health.HealthControllerTest]: HealthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:39.539Z] 2026-10-19T01:51:39.383Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.health.HealthControllerTest
+[2026-10-19T01:51:39.539Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.032 s -- in com.lastmile.health.HealthControllerTest
+[2026-10-19T01:51:39.539Z] [INFO] Running com.lastmile.health.HealthControllerUnitTest
+[2026-10-19T01:51:39.789Z] 2026-10-19T01:51:39.763Z  WARN 9940 --- [lastmile-delivery] [           main] com.lastmile.health.HealthController     : Readiness check failed: DataAccessResourceFailureException
+[2026-10-19T01:51:40.040Z] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.367 s -- in com.lastmile.health.HealthControllerUnitTest
+[2026-10-19T01:51:40.040Z] [INFO] Running com.lastmile.security.LoginTest
+[2026-10-19T01:51:40.040Z] 2026-10-19T01:51:39.797Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.security.LoginTest]: LoginTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:40.040Z] 2026-10-19T01:51:39.826Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.security.LoginTest
+[2026-10-19T01:51:40.951Z] [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.081 s -- in com.lastmile.security.LoginTest
+[2026-10-19T01:51:40.951Z] [INFO] Running com.lastmile.web.WebAuthorizationTest
+[2026-10-19T01:51:40.951Z] 2026-10-19T01:51:40.874Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.web.WebAuthorizationTest]: WebAuthorizationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:40.951Z] 2026-10-19T01:51:40.895Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.web.WebAuthorizationTest
+[2026-10-19T01:51:42.813Z] 2026-10-19T01:51:42.740Z  WARN 9940 --- [lastmile-delivery] [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'status': Failed to convert value of type 'java.lang.String' to required type 'com.lastmile.delivery.DeliveryStatus'; Failed to convert from type [java.lang.String] to type [@org.springframework.web.bind.annotation.RequestParam com.lastmile.delivery.DeliveryStatus] for value [LOST]]
+[2026-10-19T01:51:46.042Z] [INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.014 s -- in com.lastmile.web.WebAuthorizationTest
+[2026-10-19T01:51:46.042Z] [INFO] Running com.lastmile.delivery.DeliveryCreationServiceTest
+[2026-10-19T01:51:46.043Z] 2026-10-19T01:51:45.891Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.delivery.DeliveryCreationServiceTest]: DeliveryCreationServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:46.043Z] 2026-10-19T01:51:45.912Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.delivery.DeliveryCreationServiceTest
+[2026-10-19T01:51:47.386Z] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.248 s -- in com.lastmile.delivery.DeliveryCreationServiceTest
+[2026-10-19T01:51:47.386Z] [INFO] Running com.lastmile.delivery.DeliveryStatusTest
+[2026-10-19T01:51:47.386Z] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.070 s -- in com.lastmile.delivery.DeliveryStatusTest
+[2026-10-19T01:51:47.386Z] [INFO] Running com.lastmile.delivery.DeliveryCreationControllerTest
+[2026-10-19T01:51:47.386Z] 2026-10-19T01:51:47.211Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.delivery.DeliveryCreationControllerTest]: DeliveryCreationControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:47.386Z] 2026-10-19T01:51:47.215Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.delivery.DeliveryCreationControllerTest
+[2026-10-19T01:51:48.731Z] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.499 s -- in com.lastmile.delivery.DeliveryCreationControllerTest
+[2026-10-19T01:51:48.731Z] [INFO] Running com.lastmile.delivery.DeliveryCodeGeneratorTest
+[2026-10-19T01:51:48.731Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.006 s -- in com.lastmile.delivery.DeliveryCodeGeneratorTest
+[2026-10-19T01:51:48.731Z] [INFO] Running com.lastmile.delivery.DeliveryPolicyTest
+[2026-10-19T01:51:48.982Z] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.021 s -- in com.lastmile.delivery.DeliveryPolicyTest
+[2026-10-19T01:51:48.982Z] [INFO] Running com.lastmile.delivery.DeliveryWorkflowServiceTest
+[2026-10-19T01:51:48.982Z] 2026-10-19T01:51:48.749Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.delivery.DeliveryWorkflowServiceTest]: DeliveryWorkflowServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:48.982Z] 2026-10-19T01:51:48.755Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.delivery.DeliveryWorkflowServiceTest
+[2026-10-19T01:51:48.982Z] 
+[2026-10-19T01:51:48.982Z]   .   ____          _            __ _ _
+[2026-10-19T01:51:48.982Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-19T01:51:48.982Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-19T01:51:48.982Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-19T01:51:48.982Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-19T01:51:48.982Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-19T01:51:48.982Z] 
+[2026-10-19T01:51:48.982Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-19T01:51:48.982Z] 
+[2026-10-19T01:51:48.982Z] 2026-10-19T01:51:48.809Z  INFO 9940 --- [lastmile-delivery] [           main] c.l.d.DeliveryWorkflowServiceTest        : Starting DeliveryWorkflowServiceTest using Java 21.0.12.1 with PID 9940 (started by jenkins in /var/jenkins_home/workspace/lastmile-delivery_develop)
+[2026-10-19T01:51:48.982Z] 2026-10-19T01:51:48.809Z  INFO 9940 --- [lastmile-delivery] [           main] c.l.d.DeliveryWorkflowServiceTest        : The following 1 profile is active: "test"
+[2026-10-19T01:51:49.232Z] 2026-10-19T01:51:49.047Z  INFO 9940 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2026-10-19T01:51:49.232Z] 2026-10-19T01:51:49.073Z  INFO 9940 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 3 JPA repository interfaces.
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.277Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.284Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@29b36c2b
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.284Z  INFO 9940 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.285Z  INFO 9940 --- [lastmile-delivery] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:33205/postgres?user=postgres (PostgreSQL 17.11)
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.298Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.004s)
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.310Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 1
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.311Z  INFO 9940 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.340Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.371Z  INFO 9940 --- [lastmile-delivery] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+[2026-10-19T01:51:49.483Z] 2026-10-19T01:51:49.378Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+[2026-10-19T01:51:49.483Z] 	Database JDBC URL [jdbc:postgresql://localhost:33205/postgres?user=postgres]
+[2026-10-19T01:51:49.483Z] 	Database driver: PostgreSQL JDBC Driver
+[2026-10-19T01:51:49.483Z] 	Database dialect: PostgreSQLDialect
+[2026-10-19T01:51:49.483Z] 	Database version: 17.11
+[2026-10-19T01:51:49.483Z] 	Default catalog/schema: postgres/public
+[2026-10-19T01:51:49.483Z] 	Autocommit mode: undefined/unknown
+[2026-10-19T01:51:49.483Z] 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+[2026-10-19T01:51:49.483Z] 	JDBC fetch size: none
+[2026-10-19T01:51:49.483Z] 	Pool: DataSourceConnectionProvider
+[2026-10-19T01:51:49.483Z] 	Minimum pool size: undefined/unknown
+[2026-10-19T01:51:49.483Z] 	Maximum pool size: undefined/unknown
+[2026-10-19T01:51:49.733Z] 2026-10-19T01:51:49.445Z  INFO 9940 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[2026-10-19T01:51:49.733Z] 2026-10-19T01:51:49.458Z  INFO 9940 --- [lastmile-delivery] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2026-10-19T01:51:49.984Z] 2026-10-19T01:51:49.857Z  INFO 9940 --- [lastmile-delivery] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
+[2026-10-19T01:51:50.234Z] 2026-10-19T01:51:50.133Z  INFO 9940 --- [lastmile-delivery] [           main] c.l.d.DeliveryWorkflowServiceTest        : Started DeliveryWorkflowServiceTest in 1.371 seconds (process running for 66.313)
+[2026-10-19T01:51:54.449Z] [INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.040 s -- in com.lastmile.delivery.DeliveryWorkflowServiceTest
+[2026-10-19T01:51:54.449Z] [INFO] Running com.lastmile.delivery.DeliverySearchServiceTest
+[2026-10-19T01:51:54.449Z] 2026-10-19T01:51:53.794Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.delivery.DeliverySearchServiceTest]: DeliverySearchServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:54.449Z] 2026-10-19T01:51:53.797Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.delivery.DeliverySearchServiceTest
+[2026-10-19T01:51:55.361Z] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.499 s -- in com.lastmile.delivery.DeliverySearchServiceTest
+[2026-10-19T01:51:55.361Z] [INFO] Running com.lastmile.dashboard.DashboardServiceTest
+[2026-10-19T01:51:55.361Z] 2026-10-19T01:51:55.292Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.dashboard.DashboardServiceTest]: DashboardServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:55.361Z] 2026-10-19T01:51:55.300Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.dashboard.DashboardServiceTest
+[2026-10-19T01:51:56.273Z] [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.837 s -- in com.lastmile.dashboard.DashboardServiceTest
+[2026-10-19T01:51:56.273Z] [INFO] Running com.lastmile.user.DemoDataSeederTest
+[2026-10-19T01:51:56.273Z] 2026-10-19T01:51:56.131Z  INFO 9940 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.user.DemoDataSeederTest]: DemoDataSeederTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:51:56.273Z] 2026-10-19T01:51:56.137Z  INFO 9940 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.user.DemoDataSeederTest
+[2026-10-19T01:51:56.273Z] 2026-10-19T01:51:56.148Z  WARN 9940 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : demo profile active but LASTMILE_DEMO_PASSWORD is missing or shorter than 12 characters; no demo accounts created
+[2026-10-19T01:51:56.273Z] 2026-10-19T01:51:56.148Z  WARN 9940 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : demo profile active but LASTMILE_DEMO_PASSWORD is missing or shorter than 12 characters; no demo accounts created
+[2026-10-19T01:51:56.524Z] 2026-10-19T01:51:56.281Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : Demo accounts ensured: 4 created, 0 already present
+[2026-10-19T01:51:56.524Z] 2026-10-19T01:51:56.364Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : Demo deliveries created: 6 (fictional)
+[2026-10-19T01:51:56.524Z] 2026-10-19T01:51:56.428Z  INFO 9940 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : Demo accounts ensured: 0 created, 4 already present
+[2026-10-19T01:51:56.524Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.304 s -- in com.lastmile.user.DemoDataSeederTest
+[2026-10-19T01:51:56.774Z] [INFO] 
+[2026-10-19T01:51:56.774Z] [INFO] Results:
+[2026-10-19T01:51:56.774Z] [INFO] 
+[2026-10-19T01:51:56.774Z] [INFO] Tests run: 89, Failures: 0, Errors: 0, Skipped: 0
+[2026-10-19T01:51:56.774Z] [INFO] 
+[2026-10-19T01:51:56.774Z] [INFO] 
+[2026-10-19T01:51:56.774Z] [INFO] --- jar:3.5.1:jar (default-jar) @ lastmile-delivery ---
+[2026-10-19T01:51:57.025Z] [INFO] Building jar: /var/jenkins_home/workspace/lastmile-delivery_develop/target/lastmile-delivery.jar
+[2026-10-19T01:51:57.025Z] [INFO] 
+[2026-10-19T01:51:57.025Z] [INFO] --- spring-boot:4.1.1:repackage (repackage) @ lastmile-delivery ---
+[2026-10-19T01:51:57.944Z] [INFO] Replacing main artifact /var/jenkins_home/workspace/lastmile-delivery_develop/target/lastmile-delivery.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[2026-10-19T01:51:57.944Z] [INFO] The original artifact has been renamed to /var/jenkins_home/workspace/lastmile-delivery_develop/target/lastmile-delivery.jar.original
+[2026-10-19T01:51:57.944Z] [INFO] ------------------------------------------------------------------------
+[2026-10-19T01:51:57.944Z] [INFO] BUILD SUCCESS
+[2026-10-19T01:51:57.944Z] [INFO] ------------------------------------------------------------------------
+[2026-10-19T01:51:57.944Z] [INFO] Total time:  01:18 min
+[2026-10-19T01:51:57.944Z] [INFO] Finished at: 2026-10-19T01:51:57Z
+[2026-10-19T01:51:57.944Z] [INFO] ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Selenium quality gate)
+[Pipeline] sh
+[2026-10-19T01:51:59.767Z] + ./mvnw -B -ntp verify -Pselenium -Dtest=NoSuchTest -Dsurefire.failIfNoSpecifiedTests=false -Dselenium.chrome.binary=/usr/bin/chromium -Dselenium.chromedriver=/usr/bin/chromedriver -Dselenium.noSandbox=true
+[2026-10-19T01:52:01.111Z] [INFO] Scanning for projects...
+[2026-10-19T01:52:01.362Z] [INFO] 
+[2026-10-19T01:52:01.362Z] [INFO] -------------------< com.lastmile:lastmile-delivery >-------------------
+[2026-10-19T01:52:01.362Z] [INFO] Building Automated Last-Mile Delivery Management Platform 0.1.0-SNAPSHOT
+[2026-10-19T01:52:01.362Z] [INFO]   from pom.xml
+[2026-10-19T01:52:01.362Z] [INFO] --------------------------------[ jar ]---------------------------------
+[2026-10-19T01:52:02.273Z] [INFO] 
+[2026-10-19T01:52:02.273Z] [INFO] --- resources:3.5.0:resources (default-resources) @ lastmile-delivery ---
+[2026-10-19T01:52:02.273Z] [INFO] Copying 1 resource from src/main/resources to target/classes
+[2026-10-19T01:52:02.273Z] [INFO] Copying 15 resources from src/main/resources to target/classes
+[2026-10-19T01:52:02.273Z] [INFO] 
+[2026-10-19T01:52:02.273Z] [INFO] --- compiler:3.15.0:compile (default-compile) @ lastmile-delivery ---
+[2026-10-19T01:52:02.524Z] [INFO] Nothing to compile - all classes are up to date.
+[2026-10-19T01:52:02.524Z] [INFO] 
+[2026-10-19T01:52:02.524Z] [INFO] --- resources:3.5.0:testResources (default-testResources) @ lastmile-delivery ---
+[2026-10-19T01:52:02.524Z] [INFO] Copying 1 resource from src/test/resources to target/test-classes
+[2026-10-19T01:52:02.524Z] [INFO] 
+[2026-10-19T01:52:02.524Z] [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ lastmile-delivery ---
+[2026-10-19T01:52:02.524Z] [INFO] Nothing to compile - all classes are up to date.
+[2026-10-19T01:52:02.524Z] [INFO] 
+[2026-10-19T01:52:02.524Z] [INFO] --- surefire:3.5.6:test (default-test) @ lastmile-delivery ---
+[2026-10-19T01:52:02.524Z] [INFO] 
+[2026-10-19T01:52:02.524Z] [INFO] --- jar:3.5.1:jar (default-jar) @ lastmile-delivery ---
+[2026-10-19T01:52:03.075Z] [INFO] 
+[2026-10-19T01:52:03.075Z] [INFO] --- spring-boot:4.1.1:repackage (repackage) @ lastmile-delivery ---
+[2026-10-19T01:52:03.075Z] [INFO] Replacing main artifact /var/jenkins_home/workspace/lastmile-delivery_develop/target/lastmile-delivery.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[2026-10-19T01:52:03.075Z] [INFO] The original artifact has been renamed to /var/jenkins_home/workspace/lastmile-delivery_develop/target/lastmile-delivery.jar.original
+[2026-10-19T01:52:03.075Z] [INFO] 
+[2026-10-19T01:52:03.075Z] [INFO] --- failsafe:3.5.6:integration-test (default) @ lastmile-delivery ---
+[2026-10-19T01:52:03.326Z] [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[2026-10-19T01:52:03.326Z] [WARNING] System property [selenium.noSandbox], [selenium.chromedriver], [selenium.chrome.binary] overwritten by user properties from Maven session
+[2026-10-19T01:52:03.326Z] [INFO] 
+[2026-10-19T01:52:03.326Z] [INFO] -------------------------------------------------------
+[2026-10-19T01:52:03.326Z] [INFO]  T E S T S
+[2026-10-19T01:52:03.326Z] [INFO] -------------------------------------------------------
+[2026-10-19T01:52:04.237Z] [INFO] Running com.lastmile.selenium.J4AgentProgressSeleniumIT
+[2026-10-19T01:52:04.488Z] 01:52:04.299 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lastmile.selenium.BrowserJourney]: BrowserJourney does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:52:04.488Z] 01:52:04.435 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.selenium.J4AgentProgressSeleniumIT
+[2026-10-19T01:52:05.038Z] 
+[2026-10-19T01:52:05.039Z]   .   ____          _            __ _ _
+[2026-10-19T01:52:05.039Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-19T01:52:05.039Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-19T01:52:05.039Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-19T01:52:05.039Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-19T01:52:05.039Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-19T01:52:05.039Z] 
+[2026-10-19T01:52:05.039Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-19T01:52:05.039Z] 
+[2026-10-19T01:52:05.039Z] 2026-10-19T01:52:04.959Z  INFO 10427 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : Detected a Linux x86_64 system
+[2026-10-19T01:52:05.039Z] 2026-10-19T01:52:04.973Z  INFO 10427 --- [lastmile-delivery] [           main] .z.t.d.p.e.DefaultPostgresBinaryResolver : Detected distribution: 'Debian'
+[2026-10-19T01:52:05.039Z] 2026-10-19T01:52:04.975Z  INFO 10427 --- [lastmile-delivery] [           main] .z.t.d.p.e.DefaultPostgresBinaryResolver : System specific postgres binaries found: 'postgres-linux-x86_64.txz'
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.059Z  INFO 10427 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : Postgres binaries at /tmp/embedded-pg/PG-16c5707c09eef4783fc1cb48f11a526d
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.082Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : The files belonging to this database system will be owned by user "jenkins".
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.082Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : This user must also own the server process.
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.082Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.082Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : The database cluster will be initialized with locale "C.UTF-8".
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.083Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : The default text search configuration will be set to "english".
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.083Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.083Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : Data page checksums are disabled.
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.083Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.083Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : fixing permissions on existing directory /tmp/epg17848627862520910876 ... ok
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.091Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : creating subdirectories ... ok
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.091Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting dynamic shared memory implementation ... posix
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.112Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default "max_connections" ... 100
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.143Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default "shared_buffers" ... 128MB
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.173Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default time zone ... Etc/UTC
+[2026-10-19T01:52:05.289Z] 2026-10-19T01:52:05.173Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : creating configuration files ... ok
+[2026-10-19T01:52:05.540Z] 2026-10-19T01:52:05.377Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : running bootstrap script ... ok
+[2026-10-19T01:52:06.451Z] 2026-10-19T01:52:06.357Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : performing post-bootstrap initialization ... ok
+[2026-10-19T01:52:45.067Z] 2026-10-19T01:52:43.007Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : syncing data to disk ... ok
+[2026-10-19T01:52:45.067Z] 2026-10-19T01:52:43.011Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.011Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : Success. You can now start the database server using:
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.011Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.011Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      :     /tmp/embedded-pg/PG-16c5707c09eef4783fc1cb48f11a526d/bin/pg_ctl -D /tmp/epg17848627862520910876 -l logfile start
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.012Z  INFO 10427 --- [lastmile-delivery] [itdb:pid(10469)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.009Z  INFO 10427 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : b1a030db-e102-42f1-9351-cd3bd85d57fb initdb completed in 00:00:37.888
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.032Z  INFO 10427 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : b1a030db-e102-42f1-9351-cd3bd85d57fb postmaster started as Process[pid=10512, exitValue="not exited"] on port 37413.  Waiting up to PT10S for server startup to finish.
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.064Z  INFO 10427 --- [lastmile-delivery] [gres:pid(10512)] i.z.t.d.p.embedded.EmbeddedPostgres      : waiting for server to start....2026-10-19 01:52:43.064 UTC [10516] LOG:  starting PostgreSQL 17.11 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0, 64-bit
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.065Z  INFO 10427 --- [lastmile-delivery] [gres:pid(10512)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:52:43.065 UTC [10516] LOG:  listening on IPv6 address "::1", port 37413
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.065Z  INFO 10427 --- [lastmile-delivery] [gres:pid(10512)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:52:43.065 UTC [10516] LOG:  listening on IPv4 address "127.0.0.1", port 37413
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.065Z  INFO 10427 --- [lastmile-delivery] [gres:pid(10512)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:52:43.065 UTC [10516] LOG:  listening on Unix socket "/tmp/.s.PGSQL.37413"
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.068Z  INFO 10427 --- [lastmile-delivery] [gres:pid(10512)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:52:43.067 UTC [10519] LOG:  database system was shut down at 2026-10-19 01:52:06 UTC
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.072Z  INFO 10427 --- [lastmile-delivery] [gres:pid(10512)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-19 01:52:43.071 UTC [10516] LOG:  database system is ready to accept connections
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.138Z  INFO 10427 --- [lastmile-delivery] [gres:pid(10512)] i.z.t.d.p.embedded.EmbeddedPostgres      :  done
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.139Z  INFO 10427 --- [lastmile-delivery] [gres:pid(10512)] i.z.t.d.p.embedded.EmbeddedPostgres      : server started
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.301Z  INFO 10427 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : b1a030db-e102-42f1-9351-cd3bd85d57fb postmaster startup finished in 00:00:00.275
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.311Z  INFO 10427 --- [lastmile-delivery] [           main] c.l.selenium.J4AgentProgressSeleniumIT   : Starting J4AgentProgressSeleniumIT using Java 21.0.12.1 with PID 10427 (started by jenkins in /var/jenkins_home/workspace/lastmile-delivery_develop)
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:43.313Z  INFO 10427 --- [lastmile-delivery] [           main] c.l.selenium.J4AgentProgressSeleniumIT   : The following 1 profile is active: "test"
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:44.125Z  INFO 10427 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:44.209Z  INFO 10427 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 73 ms. Found 3 JPA repository interfaces.
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:45.003Z  INFO 10427 --- [lastmile-delivery] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat initialized with port 0 (http)
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:45.019Z  INFO 10427 --- [lastmile-delivery] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+[2026-10-19T01:52:45.068Z] 2026-10-19T01:52:45.019Z  INFO 10427 --- [lastmile-delivery] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/11.0.24]
+[2026-10-19T01:52:45.318Z] 2026-10-19T01:52:45.072Z  INFO 10427 --- [lastmile-delivery] [           main] b.w.c.s.WebApplicationContextInitializer : Root WebApplicationContext: initialization completed in 1736 ms
+[2026-10-19T01:52:45.569Z] 2026-10-19T01:52:45.413Z  INFO 10427 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+[2026-10-19T01:52:45.569Z] 2026-10-19T01:52:45.427Z  INFO 10427 --- [lastmile-delivery] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@73e399cc
+[2026-10-19T01:52:45.569Z] 2026-10-19T01:52:45.430Z  INFO 10427 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+[2026-10-19T01:52:45.569Z] 2026-10-19T01:52:45.452Z  INFO 10427 --- [lastmile-delivery] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:37413/postgres?user=postgres (PostgreSQL 17.11)
+[2026-10-19T01:52:45.569Z] 2026-10-19T01:52:45.506Z  INFO 10427 --- [lastmile-delivery] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+[2026-10-19T01:52:45.569Z] 2026-10-19T01:52:45.510Z  INFO 10427 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.015s)
+[2026-10-19T01:52:45.569Z] 2026-10-19T01:52:45.522Z  INFO 10427 --- [lastmile-delivery] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+[2026-10-19T01:52:45.820Z] 2026-10-19T01:52:45.560Z  INFO 10427 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+[2026-10-19T01:52:45.820Z] 2026-10-19T01:52:45.575Z  INFO 10427 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - core schema"
+[2026-10-19T01:52:45.820Z] 2026-10-19T01:52:45.609Z  INFO 10427 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.020s)
+[2026-10-19T01:52:45.820Z] 2026-10-19T01:52:45.718Z  INFO 10427 --- [lastmile-delivery] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+[2026-10-19T01:52:46.070Z] 2026-10-19T01:52:45.785Z  INFO 10427 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+[2026-10-19T01:52:46.622Z] 2026-10-19T01:52:46.296Z  INFO 10427 --- [lastmile-delivery] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+[2026-10-19T01:52:46.622Z] 2026-10-19T01:52:46.372Z  INFO 10427 --- [lastmile-delivery] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+[2026-10-19T01:52:46.622Z] 	Database JDBC URL [jdbc:postgresql://localhost:37413/postgres?user=postgres]
+[2026-10-19T01:52:46.622Z] 	Database driver: PostgreSQL JDBC Driver
+[2026-10-19T01:52:46.622Z] 	Database dialect: PostgreSQLDialect
+[2026-10-19T01:52:46.622Z] 	Database version: 17.11
+[2026-10-19T01:52:46.622Z] 	Default catalog/schema: postgres/public
+[2026-10-19T01:52:46.622Z] 	Autocommit mode: undefined/unknown
+[2026-10-19T01:52:46.622Z] 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+[2026-10-19T01:52:46.622Z] 	JDBC fetch size: none
+[2026-10-19T01:52:46.622Z] 	Pool: DataSourceConnectionProvider
+[2026-10-19T01:52:46.622Z] 	Minimum pool size: undefined/unknown
+[2026-10-19T01:52:46.622Z] 	Maximum pool size: undefined/unknown
+[2026-10-19T01:52:47.533Z] 2026-10-19T01:52:47.221Z  INFO 10427 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[2026-10-19T01:52:47.533Z] 2026-10-19T01:52:47.255Z  INFO 10427 --- [lastmile-delivery] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2026-10-19T01:52:47.533Z] 2026-10-19T01:52:47.344Z  INFO 10427 --- [lastmile-delivery] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+[2026-10-19T01:52:48.877Z] 2026-10-19T01:52:48.505Z  INFO 10427 --- [lastmile-delivery] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
+[2026-10-19T01:52:49.428Z] 2026-10-19T01:52:49.266Z  INFO 10427 --- [lastmile-delivery] [           main] o.s.boot.tomcat.TomcatWebServer          : Tomcat started on port 43015 (http) with context path '/'
+[2026-10-19T01:52:49.428Z] 2026-10-19T01:52:49.275Z  INFO 10427 --- [lastmile-delivery] [           main] c.l.selenium.J4AgentProgressSeleniumIT   : Started J4AgentProgressSeleniumIT in 44.65 seconds (process running for 45.933)
+[2026-10-19T01:52:49.428Z] Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+[2026-10-19T01:52:49.979Z] WARNING: A Java agent has been loaded dynamically (/var/jenkins_home/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.11/byte-buddy-agent-1.18.11.jar)
+[2026-10-19T01:52:49.979Z] WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+[2026-10-19T01:52:49.979Z] WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+[2026-10-19T01:52:49.979Z] WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[2026-10-19T01:52:51.842Z] 2026-10-19T01:52:51.757Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 155
+[2026-10-19T01:52:51.842Z] 2026-10-19T01:52:51.759Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 155.0.8059.79. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.43.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+[2026-10-19T01:52:53.704Z] 2026-10-19T01:52:53.123Z  INFO 10427 --- [lastmile-delivery] [o-auto-1-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+[2026-10-19T01:52:53.704Z] 2026-10-19T01:52:53.124Z  INFO 10427 --- [lastmile-delivery] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+[2026-10-19T01:52:53.704Z] 2026-10-19T01:52:53.126Z  INFO 10427 --- [lastmile-delivery] [o-auto-1-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 2 ms
+[2026-10-19T01:52:56.303Z] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 51.98 s -- in com.lastmile.selenium.J4AgentProgressSeleniumIT
+[2026-10-19T01:52:56.303Z] [INFO] Running com.lastmile.selenium.J1CreateDeliverySeleniumIT
+[2026-10-19T01:52:56.303Z] 2026-10-19T01:52:56.101Z  INFO 10427 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.selenium.BrowserJourney]: BrowserJourney does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:52:56.303Z] 2026-10-19T01:52:56.109Z  INFO 10427 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.selenium.J1CreateDeliverySeleniumIT
+[2026-10-19T01:52:56.854Z] 2026-10-19T01:52:56.682Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 155
+[2026-10-19T01:52:56.855Z] 2026-10-19T01:52:56.682Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 155.0.8059.79. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.43.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+[2026-10-19T01:53:02.053Z] 2026-10-19T01:53:01.553Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 155
+[2026-10-19T01:53:02.053Z] 2026-10-19T01:53:01.554Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 155.0.8059.79. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.43.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+[2026-10-19T01:53:05.282Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.951 s -- in com.lastmile.selenium.J1CreateDeliverySeleniumIT
+[2026-10-19T01:53:05.282Z] [INFO] Running com.lastmile.selenium.J5RejectedActionsSeleniumIT
+[2026-10-19T01:53:05.282Z] 2026-10-19T01:53:05.057Z  INFO 10427 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.selenium.BrowserJourney]: BrowserJourney does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:53:05.282Z] 2026-10-19T01:53:05.060Z  INFO 10427 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.selenium.J5RejectedActionsSeleniumIT
+[2026-10-19T01:53:05.833Z] 2026-10-19T01:53:05.570Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 155
+[2026-10-19T01:53:05.833Z] 2026-10-19T01:53:05.571Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 155.0.8059.79. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.43.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+[2026-10-19T01:53:09.957Z] 2026-10-19T01:53:09.359Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 155
+[2026-10-19T01:53:09.957Z] 2026-10-19T01:53:09.359Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 155.0.8059.79. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.43.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+[2026-10-19T01:53:12.440Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.889 s -- in com.lastmile.selenium.J5RejectedActionsSeleniumIT
+[2026-10-19T01:53:12.440Z] [INFO] Running com.lastmile.selenium.J3AssignmentVisibilitySeleniumIT
+[2026-10-19T01:53:12.440Z] 2026-10-19T01:53:11.946Z  INFO 10427 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.selenium.BrowserJourney]: BrowserJourney does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:53:12.440Z] 2026-10-19T01:53:11.948Z  INFO 10427 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.selenium.J3AssignmentVisibilitySeleniumIT
+[2026-10-19T01:53:12.440Z] 2026-10-19T01:53:12.288Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 155
+[2026-10-19T01:53:12.440Z] 2026-10-19T01:53:12.288Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 155.0.8059.79. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.43.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+[2026-10-19T01:53:18.922Z] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.781 s -- in com.lastmile.selenium.J3AssignmentVisibilitySeleniumIT
+[2026-10-19T01:53:18.922Z] [INFO] Running com.lastmile.selenium.J2SearchDeliverySeleniumIT
+[2026-10-19T01:53:18.922Z] 2026-10-19T01:53:18.729Z  INFO 10427 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.selenium.BrowserJourney]: BrowserJourney does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-19T01:53:18.922Z] 2026-10-19T01:53:18.731Z  INFO 10427 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.selenium.J2SearchDeliverySeleniumIT
+[2026-10-19T01:53:19.173Z] 2026-10-19T01:53:19.080Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 155
+[2026-10-19T01:53:19.173Z] 2026-10-19T01:53:19.081Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 155.0.8059.79. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.43.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+[2026-10-19T01:53:22.402Z] 2026-10-19T01:53:22.298Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.devtools.CdpVersionFinder   : Unable to find CDP implementation matching 155
+[2026-10-19T01:53:22.402Z] 2026-10-19T01:53:22.299Z  WARN 10427 --- [lastmile-delivery] [           main] o.o.selenium.chromium.ChromiumDriver     : Unable to find version of CDP to use for 155.0.8059.79. You may need to include a dependency on a specific version of the CDP using something similar to `org.seleniumhq.selenium:selenium-devtools-v86:4.43.0` where the version ("v86") matches the version of the chromium-based browser you're using and the version number of the artifact is the same as Selenium's.
+[2026-10-19T01:53:26.591Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 6.962 s -- in com.lastmile.selenium.J2SearchDeliverySeleniumIT
+[2026-10-19T01:53:26.591Z] [INFO] 
+[2026-10-19T01:53:26.591Z] [INFO] Results:
+[2026-10-19T01:53:26.591Z] [INFO] 
+[2026-10-19T01:53:26.592Z] [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0
+[2026-10-19T01:53:26.592Z] [INFO] 
+[2026-10-19T01:53:26.592Z] [INFO] 
+[2026-10-19T01:53:26.592Z] [INFO] --- surefire-report:3.5.6:failsafe-report-only (selenium-html-report) @ lastmile-delivery ---
+[2026-10-19T01:53:26.843Z] [WARNING] Unable to find a URL to the parent project. The parent menu will NOT be added.
+[2026-10-19T01:53:26.843Z] [INFO] Rendering content with org.apache.maven.skins:maven-fluido-skin:jar:2.0.0-M9 skin
+[2026-10-19T01:53:26.843Z] [WARNING] Unable to locate Test Source XRef to link to -- DISABLED
+[2026-10-19T01:53:27.394Z] [INFO] 
+[2026-10-19T01:53:27.394Z] [INFO] --- failsafe:3.5.6:verify (default) @ lastmile-delivery ---
+[2026-10-19T01:53:27.394Z] [INFO] ------------------------------------------------------------------------
+[2026-10-19T01:53:27.394Z] [INFO] BUILD SUCCESS
+[2026-10-19T01:53:27.394Z] [INFO] ------------------------------------------------------------------------
+[2026-10-19T01:53:27.394Z] [INFO] Total time:  01:26 min
+[2026-10-19T01:53:27.394Z] [INFO] Finished at: 2026-10-19T01:53:27Z
+[2026-10-19T01:53:27.394Z] [INFO] ------------------------------------------------------------------------
+Post stage
+[Pipeline] junit
+[2026-10-19T01:53:27.944Z] Recording test results
+[2026-10-19T01:53:28.078Z] [Checks API] No suitable checks publisher found.
+[Pipeline] publishHTML
+[2026-10-19T01:53:28.627Z] [htmlpublisher] Archiving HTML reports...
+[2026-10-19T01:53:28.630Z] [htmlpublisher] Archiving at BUILD level /var/jenkins_home/workspace/lastmile-delivery_develop/target/reports to Selenium_20report
+[2026-10-19T01:53:28.630Z] [htmlpublisher] Copying recursive using current thread
+[Pipeline] archiveArtifacts
+[2026-10-19T01:53:29.110Z] Archiving artifacts
+[2026-10-19T01:53:29.111Z] ‘target/selenium-artifacts/**’ doesn’t match anything, but ‘**’ does. Perhaps that’s what you mean?
+[2026-10-19T01:53:29.111Z] No artifacts found that match the file pattern "target/selenium-artifacts/**". Configuration error?
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Package images)
+[Pipeline] sh
+[2026-10-19T01:53:31.696Z] + docker build -q -t localhost:5000/lastmile-delivery:7af50fe2d28b --build-arg GIT_COMMIT=7af50fe2d28b8d2edb55e05bbe7384b72505db10 --build-arg VERSION=7af50fe2d28b .
+[2026-10-19T01:53:31.947Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-19T01:53:31.947Z]             Install the buildx component to build images with BuildKit:
+[2026-10-19T01:53:31.947Z]             https://docs.docker.com/go/buildx/
+[2026-10-19T01:53:31.947Z] 
+[2026-10-19T01:55:08.442Z] sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39
+[2026-10-19T01:55:08.442Z] + docker build -q -t localhost:5000/lastmile-nginx:7af50fe2d28b --build-arg GIT_COMMIT=7af50fe2d28b8d2edb55e05bbe7384b72505db10 deploy/nginx
+[2026-10-19T01:55:08.442Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-19T01:55:08.442Z]             Install the buildx component to build images with BuildKit:
+[2026-10-19T01:55:08.442Z]             https://docs.docker.com/go/buildx/
+[2026-10-19T01:55:08.442Z] 
+[2026-10-19T01:55:10.927Z] sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652
+[2026-10-19T01:55:10.927Z] + docker image inspect localhost:5000/lastmile-delivery:7af50fe2d28b --format app image {{.Id}} user={{.Config.User}} revision={{index .Config.Labels "org.opencontainers.image.revision"}}
+[2026-10-19T01:55:11.485Z] app image sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39 user=10001:10001 revision=7af50fe2d28b8d2edb55e05bbe7384b72505db10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Publish to local registry)
+[Pipeline] sh
+[2026-10-19T01:55:13.285Z] + docker push -q localhost:5000/lastmile-delivery:7af50fe2d28b
+[2026-10-19T01:55:18.491Z] localhost:5000/lastmile-delivery:7af50fe2d28b
+[2026-10-19T01:55:18.491Z] + docker push -q localhost:5000/lastmile-nginx:7af50fe2d28b
+[2026-10-19T01:55:21.719Z] localhost:5000/lastmile-nginx:7af50fe2d28b
+[2026-10-19T01:55:21.719Z] + ref=localhost:5000/lastmile-delivery:7af50fe2d28b
+[2026-10-19T01:55:21.719Z] + docker image inspect --format {{range .RepoDigests}}{{println .}}{{end}} localhost:5000/lastmile-delivery:7af50fe2d28b
+[2026-10-19T01:55:21.719Z] + grep ^localhost:5000/lastmile-delivery@
+[2026-10-19T01:55:21.719Z] + head -1
+[2026-10-19T01:55:21.719Z] + cut -d@ -f2
+[2026-10-19T01:55:21.719Z] + local_digest=sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39
+[2026-10-19T01:55:21.719Z] + curl -fsS -I -H Accept: application/vnd.oci.image.index.v1+json -H Accept: application/vnd.docker.distribution.manifest.list.v2+json -H Accept: application/vnd.oci.image.manifest.v1+json -H Accept: application/vnd.docker.distribution.manifest.v2+json http://lastmile-registry:5000/v2/lastmile-delivery/manifests/7af50fe2d28b
+[2026-10-19T01:55:21.719Z] + tr -d \r
+[2026-10-19T01:55:21.719Z] + awk -F:  tolower($1)=="docker-content-digest"{print $2}
+[2026-10-19T01:55:21.719Z] + registry_digest=sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39
+[2026-10-19T01:55:21.719Z] + echo lastmile-delivery:7af50fe2d28b pushed digest=sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39 registry digest=sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39
+[2026-10-19T01:55:21.719Z] lastmile-delivery:7af50fe2d28b pushed digest=sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39 registry digest=sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39
+[2026-10-19T01:55:21.719Z] + test -n sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39
+[2026-10-19T01:55:21.719Z] + test sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39 = sha256:fafcff66c05691932bd2254041f2111d4a1bd626a0520211976f1c01b972ef39
+[2026-10-19T01:55:21.719Z] + ref=localhost:5000/lastmile-nginx:7af50fe2d28b
+[2026-10-19T01:55:21.719Z] + docker image inspect --format {{range .RepoDigests}}{{println .}}{{end}} localhost:5000/lastmile-nginx:7af50fe2d28b
+[2026-10-19T01:55:21.719Z] + grep ^localhost:5000/lastmile-nginx@
+[2026-10-19T01:55:21.719Z] + head -1
+[2026-10-19T01:55:21.719Z] + cut -d@ -f2
+[2026-10-19T01:55:21.719Z] + local_digest=sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652
+[2026-10-19T01:55:21.719Z] + curl -fsS -I -H Accept: application/vnd.oci.image.index.v1+json -H Accept: application/vnd.docker.distribution.manifest.list.v2+json -H Accept: application/vnd.oci.image.manifest.v1+json -H Accept: application/vnd.docker.distribution.manifest.v2+json http://lastmile-registry:5000/v2/lastmile-nginx/manifests/7af50fe2d28b
+[2026-10-19T01:55:21.719Z] + tr -d \r
+[2026-10-19T01:55:21.719Z] + awk -F:  tolower($1)=="docker-content-digest"{print $2}
+[2026-10-19T01:55:21.719Z] + registry_digest=sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652
+[2026-10-19T01:55:21.719Z] + echo lastmile-nginx:7af50fe2d28b pushed digest=sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652 registry digest=sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652
+[2026-10-19T01:55:21.719Z] lastmile-nginx:7af50fe2d28b pushed digest=sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652 registry digest=sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652
+[2026-10-19T01:55:21.719Z] + test -n sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652
+[2026-10-19T01:55:21.719Z] + test sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652 = sha256:83fa480c98151a9e9c08223c715aa2eddd1f012a17727485d27154374d57c652
+[2026-10-19T01:55:21.719Z] + curl -fsS http://lastmile-registry:5000/v2/lastmile-delivery/tags/list
+[2026-10-19T01:55:21.719Z] + echo registry tags for lastmile-delivery: {"name":"lastmile-delivery","tags":["0ac1a53c836f","7af50fe2d28b","855bdeeec97f","881a67f31d06","8db6741eccd4","900a931dc0de","c18e53f81e65","cd30dadc8169","e13d79d75af7"]}
+[2026-10-19T01:55:21.719Z] registry tags for lastmile-delivery: {"name":"lastmile-delivery","tags":["0ac1a53c836f","7af50fe2d28b","855bdeeec97f","881a67f31d06","8db6741eccd4","900a931dc0de","c18e53f81e65","cd30dadc8169","e13d79d75af7"]}
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+Stage "Deploy" skipped due to when conditional
+[Pipeline] getContext
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] junit
+[2026-10-19T01:55:25.497Z] Recording test results
+[2026-10-19T01:55:25.744Z] [Checks API] No suitable checks publisher found.
+[Pipeline] archiveArtifacts
+[2026-10-19T01:55:26.131Z] Archiving artifacts
+[2026-10-19T01:55:26.274Z] Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS

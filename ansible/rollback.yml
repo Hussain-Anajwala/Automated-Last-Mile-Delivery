@@ -1,16 +1,24 @@
-# Roll the target back to the release recorded in /opt/lastmile/releases/previous.
-#   bash scripts/ansible-run.sh ansible-playbook rollback.yml
-# Redeploys the previous immutable tag with the same role (pull exact tag, up --wait, readiness and
-# revision checks). Database contents are not rolled back (forward-only migrations; docs/ANSIBLE.md).
+# Restore a recorded release on the target.
+#   rollback.yml                                   -> /opt/lastmile/releases/previous (undo the last release)
+#   rollback.yml -e lastmile_rollback_record=current -> /opt/lastmile/releases/current (recover from a failed
+#                                                      deployment: "current" is only written after a healthy deploy)
+# Redeploys the immutable tag with the same role (pull exact tag, up --wait, readiness and revision checks).
+# Database contents are not rolled back (forward-only migrations; docs/ANSIBLE.md).
 - name: Roll back LastMile to the previous known-good release
   hosts: lastmile_targets
   become: true
   gather_facts: true
 
   pre_tasks:
-    - name: Read the previous release tag recorded on the target
+    - name: Choose which recorded release to restore
+      ansible.builtin.assert:
+        that:
+          - (lastmile_rollback_record | default('previous')) in ['previous', 'current']
+        quiet: true
+
+    - name: Read the recorded release tag on the target
       ansible.builtin.slurp:
-        src: /opt/lastmile/releases/previous
+        src: "/opt/lastmile/releases/{{ lastmile_rollback_record | default('previous') }}"
       register: rollback_previous
 
     - name: Use it as the release to deploy
@@ -20,7 +28,7 @@
     - name: Refuse anything that is not a recorded commit tag
       ansible.builtin.assert:
         that:
-          - lastmile_image_tag | regex_search('^[0-9a-f]{12}$')
+          - lastmile_image_tag is regex('^[0-9a-f]{12}$')
         fail_msg: "No valid previous release recorded on {{ inventory_hostname }}"
         quiet: true
 

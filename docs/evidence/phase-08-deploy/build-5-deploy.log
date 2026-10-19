@@ -1,0 +1,782 @@
+Branch indexing
+ > git rev-parse --resolve-git-dir /var/jenkins_home/caches/git-91c2f60bf9931faa0683b9919e6efdd2/.git # timeout=10
+Setting origin to https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git
+ > git config remote.origin.url https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git # timeout=10
+Fetching origin...
+Fetching upstream changes from origin
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git config --get remote.origin.url # timeout=10
+ > git fetch --no-tags --force --progress -- origin +refs/heads/*:refs/remotes/origin/* # timeout=10
+Seen branch in repository origin/build/project-skeleton
+Seen branch in repository origin/ci/demo-failing-build
+Seen branch in repository origin/ci/jenkins-pipeline
+Seen branch in repository origin/demo/conflict-a
+Seen branch in repository origin/demo/conflict-b
+Seen branch in repository origin/demo/conflict-base
+Seen branch in repository origin/develop
+Seen branch in repository origin/docs/environment-audit
+Seen branch in repository origin/docs/phase-01-scope
+Seen branch in repository origin/docs/phase-02-agile
+Seen branch in repository origin/docs/phase-03-architecture
+Seen branch in repository origin/feature/delivery-create
+Seen branch in repository origin/feature/delivery-workflow
+Seen branch in repository origin/main
+Seen branch in repository origin/test/selenium-journeys
+Seen 15 remote branches
+Obtained Jenkinsfile from 3af9df95d0b1227fc7025b2d673653cb3edadf43
+[Pipeline] Start of Pipeline
+[Pipeline] node
+Running on Jenkins in /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Declarative: Checkout SCM)
+[Pipeline] checkout
+Selected Git installation does not exist. Using Default
+The recommended git tool is: NONE
+No credentials specified
+ > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline/.git # timeout=10
+Fetching changes from the remote Git repository
+ > git config remote.origin.url https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git # timeout=10
+Fetching without tags
+Fetching upstream changes from https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git
+ > git --version # timeout=10
+ > git --version # 'git version 2.47.3'
+ > git fetch --no-tags --force --progress -- https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+Checking out Revision 3af9df95d0b1227fc7025b2d673653cb3edadf43 (ci/jenkins-pipeline)
+ > git config core.sparsecheckout # timeout=10
+ > git checkout -f 3af9df95d0b1227fc7025b2d673653cb3edadf43 # timeout=10
+Commit message: "ci: package images and deploy behind Nginx from the Jenkinsfile"
+ > git rev-list --no-walk e0b9f6d3b76c68ab111f4371a50abb6181896d42 # timeout=10
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] timestamps
+[Pipeline] {
+[Pipeline] timeout
+[2026-10-18T22:10:31.692Z] Timeout set to expire in 45 min
+[Pipeline] {
+[Pipeline] stage
+[Pipeline] { (Checkout)
+[Pipeline] checkout
+[2026-10-18T22:10:32.986Z] Selected Git installation does not exist. Using Default
+[2026-10-18T22:10:32.986Z] The recommended git tool is: NONE
+[2026-10-18T22:10:32.987Z] No credentials specified
+[2026-10-18T22:10:32.987Z]  > git rev-parse --resolve-git-dir /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline/.git # timeout=10
+[2026-10-18T22:10:32.992Z] Fetching changes from the remote Git repository
+[2026-10-18T22:10:32.994Z]  > git config remote.origin.url https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git # timeout=10
+[2026-10-18T22:10:33.000Z] Fetching without tags
+[2026-10-18T22:10:33.000Z] Fetching upstream changes from https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git
+[2026-10-18T22:10:33.000Z]  > git --version # timeout=10
+[2026-10-18T22:10:33.006Z]  > git --version # 'git version 2.47.3'
+[2026-10-18T22:10:33.006Z]  > git fetch --no-tags --force --progress -- https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery.git +refs/heads/*:refs/remotes/origin/* # timeout=10
+[2026-10-18T22:10:33.792Z] Checking out Revision 3af9df95d0b1227fc7025b2d673653cb3edadf43 (ci/jenkins-pipeline)
+[2026-10-18T22:10:33.793Z]  > git config core.sparsecheckout # timeout=10
+[2026-10-18T22:10:33.797Z]  > git checkout -f 3af9df95d0b1227fc7025b2d673653cb3edadf43 # timeout=10
+[2026-10-18T22:10:33.809Z] Commit message: "ci: package images and deploy behind Nginx from the Jenkinsfile"
+[Pipeline] script
+[Pipeline] {
+[Pipeline] sh
+[2026-10-18T22:10:35.275Z] + git rev-parse --short=12 HEAD
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] echo
+[2026-10-18T22:10:36.566Z] Building ci/jenkins-pipeline at 3af9df95d0b1227fc7025b2d673653cb3edadf43 (image tag 3af9df95d0b1)
+[Pipeline] sh
+[2026-10-18T22:10:37.155Z] + java -version
+[2026-10-18T22:10:37.155Z] + head -1
+[2026-10-18T22:10:37.155Z] openjdk version "21.0.12.1" 2026-08-18 LTS
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Validate parameters)
+[Pipeline] script
+[Pipeline] {
+[Pipeline] echo
+[2026-10-18T22:10:39.222Z] Parameters: DEPLOY_PROFILE=demo, HTTP_PORT=8088, DEPLOY=true
+[Pipeline] }
+[Pipeline] // script
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Build and unit/integration tests)
+[Pipeline] sh
+[2026-10-18T22:10:41.563Z] + ./mvnw -B -ntp clean verify
+[2026-10-18T22:10:43.427Z] [INFO] Scanning for projects...
+[2026-10-18T22:10:43.427Z] [INFO] 
+[2026-10-18T22:10:43.427Z] [INFO] -------------------< com.lastmile:lastmile-delivery >-------------------
+[2026-10-18T22:10:43.427Z] [INFO] Building Automated Last-Mile Delivery Management Platform 0.1.0-SNAPSHOT
+[2026-10-18T22:10:43.427Z] [INFO]   from pom.xml
+[2026-10-18T22:10:43.427Z] [INFO] --------------------------------[ jar ]---------------------------------
+[2026-10-18T22:10:43.979Z] [INFO] 
+[2026-10-18T22:10:43.979Z] [INFO] --- clean:3.5.0:clean (default-clean) @ lastmile-delivery ---
+[2026-10-18T22:10:43.979Z] [INFO] Deleting /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline/target
+[2026-10-18T22:10:44.230Z] [INFO] 
+[2026-10-18T22:10:44.230Z] [INFO] --- resources:3.5.0:resources (default-resources) @ lastmile-delivery ---
+[2026-10-18T22:10:44.230Z] [INFO] Copying 1 resource from src/main/resources to target/classes
+[2026-10-18T22:10:44.230Z] [INFO] Copying 15 resources from src/main/resources to target/classes
+[2026-10-18T22:10:44.230Z] [INFO] 
+[2026-10-18T22:10:44.230Z] [INFO] --- compiler:3.15.0:compile (default-compile) @ lastmile-delivery ---
+[2026-10-18T22:10:44.230Z] [INFO] Recompiling the module because of changed source code.
+[2026-10-18T22:10:44.230Z] [INFO] Compiling 36 source files with javac [debug parameters release 21] to target/classes
+[2026-10-18T22:10:46.093Z] [INFO] 
+[2026-10-18T22:10:46.093Z] [INFO] --- resources:3.5.0:testResources (default-testResources) @ lastmile-delivery ---
+[2026-10-18T22:10:46.093Z] [INFO] Copying 1 resource from src/test/resources to target/test-classes
+[2026-10-18T22:10:46.093Z] [INFO] 
+[2026-10-18T22:10:46.093Z] [INFO] --- compiler:3.15.0:testCompile (default-testCompile) @ lastmile-delivery ---
+[2026-10-18T22:10:46.093Z] [INFO] Recompiling the module because of changed dependency.
+[2026-10-18T22:10:46.093Z] [INFO] Compiling 27 source files with javac [debug parameters release 21] to target/test-classes
+[2026-10-18T22:10:47.438Z] [INFO] 
+[2026-10-18T22:10:47.438Z] [INFO] --- surefire:3.5.6:test (default-test) @ lastmile-delivery ---
+[2026-10-18T22:10:47.438Z] [INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[2026-10-18T22:10:47.438Z] [INFO] 
+[2026-10-18T22:10:47.438Z] [INFO] -------------------------------------------------------
+[2026-10-18T22:10:47.438Z] [INFO]  T E S T S
+[2026-10-18T22:10:47.438Z] [INFO] -------------------------------------------------------
+[2026-10-18T22:10:48.783Z] [INFO] Running com.lastmile.api.DeliveryApiTest
+[2026-10-18T22:10:48.783Z] 22:10:48.569 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.lastmile.api.DeliveryApiTest]: DeliveryApiTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:10:49.033Z] 22:10:48.706 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.api.DeliveryApiTest
+[2026-10-18T22:10:49.284Z] 
+[2026-10-18T22:10:49.284Z]   .   ____          _            __ _ _
+[2026-10-18T22:10:49.285Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-18T22:10:49.285Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-18T22:10:49.285Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-18T22:10:49.285Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-18T22:10:49.285Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-18T22:10:49.285Z] 
+[2026-10-18T22:10:49.285Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-18T22:10:49.285Z] 
+[2026-10-18T22:10:49.285Z] 2026-10-18T22:10:49.183Z  INFO 1645 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : Detected a Linux x86_64 system
+[2026-10-18T22:10:49.285Z] 2026-10-18T22:10:49.198Z  INFO 1645 --- [lastmile-delivery] [           main] .z.t.d.p.e.DefaultPostgresBinaryResolver : Detected distribution: 'Debian'
+[2026-10-18T22:10:49.536Z] 2026-10-18T22:10:49.200Z  INFO 1645 --- [lastmile-delivery] [           main] .z.t.d.p.e.DefaultPostgresBinaryResolver : System specific postgres binaries found: 'postgres-linux-x86_64.txz'
+[2026-10-18T22:10:49.536Z] 2026-10-18T22:10:49.257Z  INFO 1645 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : Extracting Postgres...
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:50.958Z  INFO 1645 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : Postgres binaries at /tmp/embedded-pg/PG-16c5707c09eef4783fc1cb48f11a526d
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.061Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : The files belonging to this database system will be owned by user "jenkins".
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.062Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : This user must also own the server process.
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.062Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.062Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : The database cluster will be initialized with locale "C.UTF-8".
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.062Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : The default text search configuration will be set to "english".
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.062Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.062Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : Data page checksums are disabled.
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.062Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.062Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : fixing permissions on existing directory /tmp/epg2382169714504087291 ... ok
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.067Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : creating subdirectories ... ok
+[2026-10-18T22:10:51.399Z] 2026-10-18T22:10:51.068Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting dynamic shared memory implementation ... posix
+[2026-10-18T22:10:51.950Z] 2026-10-18T22:10:51.855Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default "max_connections" ... 100
+[2026-10-18T22:10:51.950Z] 2026-10-18T22:10:51.873Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default "shared_buffers" ... 128MB
+[2026-10-18T22:10:51.950Z] 2026-10-18T22:10:51.895Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : selecting default time zone ... Etc/UTC
+[2026-10-18T22:10:52.201Z] 2026-10-18T22:10:51.934Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : creating configuration files ... ok
+[2026-10-18T22:10:52.753Z] 2026-10-18T22:10:52.556Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : running bootstrap script ... ok
+[2026-10-18T22:10:53.304Z] 2026-10-18T22:10:53.012Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : performing post-bootstrap initialization ... ok
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.393Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : syncing data to disk ... ok
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.393Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.393Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : Success. You can now start the database server using:
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.393Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.393Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      :     /tmp/embedded-pg/PG-16c5707c09eef4783fc1cb48f11a526d/bin/pg_ctl -D /tmp/epg2382169714504087291 -l logfile start
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.393Z  INFO 1645 --- [lastmile-delivery] [nitdb:pid(1698)] i.z.t.d.p.embedded.EmbeddedPostgres      : 
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.394Z  INFO 1645 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : fc451788-c6d1-45ef-aa6f-ec735e38160d initdb completed in 00:00:45.419
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.404Z  INFO 1645 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : fc451788-c6d1-45ef-aa6f-ec735e38160d postmaster started as Process[pid=1746, exitValue="not exited"] on port 41901.  Waiting up to PT10S for server startup to finish.
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.442Z  INFO 1645 --- [lastmile-delivery] [tgres:pid(1746)] i.z.t.d.p.embedded.EmbeddedPostgres      : waiting for server to start....2026-10-18 22:11:36.442 UTC [1750] LOG:  starting PostgreSQL 17.11 on x86_64-pc-linux-gnu, compiled by gcc (Ubuntu 7.5.0-3ubuntu1~18.04) 7.5.0, 64-bit
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.442Z  INFO 1645 --- [lastmile-delivery] [tgres:pid(1746)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-18 22:11:36.442 UTC [1750] LOG:  listening on IPv6 address "::1", port 41901
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.442Z  INFO 1645 --- [lastmile-delivery] [tgres:pid(1746)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-18 22:11:36.442 UTC [1750] LOG:  listening on IPv4 address "127.0.0.1", port 41901
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.442Z  INFO 1645 --- [lastmile-delivery] [tgres:pid(1746)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-18 22:11:36.442 UTC [1750] LOG:  listening on Unix socket "/tmp/.s.PGSQL.41901"
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.444Z  INFO 1645 --- [lastmile-delivery] [tgres:pid(1746)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-18 22:11:36.444 UTC [1753] LOG:  database system was shut down at 2026-10-18 22:10:52 UTC
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.448Z  INFO 1645 --- [lastmile-delivery] [tgres:pid(1746)] i.z.t.d.p.embedded.EmbeddedPostgres      : 2026-10-18 22:11:36.448 UTC [1750] LOG:  database system is ready to accept connections
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.510Z  INFO 1645 --- [lastmile-delivery] [tgres:pid(1746)] i.z.t.d.p.embedded.EmbeddedPostgres      :  done
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.511Z  INFO 1645 --- [lastmile-delivery] [tgres:pid(1746)] i.z.t.d.p.embedded.EmbeddedPostgres      : server started
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.606Z  INFO 1645 --- [lastmile-delivery] [           main] i.z.t.d.p.embedded.EmbeddedPostgres      : fc451788-c6d1-45ef-aa6f-ec735e38160d postmaster startup finished in 00:00:00.209
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.610Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.api.DeliveryApiTest         : Starting DeliveryApiTest using Java 21.0.12.1 with PID 1645 (started by jenkins in /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline)
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:36.612Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.api.DeliveryApiTest         : The following 1 profile is active: "test"
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:37.173Z  INFO 1645 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:37.235Z  INFO 1645 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 51 ms. Found 3 JPA repository interfaces.
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:37.985Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:37.999Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@ce19c86
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.001Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.030Z  INFO 1645 --- [lastmile-delivery] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:41901/postgres?user=postgres (PostgreSQL 17.11)
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.085Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table "public"."flyway_schema_history" does not exist yet
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.088Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.014s)
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.101Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table "public"."flyway_schema_history" ...
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.150Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": << Empty Schema >>
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.166Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "1 - core schema"
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.202Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Successfully applied 1 migration to schema "public", now at version v1 (execution time 00:00.021s)
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.311Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.353Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000001: Hibernate ORM core version 7.4.5.Final
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.770Z  INFO 1645 --- [lastmile-delivery] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+[2026-10-18T22:11:39.833Z] 2026-10-18T22:11:38.840Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+[2026-10-18T22:11:39.833Z] 	Database JDBC URL [jdbc:postgresql://localhost:41901/postgres?user=postgres]
+[2026-10-18T22:11:39.833Z] 	Database driver: PostgreSQL JDBC Driver
+[2026-10-18T22:11:39.833Z] 	Database dialect: PostgreSQLDialect
+[2026-10-18T22:11:39.833Z] 	Database version: 17.11
+[2026-10-18T22:11:39.833Z] 	Default catalog/schema: postgres/public
+[2026-10-18T22:11:39.833Z] 	Autocommit mode: undefined/unknown
+[2026-10-18T22:11:39.833Z] 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+[2026-10-18T22:11:39.833Z] 	JDBC fetch size: none
+[2026-10-18T22:11:39.833Z] 	Pool: DataSourceConnectionProvider
+[2026-10-18T22:11:39.834Z] 	Minimum pool size: undefined/unknown
+[2026-10-18T22:11:39.834Z] 	Maximum pool size: undefined/unknown
+[2026-10-18T22:11:39.834Z] 2026-10-18T22:11:39.616Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[2026-10-18T22:11:39.834Z] 2026-10-18T22:11:39.651Z  INFO 1645 --- [lastmile-delivery] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2026-10-18T22:11:40.084Z] 2026-10-18T22:11:39.743Z  INFO 1645 --- [lastmile-delivery] [           main] o.s.d.j.r.query.QueryEnhancerFactories   : Hibernate is in classpath; If applicable, HQL parser will be used.
+[2026-10-18T22:11:40.996Z] 2026-10-18T22:11:40.862Z  INFO 1645 --- [lastmile-delivery] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
+[2026-10-18T22:11:41.908Z] 2026-10-18T22:11:41.612Z  INFO 1645 --- [lastmile-delivery] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+[2026-10-18T22:11:41.908Z] 2026-10-18T22:11:41.613Z  INFO 1645 --- [lastmile-delivery] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+[2026-10-18T22:11:41.908Z] 2026-10-18T22:11:41.617Z  INFO 1645 --- [lastmile-delivery] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 4 ms
+[2026-10-18T22:11:41.908Z] 2026-10-18T22:11:41.720Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.api.DeliveryApiTest         : Started DeliveryApiTest in 52.852 seconds (process running for 54.296)
+[2026-10-18T22:11:41.908Z] Mockito is currently self-attaching to enable the inline-mock-maker. This will no longer work in future releases of the JDK. Please add Mockito as an agent to your build as described in Mockito's documentation: https://javadoc.io/doc/org.mockito/mockito-core/latest/org.mockito/org/mockito/Mockito.html#0.3
+[2026-10-18T22:11:42.159Z] WARNING: A Java agent has been loaded dynamically (/var/jenkins_home/.m2/repository/net/bytebuddy/byte-buddy-agent/1.18.11/byte-buddy-agent-1.18.11.jar)
+[2026-10-18T22:11:42.159Z] WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+[2026-10-18T22:11:42.159Z] WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+[2026-10-18T22:11:42.159Z] WARNING: Dynamic loading of agents will be disallowed by default in a future release
+[2026-10-18T22:11:46.283Z] [INFO] Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 57.02 s -- in com.lastmile.api.DeliveryApiTest
+[2026-10-18T22:11:46.283Z] [INFO] Running com.lastmile.SchemaConstraintsTest
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.388Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.SchemaConstraintsTest]: SchemaConstraintsTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.394Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.SchemaConstraintsTest
+[2026-10-18T22:11:46.283Z] 
+[2026-10-18T22:11:46.283Z]   .   ____          _            __ _ _
+[2026-10-18T22:11:46.283Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-18T22:11:46.283Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-18T22:11:46.283Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-18T22:11:46.283Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-18T22:11:46.283Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-18T22:11:46.283Z] 
+[2026-10-18T22:11:46.283Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-18T22:11:46.283Z] 
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.446Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.SchemaConstraintsTest       : Starting SchemaConstraintsTest using Java 21.0.12.1 with PID 1645 (started by jenkins in /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline)
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.447Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.SchemaConstraintsTest       : The following 1 profile is active: "test"
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.609Z  INFO 1645 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.624Z  INFO 1645 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 12 ms. Found 3 JPA repository interfaces.
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.745Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.752Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection org.postgresql.jdbc.PgConnection@21e896f6
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.753Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.754Z  INFO 1645 --- [lastmile-delivery] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:41901/postgres?user=postgres (PostgreSQL 17.11)
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.771Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.006s)
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.788Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 1
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.789Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.824Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.856Z  INFO 1645 --- [lastmile-delivery] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.863Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+[2026-10-18T22:11:46.283Z] 	Database JDBC URL [jdbc:postgresql://localhost:41901/postgres?user=postgres]
+[2026-10-18T22:11:46.283Z] 	Database driver: PostgreSQL JDBC Driver
+[2026-10-18T22:11:46.283Z] 	Database dialect: PostgreSQLDialect
+[2026-10-18T22:11:46.283Z] 	Database version: 17.11
+[2026-10-18T22:11:46.283Z] 	Default catalog/schema: postgres/public
+[2026-10-18T22:11:46.283Z] 	Autocommit mode: undefined/unknown
+[2026-10-18T22:11:46.283Z] 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+[2026-10-18T22:11:46.283Z] 	JDBC fetch size: none
+[2026-10-18T22:11:46.283Z] 	Pool: DataSourceConnectionProvider
+[2026-10-18T22:11:46.283Z] 	Minimum pool size: undefined/unknown
+[2026-10-18T22:11:46.283Z] 	Maximum pool size: undefined/unknown
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.945Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:45.958Z  INFO 1645 --- [lastmile-delivery] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2026-10-18T22:11:46.283Z] 2026-10-18T22:11:46.112Z  INFO 1645 --- [lastmile-delivery] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
+[2026-10-18T22:11:46.534Z] 2026-10-18T22:11:46.281Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.SchemaConstraintsTest       : Started SchemaConstraintsTest in 0.882 seconds (process running for 58.857)
+[2026-10-18T22:11:47.085Z] [INFO] Tests run: 7, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.484 s -- in com.lastmile.SchemaConstraintsTest
+[2026-10-18T22:11:47.085Z] [INFO] Running com.lastmile.health.HealthControllerTest
+[2026-10-18T22:11:47.085Z] 2026-10-18T22:11:46.872Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.health.HealthControllerTest]: HealthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:11:47.085Z] 2026-10-18T22:11:46.879Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.health.HealthControllerTest
+[2026-10-18T22:11:47.085Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.029 s -- in com.lastmile.health.HealthControllerTest
+[2026-10-18T22:11:47.085Z] [INFO] Running com.lastmile.health.HealthControllerUnitTest
+[2026-10-18T22:11:47.336Z] 2026-10-18T22:11:47.214Z  WARN 1645 --- [lastmile-delivery] [           main] com.lastmile.health.HealthController     : Readiness check failed: DataAccessResourceFailureException
+[2026-10-18T22:11:47.336Z] [INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.324 s -- in com.lastmile.health.HealthControllerUnitTest
+[2026-10-18T22:11:47.336Z] [INFO] Running com.lastmile.security.LoginTest
+[2026-10-18T22:11:47.336Z] 2026-10-18T22:11:47.246Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.security.LoginTest]: LoginTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:11:47.336Z] 2026-10-18T22:11:47.270Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.security.LoginTest
+[2026-10-18T22:11:48.680Z] [INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.065 s -- in com.lastmile.security.LoginTest
+[2026-10-18T22:11:48.680Z] [INFO] Running com.lastmile.web.WebAuthorizationTest
+[2026-10-18T22:11:48.680Z] 2026-10-18T22:11:48.307Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.web.WebAuthorizationTest]: WebAuthorizationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:11:48.680Z] 2026-10-18T22:11:48.327Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.web.WebAuthorizationTest
+[2026-10-18T22:11:50.025Z] 2026-10-18T22:11:49.866Z  WARN 1645 --- [lastmile-delivery] [           main] .w.s.m.s.DefaultHandlerExceptionResolver : Resolved [org.springframework.web.method.annotation.MethodArgumentTypeMismatchException: Method parameter 'status': Failed to convert value of type 'java.lang.String' to required type 'com.lastmile.delivery.DeliveryStatus'; Failed to convert from type [java.lang.String] to type [@org.springframework.web.bind.annotation.RequestParam com.lastmile.delivery.DeliveryStatus] for value [LOST]]
+[2026-10-18T22:11:52.509Z] [INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 3.825 s -- in com.lastmile.web.WebAuthorizationTest
+[2026-10-18T22:11:52.509Z] [INFO] Running com.lastmile.delivery.DeliveryCreationServiceTest
+[2026-10-18T22:11:52.509Z] 2026-10-18T22:11:52.133Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.delivery.DeliveryCreationServiceTest]: DeliveryCreationServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:11:52.509Z] 2026-10-18T22:11:52.151Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.delivery.DeliveryCreationServiceTest
+[2026-10-18T22:11:53.420Z] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.179 s -- in com.lastmile.delivery.DeliveryCreationServiceTest
+[2026-10-18T22:11:53.420Z] [INFO] Running com.lastmile.delivery.DeliveryStatusTest
+[2026-10-18T22:11:53.420Z] [INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.048 s -- in com.lastmile.delivery.DeliveryStatusTest
+[2026-10-18T22:11:53.420Z] [INFO] Running com.lastmile.delivery.DeliveryCreationControllerTest
+[2026-10-18T22:11:53.420Z] 2026-10-18T22:11:53.363Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.delivery.DeliveryCreationControllerTest]: DeliveryCreationControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:11:53.420Z] 2026-10-18T22:11:53.367Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.delivery.DeliveryCreationControllerTest
+[2026-10-18T22:11:54.764Z] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.374 s -- in com.lastmile.delivery.DeliveryCreationControllerTest
+[2026-10-18T22:11:54.764Z] [INFO] Running com.lastmile.delivery.DeliveryCodeGeneratorTest
+[2026-10-18T22:11:54.764Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.004 s -- in com.lastmile.delivery.DeliveryCodeGeneratorTest
+[2026-10-18T22:11:54.764Z] [INFO] Running com.lastmile.delivery.DeliveryPolicyTest
+[2026-10-18T22:11:54.764Z] [INFO] Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.014 s -- in com.lastmile.delivery.DeliveryPolicyTest
+[2026-10-18T22:11:54.764Z] [INFO] Running com.lastmile.delivery.DeliveryWorkflowServiceTest
+[2026-10-18T22:11:55.015Z] 2026-10-18T22:11:54.762Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.delivery.DeliveryWorkflowServiceTest]: DeliveryWorkflowServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:11:55.015Z] 2026-10-18T22:11:54.770Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.delivery.DeliveryWorkflowServiceTest
+[2026-10-18T22:11:55.015Z] 
+[2026-10-18T22:11:55.015Z]   .   ____          _            __ _ _
+[2026-10-18T22:11:55.015Z]  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+[2026-10-18T22:11:55.015Z] ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+[2026-10-18T22:11:55.015Z]  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+[2026-10-18T22:11:55.015Z]   '  |____| .__|_| |_|_| |_\__, | / / / /
+[2026-10-18T22:11:55.015Z]  =========|_|==============|___/=/_/_/_/
+[2026-10-18T22:11:55.015Z] 
+[2026-10-18T22:11:55.015Z]  :: Spring Boot ::                (v4.1.1)
+[2026-10-18T22:11:55.015Z] 
+[2026-10-18T22:11:55.015Z] 2026-10-18T22:11:54.814Z  INFO 1645 --- [lastmile-delivery] [           main] c.l.d.DeliveryWorkflowServiceTest        : Starting DeliveryWorkflowServiceTest using Java 21.0.12.1 with PID 1645 (started by jenkins in /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline)
+[2026-10-18T22:11:55.015Z] 2026-10-18T22:11:54.814Z  INFO 1645 --- [lastmile-delivery] [           main] c.l.d.DeliveryWorkflowServiceTest        : The following 1 profile is active: "test"
+[2026-10-18T22:11:55.266Z] 2026-10-18T22:11:54.977Z  INFO 1645 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+[2026-10-18T22:11:55.266Z] 2026-10-18T22:11:54.988Z  INFO 1645 --- [lastmile-delivery] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 9 ms. Found 3 JPA repository interfaces.
+[2026-10-18T22:11:55.266Z] 2026-10-18T22:11:55.135Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Starting...
+[2026-10-18T22:11:55.266Z] 2026-10-18T22:11:55.142Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-3 - Added connection org.postgresql.jdbc.PgConnection@3c68a85f
+[2026-10-18T22:11:55.266Z] 2026-10-18T22:11:55.143Z  INFO 1645 --- [lastmile-delivery] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-3 - Start completed.
+[2026-10-18T22:11:55.266Z] 2026-10-18T22:11:55.144Z  INFO 1645 --- [lastmile-delivery] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://localhost:41901/postgres?user=postgres (PostgreSQL 17.11)
+[2026-10-18T22:11:55.266Z] 2026-10-18T22:11:55.159Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 1 migration (execution time 00:00.004s)
+[2026-10-18T22:11:55.267Z] 2026-10-18T22:11:55.173Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 1
+[2026-10-18T22:11:55.267Z] 2026-10-18T22:11:55.174Z  INFO 1645 --- [lastmile-delivery] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+[2026-10-18T22:11:55.267Z] 2026-10-18T22:11:55.205Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.jpa                    : HHH008540: Processing PersistenceUnitInfo [name: default]
+[2026-10-18T22:11:55.267Z] 2026-10-18T22:11:55.233Z  INFO 1645 --- [lastmile-delivery] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+[2026-10-18T22:11:55.267Z] 2026-10-18T22:11:55.239Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+[2026-10-18T22:11:55.267Z] 	Database JDBC URL [jdbc:postgresql://localhost:41901/postgres?user=postgres]
+[2026-10-18T22:11:55.267Z] 	Database driver: PostgreSQL JDBC Driver
+[2026-10-18T22:11:55.267Z] 	Database dialect: PostgreSQLDialect
+[2026-10-18T22:11:55.267Z] 	Database version: 17.11
+[2026-10-18T22:11:55.267Z] 	Default catalog/schema: postgres/public
+[2026-10-18T22:11:55.267Z] 	Autocommit mode: undefined/unknown
+[2026-10-18T22:11:55.267Z] 	Isolation level: READ_COMMITTED [default READ_COMMITTED]
+[2026-10-18T22:11:55.267Z] 	JDBC fetch size: none
+[2026-10-18T22:11:55.267Z] 	Pool: DataSourceConnectionProvider
+[2026-10-18T22:11:55.267Z] 	Minimum pool size: undefined/unknown
+[2026-10-18T22:11:55.267Z] 	Maximum pool size: undefined/unknown
+[2026-10-18T22:11:55.517Z] 2026-10-18T22:11:55.319Z  INFO 1645 --- [lastmile-delivery] [           main] org.hibernate.orm.core                   : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+[2026-10-18T22:11:55.518Z] 2026-10-18T22:11:55.338Z  INFO 1645 --- [lastmile-delivery] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+[2026-10-18T22:11:56.069Z] 2026-10-18T22:11:55.737Z  INFO 1645 --- [lastmile-delivery] [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name appUserDetailsService
+[2026-10-18T22:11:56.069Z] 2026-10-18T22:11:55.969Z  INFO 1645 --- [lastmile-delivery] [           main] c.l.d.DeliveryWorkflowServiceTest        : Started DeliveryWorkflowServiceTest in 1.194 seconds (process running for 68.545)
+[2026-10-18T22:12:00.193Z] [INFO] Tests run: 12, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.625 s -- in com.lastmile.delivery.DeliveryWorkflowServiceTest
+[2026-10-18T22:12:00.193Z] [INFO] Running com.lastmile.delivery.DeliverySearchServiceTest
+[2026-10-18T22:12:00.193Z] 2026-10-18T22:11:59.389Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.delivery.DeliverySearchServiceTest]: DeliverySearchServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:12:00.193Z] 2026-10-18T22:11:59.390Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.delivery.DeliverySearchServiceTest
+[2026-10-18T22:12:00.744Z] [INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.154 s -- in com.lastmile.delivery.DeliverySearchServiceTest
+[2026-10-18T22:12:00.744Z] [INFO] Running com.lastmile.dashboard.DashboardServiceTest
+[2026-10-18T22:12:00.744Z] 2026-10-18T22:12:00.544Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.dashboard.DashboardServiceTest]: DashboardServiceTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:12:00.744Z] 2026-10-18T22:12:00.550Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.dashboard.DashboardServiceTest
+[2026-10-18T22:12:01.656Z] [INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.840 s -- in com.lastmile.dashboard.DashboardServiceTest
+[2026-10-18T22:12:01.656Z] [INFO] Running com.lastmile.user.DemoDataSeederTest
+[2026-10-18T22:12:01.656Z] 2026-10-18T22:12:01.384Z  INFO 1645 --- [lastmile-delivery] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.lastmile.user.DemoDataSeederTest]: DemoDataSeederTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+[2026-10-18T22:12:01.656Z] 2026-10-18T22:12:01.390Z  INFO 1645 --- [lastmile-delivery] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.lastmile.LastMileApplication for test class com.lastmile.user.DemoDataSeederTest
+[2026-10-18T22:12:01.656Z] 2026-10-18T22:12:01.402Z  WARN 1645 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : demo profile active but LASTMILE_DEMO_PASSWORD is missing or shorter than 12 characters; no demo accounts created
+[2026-10-18T22:12:01.656Z] 2026-10-18T22:12:01.402Z  WARN 1645 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : demo profile active but LASTMILE_DEMO_PASSWORD is missing or shorter than 12 characters; no demo accounts created
+[2026-10-18T22:12:01.656Z] 2026-10-18T22:12:01.523Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : Demo accounts ensured: 4 created, 0 already present
+[2026-10-18T22:12:01.656Z] 2026-10-18T22:12:01.601Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : Demo deliveries created: 6 (fictional)
+[2026-10-18T22:12:01.907Z] 2026-10-18T22:12:01.664Z  INFO 1645 --- [lastmile-delivery] [           main] com.lastmile.user.DemoDataSeeder         : Demo accounts ensured: 0 created, 4 already present
+[2026-10-18T22:12:01.907Z] [INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.286 s -- in com.lastmile.user.DemoDataSeederTest
+[2026-10-18T22:12:02.158Z] [INFO] 
+[2026-10-18T22:12:02.158Z] [INFO] Results:
+[2026-10-18T22:12:02.158Z] [INFO] 
+[2026-10-18T22:12:02.158Z] [INFO] Tests run: 86, Failures: 0, Errors: 0, Skipped: 0
+[2026-10-18T22:12:02.158Z] [INFO] 
+[2026-10-18T22:12:02.158Z] [INFO] 
+[2026-10-18T22:12:02.158Z] [INFO] --- jar:3.5.1:jar (default-jar) @ lastmile-delivery ---
+[2026-10-18T22:12:02.408Z] [INFO] Building jar: /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline/target/lastmile-delivery.jar
+[2026-10-18T22:12:02.408Z] [INFO] 
+[2026-10-18T22:12:02.408Z] [INFO] --- spring-boot:4.1.1:repackage (repackage) @ lastmile-delivery ---
+[2026-10-18T22:12:02.960Z] [INFO] Replacing main artifact /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline/target/lastmile-delivery.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[2026-10-18T22:12:02.960Z] [INFO] The original artifact has been renamed to /var/jenkins_home/workspace/ile-delivery_ci_jenkins-pipeline/target/lastmile-delivery.jar.original
+[2026-10-18T22:12:02.960Z] [INFO] ------------------------------------------------------------------------
+[2026-10-18T22:12:02.960Z] [INFO] BUILD SUCCESS
+[2026-10-18T22:12:02.960Z] [INFO] ------------------------------------------------------------------------
+[2026-10-18T22:12:02.960Z] [INFO] Total time:  01:19 min
+[2026-10-18T22:12:02.960Z] [INFO] Finished at: 2026-10-18T22:12:02Z
+[2026-10-18T22:12:02.960Z] [INFO] ------------------------------------------------------------------------
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Package images)
+[Pipeline] sh
+[2026-10-18T22:12:04.779Z] + docker build -q -t lastmile-delivery:3af9df95d0b1 --build-arg GIT_COMMIT=3af9df95d0b1227fc7025b2d673653cb3edadf43 --build-arg VERSION=3af9df95d0b1 .
+[2026-10-18T22:12:04.779Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-18T22:12:04.779Z]             Install the buildx component to build images with BuildKit:
+[2026-10-18T22:12:04.779Z]             https://docs.docker.com/go/buildx/
+[2026-10-18T22:12:04.779Z] 
+[2026-10-18T22:13:41.072Z] sha256:898152c9f82dffd4de62d86b00a3d94bdfed95033b9cc8dbc1cefcf5ac149027
+[2026-10-18T22:13:41.073Z] + docker build -q -t lastmile-nginx:3af9df95d0b1 --build-arg GIT_COMMIT=3af9df95d0b1227fc7025b2d673653cb3edadf43 deploy/nginx
+[2026-10-18T22:13:41.073Z] DEPRECATED: The legacy builder is deprecated and will be removed in a future release.
+[2026-10-18T22:13:41.073Z]             Install the buildx component to build images with BuildKit:
+[2026-10-18T22:13:41.073Z]             https://docs.docker.com/go/buildx/
+[2026-10-18T22:13:41.073Z] 
+[2026-10-18T22:14:13.010Z] sha256:72ae255f7f372497bc79c1e6a0bf506965c82b50d40ea0d1adaf47e577136a56
+[2026-10-18T22:14:13.010Z] + docker image inspect lastmile-delivery:3af9df95d0b1 --format app image {{.Id}} user={{.Config.User}} revision={{index .Config.Labels "org.opencontainers.image.revision"}}
+[2026-10-18T22:14:13.010Z] app image sha256:898152c9f82dffd4de62d86b00a3d94bdfed95033b9cc8dbc1cefcf5ac149027 user=10001:10001 revision=3af9df95d0b1227fc7025b2d673653cb3edadf43
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Deploy)
+[Pipeline] withCredentials
+[2026-10-18T22:14:15.511Z] Masking supported pattern matches of $LASTMILE_DB_PASSWORD or $LASTMILE_DEMO_PASSWORD
+[Pipeline] {
+[Pipeline] withEnv
+[Pipeline] {
+[Pipeline] sh
+[2026-10-18T22:14:17.079Z] + docker compose -f deploy/compose.yaml up -d --remove-orphans --wait --wait-timeout 180
+[2026-10-18T22:14:17.330Z]  Image postgres:17.11-alpine3.24 Pulling 
+[2026-10-18T22:14:22.526Z]  a8a481ae6efc Pulling fs layer 0B
+[2026-10-18T22:14:22.526Z]  7ccdb0dcae74 Pulling fs layer 0B
+[2026-10-18T22:14:22.526Z]  3333950675b2 Pulling fs layer 0B
+[2026-10-18T22:14:22.527Z]  f3b07e8a357c Pulling fs layer 0B
+[2026-10-18T22:14:22.527Z]  4ece9a32c307 Pulling fs layer 0B
+[2026-10-18T22:14:22.527Z]  93a3470d5852 Pulling fs layer 0B
+[2026-10-18T22:14:22.527Z]  eb805f20f060 Pulling fs layer 0B
+[2026-10-18T22:14:22.527Z]  43f9814c9a3b Pulling fs layer 0B
+[2026-10-18T22:14:22.527Z]  b0a0d9d2abf2 Pulling fs layer 0B
+[2026-10-18T22:14:22.527Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:22.527Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:22.527Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:22.527Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:22.527Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:22.527Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:22.527Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:22.777Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:22.777Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:22.777Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:22.777Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:22.777Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:22.777Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:22.777Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:22.777Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:22.777Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:22.777Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.028Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.028Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.028Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.028Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.028Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.028Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.028Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.028Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.279Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:23.279Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.279Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.279Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.279Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.279Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:23.279Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.279Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.279Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.279Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.279Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:23.279Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.279Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.279Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.279Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.529Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.529Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.529Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.529Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.529Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:23.529Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:23.529Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.529Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.529Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.529Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.780Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:23.780Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.780Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.780Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.780Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.780Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:23.780Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.780Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.780Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:23.780Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.780Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:23.780Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:23.780Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:23.780Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:23.780Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:23.780Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:23.780Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:23.780Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:23.780Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:24.031Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.031Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.031Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:24.031Z]  7ccdb0dcae74 Downloading 128B
+[2026-10-18T22:14:24.031Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:24.031Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:24.031Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:24.031Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:24.031Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:24.031Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.031Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.031Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:24.031Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:24.031Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:24.031Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:24.281Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:24.282Z]  7ccdb0dcae74 Download complete 0B
+[2026-10-18T22:14:24.282Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:24.282Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:24.282Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:24.282Z]  a8a481ae6efc Downloading 183B
+[2026-10-18T22:14:24.282Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.282Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.282Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:24.282Z]  eb805f20f060 Downloading 9.999kB
+[2026-10-18T22:14:24.282Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.282Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.282Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:24.282Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:24.282Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.282Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.282Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:24.282Z]  3333950675b2 Downloading 116B
+[2026-10-18T22:14:24.282Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:24.282Z]  a8a481ae6efc Download complete 0B
+[2026-10-18T22:14:24.282Z]  f3b07e8a357c Downloading 1.049MB
+[2026-10-18T22:14:24.532Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.533Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.533Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:24.533Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:24.533Z]  eb805f20f060 Download complete 0B
+[2026-10-18T22:14:24.533Z]  f3b07e8a357c Downloading 2.097MB
+[2026-10-18T22:14:24.533Z]  4ece9a32c307 Downloading 968B
+[2026-10-18T22:14:24.533Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:24.533Z]  f3b07e8a357c Downloading 3.146MB
+[2026-10-18T22:14:24.533Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.533Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.784Z]  f3b07e8a357c Downloading 5.243MB
+[2026-10-18T22:14:24.784Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.784Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.784Z]  3333950675b2 Download complete 0B
+[2026-10-18T22:14:24.784Z]  93a3470d5852 Downloading 169B
+[2026-10-18T22:14:24.784Z]  f3b07e8a357c Downloading 8.389MB
+[2026-10-18T22:14:24.784Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.784Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.784Z]  4ece9a32c307 Download complete 0B
+[2026-10-18T22:14:24.784Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:24.784Z]  f3b07e8a357c Downloading 10.49MB
+[2026-10-18T22:14:24.784Z]  43f9814c9a3b Downloading 901.4kB
+[2026-10-18T22:14:24.784Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:24.784Z]  93a3470d5852 Download complete 0B
+[2026-10-18T22:14:25.035Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.035Z]  f3b07e8a357c Downloading 12.58MB
+[2026-10-18T22:14:25.035Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:25.035Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.035Z]  f3b07e8a357c Downloading 14.68MB
+[2026-10-18T22:14:25.035Z]  43f9814c9a3b Download complete 0B
+[2026-10-18T22:14:25.035Z]  b0a0d9d2abf2 Downloading 6.111kB
+[2026-10-18T22:14:25.035Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.286Z]  f3b07e8a357c Downloading 16.78MB
+[2026-10-18T22:14:25.286Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.286Z]  f3b07e8a357c Downloading 18.87MB
+[2026-10-18T22:14:25.286Z]  b0a0d9d2abf2 Download complete 0B
+[2026-10-18T22:14:25.286Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.286Z]  f3b07e8a357c Downloading 20.97MB
+[2026-10-18T22:14:25.286Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.537Z]  f3b07e8a357c Downloading 23.07MB
+[2026-10-18T22:14:25.537Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.537Z]  f3b07e8a357c Downloading 25.17MB
+[2026-10-18T22:14:25.537Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.789Z]  f3b07e8a357c Downloading 27.26MB
+[2026-10-18T22:14:25.789Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.789Z]  f3b07e8a357c Downloading 30.41MB
+[2026-10-18T22:14:25.789Z]  4ece9a32c307 Extracting 1B
+[2026-10-18T22:14:25.789Z]  f3b07e8a357c Downloading 32.51MB
+[2026-10-18T22:14:25.789Z]  4ece9a32c307 Extracting 2B
+[2026-10-18T22:14:26.040Z]  f3b07e8a357c Downloading 34.6MB
+[2026-10-18T22:14:26.040Z]  4ece9a32c307 Extracting 2B
+[2026-10-18T22:14:26.040Z]  f3b07e8a357c Downloading 36.7MB
+[2026-10-18T22:14:26.040Z]  4ece9a32c307 Extracting 2B
+[2026-10-18T22:14:26.291Z]  f3b07e8a357c Downloading 37.75MB
+[2026-10-18T22:14:26.291Z]  4ece9a32c307 Extracting 2B
+[2026-10-18T22:14:26.291Z]  f3b07e8a357c Downloading 39.85MB
+[2026-10-18T22:14:26.291Z]  4ece9a32c307 Extracting 2B
+[2026-10-18T22:14:26.291Z]  f3b07e8a357c Downloading 41.94MB
+[2026-10-18T22:14:26.291Z]  4ece9a32c307 Extracting 2B
+[2026-10-18T22:14:26.541Z]  f3b07e8a357c Downloading 45.09MB
+[2026-10-18T22:14:26.542Z]  4ece9a32c307 Extracting 2B
+[2026-10-18T22:14:26.542Z]  f3b07e8a357c Downloading 47.19MB
+[2026-10-18T22:14:26.542Z]  4ece9a32c307 Extracting 2B
+[2026-10-18T22:14:26.792Z]  656469e78267 Downloading 41.69kB
+[2026-10-18T22:14:26.792Z]  f3b07e8a357c Downloading 49.28MB
+[2026-10-18T22:14:26.792Z]  656469e78267 Downloading 41.69kB
+[2026-10-18T22:14:26.792Z]  f3b07e8a357c Downloading 51.38MB
+[2026-10-18T22:14:26.792Z]  656469e78267 Downloading 41.69kB
+[2026-10-18T22:14:26.792Z]  f3b07e8a357c Downloading 53.48MB
+[2026-10-18T22:14:26.792Z]  fa8e66b88311 Downloading 598kB
+[2026-10-18T22:14:27.043Z]  656469e78267 Downloading 41.69kB
+[2026-10-18T22:14:27.043Z]  f3b07e8a357c Downloading 56.62MB
+[2026-10-18T22:14:27.043Z]  fa8e66b88311 Downloading 598kB
+[2026-10-18T22:14:27.043Z]  4ece9a32c307 Pull complete 0B
+[2026-10-18T22:14:27.043Z]  f3b07e8a357c Downloading 58.72MB
+[2026-10-18T22:14:27.043Z]  fa8e66b88311 Downloading 598kB
+[2026-10-18T22:14:27.294Z]  f3b07e8a357c Downloading 60.82MB
+[2026-10-18T22:14:27.294Z]  fa8e66b88311 Downloading 598kB
+[2026-10-18T22:14:27.294Z]  656469e78267 Download complete 0B
+[2026-10-18T22:14:27.294Z]  f3b07e8a357c Downloading 62.91MB
+[2026-10-18T22:14:27.294Z]  fa8e66b88311 Downloading 598kB
+[2026-10-18T22:14:27.294Z]  f3b07e8a357c Downloading 65.01MB
+[2026-10-18T22:14:27.294Z]  fa8e66b88311 Download complete 0B
+[2026-10-18T22:14:27.545Z]  f3b07e8a357c Downloading 67.11MB
+[2026-10-18T22:14:27.545Z]  f3b07e8a357c Downloading 69.21MB
+[2026-10-18T22:14:27.796Z]  f3b07e8a357c Downloading 71.3MB
+[2026-10-18T22:14:27.796Z]  f3b07e8a357c Downloading 74.45MB
+[2026-10-18T22:14:27.796Z]  f3b07e8a357c Downloading 76.55MB
+[2026-10-18T22:14:28.047Z]  f3b07e8a357c Downloading 78.64MB
+[2026-10-18T22:14:28.047Z]  43f9814c9a3b Extracting 1B
+[2026-10-18T22:14:28.047Z]  f3b07e8a357c Downloading 80.74MB
+[2026-10-18T22:14:28.298Z]  f3b07e8a357c Downloading 82.84MB
+[2026-10-18T22:14:28.298Z]  43f9814c9a3b Pull complete 0B
+[2026-10-18T22:14:28.298Z]  f3b07e8a357c Downloading 85.85MB
+[2026-10-18T22:14:28.298Z]  f3b07e8a357c Downloading 88.08MB
+[2026-10-18T22:14:28.549Z]  f3b07e8a357c Downloading 90.18MB
+[2026-10-18T22:14:28.549Z]  3333950675b2 Extracting 1B
+[2026-10-18T22:14:28.549Z]  f3b07e8a357c Downloading 92.27MB
+[2026-10-18T22:14:28.799Z]  f3b07e8a357c Downloading 94.37MB
+[2026-10-18T22:14:28.799Z]  3333950675b2 Pull complete 0B
+[2026-10-18T22:14:28.799Z]  f3b07e8a357c Downloading 96.47MB
+[2026-10-18T22:14:28.799Z]  f3b07e8a357c Downloading 98.57MB
+[2026-10-18T22:14:29.050Z]  f3b07e8a357c Downloading 100.7MB
+[2026-10-18T22:14:29.050Z]  f3b07e8a357c Downloading 103.8MB
+[2026-10-18T22:14:29.301Z]  f3b07e8a357c Downloading 105.9MB
+[2026-10-18T22:14:29.301Z]  f3b07e8a357c Downloading 109.1MB
+[2026-10-18T22:14:29.301Z]  f3b07e8a357c Downloading 111.1MB
+[2026-10-18T22:14:29.552Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:29.552Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:29.802Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:29.802Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:29.802Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.053Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.053Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.303Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.304Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.304Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.554Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.554Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.805Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.805Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:30.805Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:31.055Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:31.055Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:31.401Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:31.652Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:31.652Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:31.652Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:31.652Z]  f3b07e8a357c Downloading 112.4MB
+[2026-10-18T22:14:31.902Z]  f3b07e8a357c Download complete 0B
+[2026-10-18T22:14:31.902Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:31.902Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.153Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.153Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.404Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.404Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.404Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.654Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.654Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.905Z]  f3b07e8a357c Extracting 1B
+[2026-10-18T22:14:32.905Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:32.905Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.156Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.156Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.406Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.406Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.406Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.657Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.657Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.907Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.907Z]  f3b07e8a357c Extracting 2B
+[2026-10-18T22:14:33.908Z]  f3b07e8a357c Extracting 3B
+[2026-10-18T22:14:34.158Z]  f3b07e8a357c Extracting 3B
+[2026-10-18T22:14:34.158Z]  f3b07e8a357c Extracting 3B
+[2026-10-18T22:14:34.409Z]  f3b07e8a357c Extracting 3B
+[2026-10-18T22:14:34.409Z]  f3b07e8a357c Extracting 3B
+[2026-10-18T22:14:34.659Z]  f3b07e8a357c Pull complete 0B
+[2026-10-18T22:14:34.913Z]  eb805f20f060 Extracting 1B
+[2026-10-18T22:14:35.164Z]  eb805f20f060 Pull complete 0B
+[2026-10-18T22:14:35.415Z]  7ccdb0dcae74 Extracting 1B
+[2026-10-18T22:14:35.415Z]  7ccdb0dcae74 Extracting 1B
+[2026-10-18T22:14:35.665Z]  7ccdb0dcae74 Pull complete 0B
+[2026-10-18T22:14:35.916Z]  93a3470d5852 Extracting 1B
+[2026-10-18T22:14:35.916Z]  93a3470d5852 Pull complete 0B
+[2026-10-18T22:14:36.467Z]  b0a0d9d2abf2 Extracting 1B
+[2026-10-18T22:14:36.467Z]  b0a0d9d2abf2 Pull complete 0B
+[2026-10-18T22:14:36.718Z]  a8a481ae6efc Extracting 1B
+[2026-10-18T22:14:36.718Z]  a8a481ae6efc Pull complete 0B
+[2026-10-18T22:14:36.968Z]  Image postgres:17.11-alpine3.24 Pulled 
+[2026-10-18T22:14:37.219Z]  Network lastmile_backend Creating 
+[2026-10-18T22:14:37.219Z]  Network lastmile_backend Creating 
+[2026-10-18T22:14:37.219Z]  Volume lastmile_pgdata Creating 
+[2026-10-18T22:14:37.219Z]  Volume lastmile_pgdata Creating 
+[2026-10-18T22:14:37.219Z]  Network lastmile_frontend Creating 
+[2026-10-18T22:14:37.219Z]  Network lastmile_frontend Creating 
+[2026-10-18T22:14:37.219Z]  Volume lastmile_pgdata Created 
+[2026-10-18T22:14:37.219Z]  Volume lastmile_pgdata Created 
+[2026-10-18T22:14:37.219Z]  Network lastmile_backend Created 
+[2026-10-18T22:14:37.219Z]  Network lastmile_backend Created 
+[2026-10-18T22:14:37.219Z]  Container lastmile-db-1 Creating 
+[2026-10-18T22:14:37.470Z]  Network lastmile_frontend Created 
+[2026-10-18T22:14:37.470Z]  Network lastmile_frontend Created 
+[2026-10-18T22:14:41.594Z]  Container lastmile-db-1 Created 
+[2026-10-18T22:14:41.594Z]  Container lastmile-app-1 Creating 
+[2026-10-18T22:14:42.505Z]  Container lastmile-app-1 Created 
+[2026-10-18T22:14:42.505Z]  Container lastmile-nginx-1 Creating 
+[2026-10-18T22:14:43.417Z]  Container lastmile-nginx-1 Created 
+[2026-10-18T22:14:43.668Z]  Container lastmile-db-1 Starting 
+[2026-10-18T22:14:45.530Z]  Container lastmile-db-1 Started 
+[2026-10-18T22:14:45.530Z]  Container lastmile-db-1 Waiting 
+[2026-10-18T22:14:57.629Z]  Container lastmile-db-1 Healthy 
+[2026-10-18T22:14:57.629Z]  Container lastmile-app-1 Starting 
+[2026-10-18T22:14:57.629Z]  Container lastmile-app-1 Started 
+[2026-10-18T22:14:57.629Z]  Container lastmile-app-1 Waiting 
+[2026-10-18T22:15:07.512Z]  Container lastmile-app-1 Healthy 
+[2026-10-18T22:15:07.512Z]  Container lastmile-nginx-1 Starting 
+[2026-10-18T22:15:08.857Z]  Container lastmile-nginx-1 Started 
+[2026-10-18T22:15:08.857Z]  Container lastmile-app-1 Waiting 
+[2026-10-18T22:15:08.857Z]  Container lastmile-nginx-1 Waiting 
+[2026-10-18T22:15:08.857Z]  Container lastmile-db-1 Waiting 
+[2026-10-18T22:15:09.410Z]  Container lastmile-db-1 Healthy 
+[2026-10-18T22:15:09.410Z]  Container lastmile-app-1 Healthy 
+[2026-10-18T22:15:19.288Z]  Container lastmile-nginx-1 Healthy 
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withCredentials
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Verify deployment)
+[Pipeline] sh
+[2026-10-18T22:15:22.402Z] + docker compose -p lastmile ps --format table {{.Service}}	{{.Image}}	{{.Status}}
+[2026-10-18T22:15:22.402Z] SERVICE   IMAGE                            STATUS
+[2026-10-18T22:15:22.402Z] app       lastmile-delivery:3af9df95d0b1   Up 26 seconds (healthy)
+[2026-10-18T22:15:22.402Z] db        postgres:17.11-alpine3.24        Up 38 seconds (healthy)
+[2026-10-18T22:15:22.402Z] nginx     lastmile-nginx:3af9df95d0b1      Up 14 seconds (healthy)
+[2026-10-18T22:15:22.402Z] + docker exec lastmile-nginx-1 wget -q -O - http://127.0.0.1/api/v1/health/ready
+[2026-10-18T22:15:22.402Z] + ready={"status":"UP"}
+[2026-10-18T22:15:22.402Z] + echo readiness via nginx: {"status":"UP"}
+[2026-10-18T22:15:22.402Z] readiness via nginx: {"status":"UP"}
+[2026-10-18T22:15:22.402Z] + echo {"status":"UP"}
+[2026-10-18T22:15:22.402Z] + grep -q "status":"UP"
+[2026-10-18T22:15:22.402Z] + docker inspect --format {{index .Config.Labels "org.opencontainers.image.revision"}} lastmile-app-1
+[2026-10-18T22:15:22.653Z] + deployed=3af9df95d0b1227fc7025b2d673653cb3edadf43
+[2026-10-18T22:15:22.653Z] + echo deployed app revision: 3af9df95d0b1227fc7025b2d673653cb3edadf43
+[2026-10-18T22:15:22.653Z] deployed app revision: 3af9df95d0b1227fc7025b2d673653cb3edadf43
+[2026-10-18T22:15:22.653Z] + test 3af9df95d0b1227fc7025b2d673653cb3edadf43 = 3af9df95d0b1227fc7025b2d673653cb3edadf43
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] stage
+[Pipeline] { (Declarative: Post Actions)
+[Pipeline] junit
+[2026-10-18T22:15:24.565Z] Recording test results
+[2026-10-18T22:15:25.156Z] [Checks API] No suitable checks publisher found.
+[Pipeline] archiveArtifacts
+[2026-10-18T22:15:25.480Z] Archiving artifacts
+[2026-10-18T22:15:25.636Z] Recording fingerprints
+[Pipeline] }
+[Pipeline] // stage
+[Pipeline] }
+[Pipeline] // timeout
+[Pipeline] }
+[Pipeline] // timestamps
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // withEnv
+[Pipeline] }
+[Pipeline] // node
+[Pipeline] End of Pipeline
+Finished: SUCCESS
