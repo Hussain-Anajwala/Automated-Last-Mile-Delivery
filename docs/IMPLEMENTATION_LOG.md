@@ -106,3 +106,61 @@ EXIT CRITERIA:
 AUTO-ADVANCE: NO for infrastructure-dependent phases (7, 8, 10–14). YES for Phases 4–6 under D12
   (they depend only on G1–G4, and the user directed continued independent work).
 ```
+
+```text
+PHASE: 4 — Git/GitHub repository initialization
+STATUS: PASS (GitHub Issues mirror pending B5)
+OBJECTIVE / SCOPE: Maven skeleton + wrapper, .gitignore/.gitattributes/.env.example, issue/PR templates,
+  CONTRIBUTING, README, setup guide, develop branch, first push after secret scan.
+FILES CHANGED: pom.xml, mvnw, mvnw.cmd, .mvn/wrapper/maven-wrapper.properties, .gitattributes, .gitignore,
+  .env.example, .github/*, CONTRIBUTING.md, README.md, docs/SETUP.md, scripts/use-jdk21.ps1,
+  src/main/java/com/lastmile/{LastMileApplication,health/HealthController}.java,
+  src/main/resources/application.properties, src/test/java/com/lastmile/{support,health}/*
+DECISIONS MADE AND SOURCES: Base package com.lastmile; JAR name lastmile-delivery.jar; gitleaks 8.30.1
+  (winget, hash verified) as secret scanner; phase branches pushed as history evidence.
+COMMANDS EXECUTED WITH EXIT CODES: see docs/evidence/phase-04-repo/repository-init.md (all 0).
+TESTS AND EXACT RESULTS: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0 (HealthControllerTest x2
+  against embedded PostgreSQL 17.11; HealthControllerUnitTest x1). Fresh-clone build exit 0.
+EVIDENCE PATHS / REAL URLS: https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery ;
+  docs/evidence/phase-04-repo/repository-init.md
+GIT BRANCH / COMMITS / PR / TAG: build/project-skeleton c84ea37 → main 1663370; develop created at 1663370
+KNOWN ISSUES / SECURITY NOTES: Repository is public; commit author metadata includes the configured Git
+  email. No Issues created yet (B5).
+USER ACTIONS REQUIRED: B5 gh auth login (for Issues/PRs)
+EXIT CRITERIA:
+  - Fresh clone contains no secrets: PASS (gitleaks history/staged/tree: no leaks)
+  - Initial skeleton builds with documented commands: PASS (fresh clone mvnw.cmd -B verify exit 0)
+  - README, .gitignore, .gitattributes, issue templates, branch policy: PASS
+  - Repository URL + commit history: PASS (pushed)
+  - GitHub issues: BLOCKED (B5) — templates + Git board used meanwhile
+AUTO-ADVANCE: YES (exit gate criteria pass; issue mirroring is tracked under B5)
+```
+
+```text
+PHASE: 5 — First feature with branching (delivery creation)
+STATUS: BLOCKED (PR/review/merge only) — implementation, tests and live run PASS
+OBJECTIVE / SCOPE: V1 schema, login, delivery creation with validation/code generation/history,
+  create form + detail page, focused tests, branch + push + PR.
+FILES CHANGED: see commits ba96a34, aa9b1ab (pom.xml, V1__core_schema.sql, user/security/delivery/
+  workflow/web packages, templates, static css/js, tests, DevApplication, scripts/smoke_create.py, docs)
+DECISIONS MADE AND SOURCES: D13 stacked branches while PR blocked; codes LMD-<UTC yyyyMMdd>-<seq>
+  from a PostgreSQL sequence; CHECK constraints mirror the state rules at DB level.
+COMMANDS EXECUTED WITH EXIT CODES: mvnw.cmd -B verify (1 then 0 after assertion fix; 0 after review fix);
+  LoginTest without/with fix (1 / 0); spring-boot:test-run DevApplication (ran, health 200);
+  smoke_create.py (0); gitleaks staged (0); git push feature/delivery-create (0); gh auth status (1).
+TESTS AND EXACT RESULTS: Tests run: 36, Failures: 0, Errors: 0, Skipped: 0. Live smoke: valid create 302
+  -> detail 200 CREATED + 1 history row; invalid create 200 with errors and preserved input; agent 403 on
+  form, 404 on unassigned delivery; wrong password -> /login?error.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-05-feature/{feature-evidence.md,pull-request.md,*.png};
+  branch https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery/tree/feature/delivery-create
+GIT BRANCH / COMMITS / PR / TAG: feature/delivery-create ba96a34, aa9b1ab (pushed). PR: NOT OPENED (B5).
+KNOWN ISSUES / SECURITY NOTES: No login rate limiting. Code date is UTC.
+USER ACTIONS REQUIRED: B5 gh auth login; B6.2 whether a second-person review is required.
+EXIT CRITERIA:
+  - Fresh local run creates a valid record and rejects invalid input: PASS (live smoke)
+  - Tests for valid creation, invalid fields, generated/unique code: PASS
+  - Issue + feature branch + push: branch PASS; GitHub issue BLOCKED (B5)
+  - PR, review, merge: BLOCKED (B5); self-review finding fixed with regression test
+AUTO-ADVANCE: YES for Phase 6 implementation under D12/D13 (stacked); Phase 5 remains BLOCKED until
+  the PR is opened, reviewed as required and merged.
+```

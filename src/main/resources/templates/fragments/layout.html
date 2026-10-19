@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head(title)">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title th:text="${title} + ' · LastMile Ops'">LastMile Ops</title>
+    <link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+
+<header th:fragment="nav" class="app-header">
+    <a class="visually-hidden-focusable app-skip" href="#main">Skip to main content</a>
+    <nav class="navbar navbar-expand-md app-navbar" aria-label="Main navigation">
+        <div class="container-fluid">
+            <a class="navbar-brand app-brand" th:href="@{/}">LastMile Ops</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                    aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item" sec:authorize="hasAnyRole('ADMIN','DISPATCHER')">
+                        <a class="nav-link" th:href="@{/deliveries/new}" data-testid="nav-create-delivery">Create delivery</a>
+                    </li>
+                </ul>
+                <div class="d-flex align-items-center gap-3" sec:authorize="isAuthenticated()">
+                    <span class="app-user" data-testid="current-user">
+                        <span sec:authentication="principal.fullName">User</span>
+                        <span class="badge text-bg-light" sec:authentication="principal.role">ROLE</span>
+                    </span>
+                    <form th:action="@{/logout}" method="post">
+                        <button type="submit" class="btn btn-sm btn-outline-light" data-testid="logout">Sign out</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div th:fragment="flash">
+    <div th:if="${successMessage}" class="alert alert-success" role="status" data-testid="flash-success"
+         th:text="${successMessage}">Saved.</div>
+    <div th:if="${errorMessage}" class="alert alert-danger" role="alert" data-testid="flash-error"
+         th:text="${errorMessage}">Error.</div>
+</div>
+
+<span th:fragment="status(status)" class="status-badge" th:classappend="'status-' + ${#strings.toLowerCase(status)}"
+      th:attr="data-status=${status}" data-testid="status-badge" th:text="${status.label()}">Created</span>
+
+<th:block th:fragment="scripts">
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>
+    <script th:src="@{/js/app.js}"></script>
+</th:block>
+</body>
+</html>

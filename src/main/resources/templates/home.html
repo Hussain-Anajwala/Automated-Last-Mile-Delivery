@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="~{fragments/layout :: head('Home')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: nav}"></header>
+<main id="main" class="container app-main">
+    <h1 class="page-title">Welcome, <span sec:authentication="principal.fullName">user</span></h1>
+    <p class="text-secondary">Choose an action.</p>
+    <div sec:authorize="hasAnyRole('ADMIN','DISPATCHER')">
+        <a class="btn btn-primary" th:href="@{/deliveries/new}" data-testid="home-create-delivery">Create delivery</a>
+    </div>
+    <p sec:authorize="hasRole('AGENT')" class="text-secondary">
+        Your assigned deliveries will appear here once a dispatcher assigns them.
+    </p>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

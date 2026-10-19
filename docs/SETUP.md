@@ -29,6 +29,22 @@ export JAVA_HOME=/path/to/jdk-21
 
 The executable JAR is written to `target/lastmile-delivery.jar`.
 
+## Run locally without Docker
+
+`DevApplication` (test sources) starts a throwaway embedded PostgreSQL 17 and the real app with
+the `demo` profile. Data is discarded when it stops.
+
+```powershell
+. .\scripts\use-jdk21.ps1
+$env:LASTMILE_DEMO_PASSWORD = "<local value, at least 12 characters>"
+$env:LASTMILE_SERVER_PORT = "18080"
+.\mvnw.cmd spring-boot:test-run "-Dspring-boot.run.main-class=com.lastmile.DevApplication"
+```
+
+Open http://localhost:18080 and sign in with a fictional demo account (`admin@lastmile.test`,
+`dispatcher@lastmile.test`, `agent.one@lastmile.test`, `agent.two@lastmile.test`) using the
+password you set. Without `LASTMILE_DEMO_PASSWORD` no accounts are created.
+
 ## Health endpoints
 
 - `GET /api/v1/health/live` → `200 {"status":"UP"}`

@@ -83,3 +83,9 @@ Format: ID — date — context — options — decision — rationale — conse
 - **Context:** Implementation_Plan §8 says a BLOCKED phase does not authorize dependent phases without an explicit user exception. Phase 3 gates G5–G9 are blocked on user actions B2–B4.
 - **Decision:** The user's continuation directive (2026-10-19) explicitly instructs continuing all independent work, including source code and tests, while infrastructure is unavailable. Phases 4–6 depend only on G1–G4 (passed). Phases 7, 8, 10–14 remain blocked until their gates pass.
 - **Consequences:** Phase 3 is recorded as `PARTIAL / BLOCKED (infrastructure)`, never as PASS, until G5–G9 are proven.
+
+## D13 — 2026-10-19 — Stack Phase 6 branches on the unmerged Phase 5 branch
+
+- **Context:** The Phase 5 PR cannot be opened until `gh` is authenticated (B5). Merging `feature/delivery-create` into `develop` without a PR would skip the teacher-required PR/review evidence.
+- **Decision:** Do not merge without the PR. Phase 6 feature branches start from `feature/delivery-create` (stacked branches). When B5 is resolved, PRs are opened in order (Phase 5 first); each later PR then shows only its own changes.
+- **Consequences:** `develop` lags until PRs merge. Phase 5 stays `BLOCKED (PR/review/merge)` with implementation evidence recorded; Phase 6 may proceed under D12.
