@@ -1,0 +1,85 @@
+# 2026-10-19T09:21:10Z ansible-playbook site.yml -e lastmile_image_tag=e3b9d31cae5b
+
+PLAY [Configure LastMile target node] ******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lastmile-target]
+
+TASK [Refuse to run against anything that is not Ubuntu] ***********************
+ok: [lastmile-target]
+
+TASK [Require an explicit image tag (no 'latest')] *****************************
+ok: [lastmile-target]
+
+TASK [base : Install base packages] ********************************************
+ok: [lastmile-target]
+
+TASK [docker_engine : Create the apt keyrings directory] ***********************
+ok: [lastmile-target]
+
+TASK [docker_engine : Install Docker's repository signing key] *****************
+ok: [lastmile-target]
+
+TASK [docker_engine : Add Docker's apt repository] *****************************
+ok: [lastmile-target]
+
+TASK [docker_engine : Install Docker Engine and the Compose plugin] ************
+ok: [lastmile-target]
+
+TASK [docker_engine : Configure the Docker daemon (logging limits; trusted host-only registry)] ***
+ok: [lastmile-target]
+
+TASK [docker_engine : Ensure Docker is enabled and running] ********************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Require deployment secrets from the control node environment or vault] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Create the application group] *****************************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Create the application user (no login shell, no password, no docker group)] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Create application directories] ***************************
+ok: [lastmile-target] => (item={'path': '/opt/lastmile', 'mode': '0750'})
+ok: [lastmile-target] => (item={'path': '/opt/lastmile/releases', 'mode': '0750'})
+
+TASK [lastmile_app : Install the Compose definition (same file the Jenkins pipeline uses)] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Write runtime configuration including secrets] ************
+changed: [lastmile-target]
+
+TASK [lastmile_app : Read the currently deployed release] **********************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Remember the current release] *****************************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Pull the release images from the registry (exact tag)] ****
+ok: [lastmile-target]
+
+TASK [lastmile_app : Start or update the stack and wait until every service is healthy] ***
+changed: [lastmile-target]
+
+TASK [lastmile_app : Verify readiness through Nginx on the target] *************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Verify the deployed revision matches the requested image tag] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Record the previous release (only when the release changes)] ***
+changed: [lastmile-target]
+
+TASK [lastmile_app : Record the current release] *******************************
+changed: [lastmile-target]
+
+TASK [lastmile_app : Report the deployed release] ******************************
+ok: [lastmile-target] => 
+    msg: 'LastMile e3b9d31cae5b healthy on lastmile-target (previous: 0ac1a53c836f)'
+
+PLAY RECAP *********************************************************************
+lastmile-target            : ok=25   changed=4    unreachable=0    failed=0    skipped=4    rescued=0    ignored=0   
+
+# exit code: 0
