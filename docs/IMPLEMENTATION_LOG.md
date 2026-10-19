@@ -164,3 +164,36 @@ EXIT CRITERIA:
 AUTO-ADVANCE: YES for Phase 6 implementation under D12/D13 (stacked); Phase 5 remains BLOCKED until
   the PR is opened, reviewed as required and merged.
 ```
+
+```text
+PHASE: 6 — MVP completion and Git collaboration
+STATUS: BLOCKED (release tag + PR merge only) — MVP features, tests, UI review and conflict demo PASS
+OBJECTIVE / SCOPE: list/search/filter/pagination, edit, assignment/reassignment/retry, status workflow with
+  atomic history, role-scoped dashboard, admin user list, JSON API, demo data, UI review, conflict demo, tag.
+FILES CHANGED: commits dde4829, 8226f95, 9fa37b0 and this docs commit — delivery/dashboard/api/user/web/security
+  packages, templates (list, form edit mode, detail actions, dashboard, admin/users), css, tests (7 new classes),
+  scripts/smoke_api.sh, docs/API.md, docs/KNOWN_LIMITATIONS.md, evidence.
+DECISIONS MADE AND SOURCES: D9 revised (stateless API; security flaw found in own design), D14 version token,
+  DeliveryPolicy as single rule source for checks and visible controls.
+COMMANDS EXECUTED WITH EXIT CODES: mvnw.cmd -B verify (0: 82 → 84 → 85 → 86 tests as tests were added);
+  DevApplication live run (health 200); scripts/smoke_api.sh (all expected codes); Selenium screenshot capture
+  (0 after harness click fix); gitleaks staged (0, no leaks); git push feature/delivery-workflow, demo/* (0).
+TESTS AND EXACT RESULTS: Tests run: 86, Failures: 0, Errors: 0, Skipped: 0. Acceptance map A1–A7:
+  docs/evidence/phase-06-mvp/acceptance.md.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-06-mvp/{acceptance.md,api-smoke-output.txt,
+  merge-conflict-transcript.md,screenshots/*.png}; branches feature/delivery-workflow, demo/conflict-{base,a,b}
+GIT BRANCH / COMMITS / PR / TAG: feature/delivery-workflow (stacked on feature/delivery-create); conflict
+  resolution commit cbe5031 on demo/conflict-base; PRs not opened (B5); tag v0.1.0 NOT created (needs main).
+KNOWN ISSUES / SECURITY NOTES: docs/KNOWN_LIMITATIONS.md (no login rate limiting, Basic auth API, UTC display).
+USER ACTIONS REQUIRED: B5 (gh auth login) to open PRs #1 (delivery-create) and #2 (delivery-workflow), merge
+  to develop → main, then tag v0.1.0; B6.2 independent reviewer if required.
+EXIT CRITERIA:
+  - PRD acceptance targets A1–A7 pass: PASS (tests + live smoke)
+  - Application usable locally: PASS (DevApplication + screenshots desktop/mobile)
+  - Service/repository/security tests incl. denied access, terminal status, invalid transition, no-result
+    search, dashboard correctness: PASS
+  - Second feature branch + isolated conflict created and resolved: PASS (transcript)
+  - Release-ready baseline tagged: BLOCKED (B5 — PR merge to main required first)
+AUTO-ADVANCE: YES for independent work (Phase 9 Selenium depends only on T6) under D12. Phases 7, 8, 10–14
+  remain blocked on Docker (B2). Phase 6 stays BLOCKED until PRs merge and v0.1.0 is tagged.
+```

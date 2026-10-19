@@ -2,6 +2,9 @@ package com.lastmile.support;
 
 import java.time.Instant;
 
+import com.lastmile.delivery.DeliveryForm;
+import com.lastmile.delivery.DeliveryService;
+import com.lastmile.delivery.DeliveryView;
 import com.lastmile.security.AppUserDetails;
 import com.lastmile.user.Role;
 import com.lastmile.user.UserAccount;
@@ -18,11 +21,40 @@ public class TestData {
     private final JdbcTemplate jdbc;
     private final UserAccountRepository users;
     private final PasswordEncoder passwordEncoder;
+    private final DeliveryService deliveries;
 
-    public TestData(JdbcTemplate jdbc, UserAccountRepository users, PasswordEncoder passwordEncoder) {
+    public TestData(JdbcTemplate jdbc, UserAccountRepository users, PasswordEncoder passwordEncoder,
+                    DeliveryService deliveries) {
         this.jdbc = jdbc;
         this.users = users;
         this.passwordEncoder = passwordEncoder;
+        this.deliveries = deliveries;
+    }
+
+    /** Creates a delivery through the real service (so history and rules apply). */
+    public DeliveryView delivery(UserAccount creator, UserAccount agent, String recipient, String reference) {
+        DeliveryForm form = new DeliveryForm();
+        form.setRecipientName(recipient);
+        form.setRecipientPhone("9876543210");
+        form.setDeliveryAddress("1 Test Street");
+        form.setDeliveryCity("Pune");
+        form.setReferenceNumber(reference);
+        form.setAssignedAgentId(agent == null ? null : agent.getId());
+        return deliveries.create(form, principal(creator));
+    }
+
+    public DeliveryView delivery(UserAccount creator, UserAccount agent) {
+        return delivery(creator, agent, "Test Recipient", null);
+    }
+
+    public String status(long deliveryId) {
+        return jdbc.queryForObject("SELECT status FROM deliveries WHERE id = ?", String.class, deliveryId);
+    }
+
+    public int historyCount(long deliveryId) {
+        Integer n = jdbc.queryForObject("SELECT count(*) FROM delivery_status_history WHERE delivery_id = ?",
+                Integer.class, deliveryId);
+        return n == null ? 0 : n;
     }
 
     public void reset() {

@@ -72,3 +72,8 @@ body { background: var(--lm-background); color: var(--lm-text); }
     border-radius: var(--lm-radius); box-shadow: var(--lm-shadow); padding: var(--lm-space-6); }
 
 .metric-value { font-size: 2rem; font-weight: 600; font-variant-numeric: tabular-nums; }
+.metric-card { color: var(--lm-text); padding: var(--lm-space-4); }
+.metric-card:hover { border-color: var(--lm-primary); }
+.metric-label { color: var(--lm-text-muted); font-size: 0.9rem; }
+/* Codes and status badges never wrap; narrow screens scroll the table horizontally instead. */
+.table .code-cell, .table .status-cell { white-space: nowrap; }

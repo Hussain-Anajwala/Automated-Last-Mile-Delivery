@@ -1,0 +1,30 @@
+== health
+{"status":"UP"} HTTP 200
+== no credentials
+HTTP 401
+== dashboard (dispatcher)
+6 {'ASSIGNED': 1, 'CREATED': 2, 'DELIVERED': 1, 'FAILED': 1, 'OUT_FOR_DELIVERY': 1}
+== dashboard (agent.one)
+MY_ASSIGNMENTS 2
+== search q=ord-200 status=CREATED
+2 ['ORD-2002', 'ORD-2001']
+== create
+ 201 status=CREATED code=LMD-20261018-000007
+== invalid transition CREATED->DELIVERED
+{"status":409,"error":"Conflict","message":"Cannot change status from Created to Delivered.","fieldErrors":[]} HTTP 409
+== agent.one reads unassigned delivery
+","message":"Delivery not found.","fieldErrors":[]} HTTP 404
+== assign to agent.one (agent.one is seeded third: id 3; response must name Arjun Agent)
+ASSIGNED Arjun Agent
+== agent.two tries to dispatch it
+","message":"Delivery not found.","fieldErrors":[]} HTTP 404
+== agent.one dispatches
+OUT_FOR_DELIVERY
+== agent.one fails w/o reason
+son is required when a delivery fails.","fieldErrors":[{"field":"reason","message":"A reason is required when a delivery fails."}]} HTTP 400
+== agent.one delivers
+DELIVERED True ['CREATED', 'ASSIGNED', 'OUT_FOR_DELIVERY', 'DELIVERED']
+== edit delivered
+":"Conflict","message":"A delivered delivery cannot be edited.","fieldErrors":[]} HTTP 409
+== dashboard after (dispatcher)
+7 2

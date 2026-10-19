@@ -89,3 +89,15 @@ Format: ID — date — context — options — decision — rationale — conse
 - **Context:** The Phase 5 PR cannot be opened until `gh` is authenticated (B5). Merging `feature/delivery-create` into `develop` without a PR would skip the teacher-required PR/review evidence.
 - **Decision:** Do not merge without the PR. Phase 6 feature branches start from `feature/delivery-create` (stacked branches). When B5 is resolved, PRs are opened in order (Phase 5 first); each later PR then shows only its own changes.
 - **Consequences:** `develop` lags until PRs merge. Phase 5 stays `BLOCKED (PR/review/merge)` with implementation evidence recorded; Phase 6 may proceed under D12.
+
+## D9 (revised) — 2026-10-19 — API is stateless HTTP Basic only
+
+- **Context:** The original D9 let `/api/**` accept either the browser session or HTTP Basic while ignoring CSRF. While implementing the API filter chain this was found to be unsafe: a cross-site request could ride the browser session cookie on a CSRF-exempt endpoint.
+- **Decision:** `/api/**` uses a separate stateless filter chain with HTTP Basic only and a request-scoped security context, so session cookies are ignored there. CSRF stays enabled for every browser route.
+- **Evidence:** `DeliveryApiTest.browserSessionCookiesAreNotAcceptedByTheApi` (a logged-in session posting to the API gets 401 and nothing is created).
+
+## D14 — 2026-10-19 — Optional optimistic-concurrency token
+
+- **Context:** Backend_Schema §8 forbids client-supplied version values "unless a deliberately documented concurrency protocol requires a token". App_Flow §5 asks that concurrent updates not silently overwrite each other.
+- **Decision:** Status, assignment and edit requests accept an optional `expectedVersion` (`version` hidden field in web forms). If it differs from the stored `@Version`, the request is rejected with 409 and nothing changes. It is only compared, never written.
+- **Consequences:** Double submissions and stale pages cannot apply a transition twice (`DeliveryWorkflowServiceTest.staleVersionIsRejected…`).
