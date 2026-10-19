@@ -1,0 +1,9 @@
+url: http://localhost:58981/deliveries/1
+title: LMD-20261018-000008 · LastMile Ops
+error: org.openqa.selenium.TimeoutException: Expected condition failed: waiting for visibility of element found by By.cssSelector: [data-testid='flash-error'], but... org.openqa.selenium.NoSuchElementException: no such element: Unable to locate element: {"method":"css selector","selector":"[data-testid='flash-error']"}.
+(tried for 10 seconds with 500 milliseconds interval)
+Build info: version: '4.43.0', revision: 'dd0f534'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.12.1'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 155.0.8059.81, chrome: {chromedriverVersion: 155.0.8059.84 (5869fe313571..., userDataDir: <redacted>}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:54063}, goog:processID: 2164, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:54063/devtoo..., se:cdpVersion: 155.0.8059.81, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:cmtgKey: true, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: d05cb89ebde18d0a0f5e33a5bf151bcc

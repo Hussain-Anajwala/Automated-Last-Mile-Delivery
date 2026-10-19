@@ -197,3 +197,33 @@ EXIT CRITERIA:
 AUTO-ADVANCE: YES for independent work (Phase 9 Selenium depends only on T6) under D12. Phases 7, 8, 10–14
   remain blocked on Docker (B2). Phase 6 stays BLOCKED until PRs merge and v0.1.0 is tagged.
 ```
+
+```text
+PHASE: 9 — Selenium test design and local execution
+STATUS: PASS
+OBJECTIVE / SCOPE: Test plan, 5 journeys (8 tests) with data-testid locators, explicit waits, isolated data,
+  failure screenshots/HTML/URL, JUnit XML + HTML report, local execution through Maven.
+  (Run before Phases 7–8, which are blocked on Docker; Phase 9 depends only on T6 — D12.)
+FILES CHANGED: pom.xml (selenium-java test dep, `selenium` profile: failsafe + surefire-report 3.5.6),
+  src/test/java/com/lastmile/selenium/* (BrowserFactory, BrowserJourney, FailureArtifactsExtension, J1–J5),
+  docs/SELENIUM_TEST_PLAN.md, docs/evidence/phase-09-selenium/*
+DECISIONS MADE AND SOURCES: Boot-managed Selenium 4.43.0; journeys in Failsafe behind a profile so the default
+  build stays browser-free; window-marker page-load wait (after diagnosing a real flaky run).
+COMMANDS EXECUTED WITH EXIT CODES: see docs/evidence/phase-09-selenium/selenium-evidence.md
+  (first run 0; repeat 3 = 1 diagnosed; 5 consecutive = 0; deliberate defect = 1; final clean = 0).
+TESTS AND EXACT RESULTS: Tests run: 86 (unit/integration) + 8 (Selenium), Failures: 0, Errors: 0, Skipped: 0.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-09-selenium/{selenium-evidence.md,passing-report/,defect-caught/,
+  flaky-run-diagnosed/}
+GIT BRANCH / COMMITS / PR / TAG: test/selenium-journeys (pushed); PR blocked (B5)
+KNOWN ISSUES / SECURITY NOTES: Jenkins/container execution not yet proven (Phase 10, blocked on B2).
+USER ACTIONS REQUIRED: none for this phase
+EXIT CRITERIA:
+  - Test plan + 3–5 critical journeys: PASS (5 journeys, 8 tests)
+  - Stable selectors, deterministic data, explicit waits, real assertions: PASS
+  - Runs from documented command, repeatable: PASS (5 consecutive green runs after fixing diagnosed flake)
+  - Catches a known UI/workflow defect: PASS (deliberate defect → J5 failed)
+  - Failure screenshot mechanism demonstrated: PASS (defect-caught/*.png, flaky-run-diagnosed/*.png)
+  - Report published locally: PASS (target/reports/failsafe.html; JUnit XML)
+AUTO-ADVANCE: Phase 10 requires Jenkins (B2) → BLOCKED. Continue with independent Phase 11/12/13 preparation
+  (Dockerfile, Compose, Jenkinsfile, Ansible files) that can be written and statically checked without Docker.
+```
