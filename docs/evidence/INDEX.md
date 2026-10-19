@@ -1,6 +1,6 @@
 # Evidence Index — 15 Teacher Tasks
 
-Status meanings: **Verified** = observed in a real run and recorded; **Blocked** = cannot be shown
+Final state: release `v1.0.0` (2026-10-19). Status meanings: **Verified** = observed in a real run and recorded; **Blocked** = cannot be shown
 yet, with the reason; **Pending** = not done yet. Nothing here is claimed without a file, log, PR,
 image or command result behind it. Repository: https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery
 
@@ -20,7 +20,7 @@ image or command result behind it. Repository: https://github.com/Hussain-Anajwa
 | 12 | Jenkins→Docker CD with local registry | Verified | `phase-12-registry/` — digest match pushed vs registry, deploy by registry tag, fault-injected candidate rolled back automatically; the WSL2 target pulled the same references with identical digests (`phase-15-release/e2e-trace-v0.1.0.md`) |
 | 13 | Ansible configuration management | Verified (WSL2 target, D20) | `ansible/`, `docs/ANSIBLE.md`, `phase-13-ansible/target-run-evidence.md`: pre-checks, dry run, `pong`, run 1 (`changed=13`), independent verification of packages, account, files and services. Target is a separate WSL2 distribution, not a VM (limitation) |
 | 14 | Provisioning, idempotency, health, rollback on the target | Verified (WSL2 target, D20) | `phase-13-ansible/`: exact registry images pulled (digests equal), readiness 200, run 2 **`changed=0`**, upgrade → `rollback.yml` → previous release healthy, failed-candidate drill recovered (logs `02`–`09`); data preservation re-checked in the final release (`phase-15-release/`) |
-| 15 | End-to-end release, documentation, viva | **In progress** | Docs: `docs/SECURITY.md`, `docs/TROUBLESHOOTING.md`, `docs/DEMO_RUNBOOK.md`, `docs/VIVA_QA.md`, `docs/PRESENTATION_OUTLINE.md`. End-to-end trace of `v0.1.0` (commit → Jenkins gates → registry digests → workstation deploy → Ansible target with identical digests, healthy): `phase-15-release/e2e-trace-v0.1.0.md`. Still pending: teacher answers Q1–Q5 and final sign-off (Jenkins does not trigger Ansible; the target step is a manual control-node run) |
+| 15 | End-to-end release, documentation, viva | Verified | Release `v1.0.0` (`ff1cac19`): Jenkins main #3 (89 + 8 tests, digests), workstation deploy, Ansible target upgrade / `changed=0` / rollback / roll-forward with identical digests and preserved data — `phase-15-release/release-v1.0.0-evidence.md`; earlier trace `e2e-trace-v0.1.0.md`; docs: `SECURITY.md`, `TROUBLESHOOTING.md`, `DEMO_RUNBOOK.md`, `VIVA_QA.md`, `PRESENTATION_OUTLINE.md`. The viva and presentation themselves are delivered by the student |
 
 ## Cross-cutting evidence
 
