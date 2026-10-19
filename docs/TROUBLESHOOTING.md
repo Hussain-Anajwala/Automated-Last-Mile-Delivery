@@ -20,3 +20,4 @@ Problems actually met during this project, with the fix that worked.
 | Git Bash mangles `branch:path` or `/mnt/c/...` arguments | MSYS path conversion | prefix the command with `MSYS_NO_PATHCONV=1` |
 | Secret scan "passed" but output said leaks found | Exit status of a pipe is the last command's | Never pipe the gate; use `scripts/secret-scan.sh`/`safe-push.sh` directly |
 | Readiness `503 {"status":"DOWN"}` while liveness is 200 | Database unreachable (by design) | Check `docker compose -p lastmile ps` and the `db` container |
+| Jenkins checkout fails: `Could not resolve host: github.com` | Transient DNS failure inside the Jenkins container (seen right after container start and once during the release) | Check with `docker exec lastmile-jenkins git ls-remote <repo>`; re-run the build with *Build with Parameters* once DNS answers |

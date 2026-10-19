@@ -509,3 +509,28 @@ NEXT: when the teacher answers — record the answers; if a second reviewer is r
   update docs/evidence/INDEX.md and close #5/#7. To use the target: keep `wsl -d lastmile-target -u root -- sleep
   infinity` running, then scripts/wsl-target/run-ansible.sh.
 ```
+
+```text
+FINAL — 2026-10-19
+TEACHER RESPONSE (Q3, exact): "Do whatever you think is right and best for your system." -> WSL2 target kept (D20);
+  recorded as discretion, not as a statement that WSL2 equals a VM; remaining uncertainty listed as a limitation.
+
+PHASE: 13 — Ansible configuration management                       STATUS: PASS (WSL2 target, D20)
+PHASE: 14 — Provisioning, idempotency, health, recovery            STATUS: PASS (WSL2 target, D20)
+  Evidence re-checked from the committed logs: pong; run 1 changed=13; registry-identical digests; readiness 200;
+  run 2 changed=0; rollback healthy; failed-candidate recovery; data preservation re-proved during the v1.0.0
+  release with saved output (the earlier rollback data check had only been summarised).
+
+PHASE: 15 — End-to-end release, documentation and viva              STATUS: PASS (technical deliverables)
+  PR #16 merged fba69706 after self-review + Jenkins docs/phase-15-release #4 (89 + 8). Release PR #18 merged
+  ff1cac19 (main tree = tested tree). Jenkins main #2 failed on transient DNS before checkout; main #3 passed
+  (89 + 8), published, deployed. Ansible target: upgrade changed=4, second run changed=0, rollback to v0.1.0 and
+  roll-forward healthy, digests identical, data preserved. Tag v1.0.0 -> ff1cac19 (annotated, gated push).
+  Evidence: docs/evidence/phase-15-release/release-v1.0.0-evidence.md. The viva/presentation are delivered by
+  the student (materials: VIVA_QA.md, PRESENTATION_OUTLINE.md, DEMO_RUNBOOK.md).
+
+FINAL BRANCHES: main = v1.0.0 (ff1cac19, deployed on both targets). develop = main + post-release evidence.
+  Release tags: v0.1.0 (e3b9d31), v1.0.0 (ff1cac19). Not for merging: ci/demo-failing-build, demo/conflict-*.
+REVIEWS: all PRs (#8–#18) merged after documented self-review by the Claude Code assistant with green CI;
+  no second human reviewer (D15).
+```

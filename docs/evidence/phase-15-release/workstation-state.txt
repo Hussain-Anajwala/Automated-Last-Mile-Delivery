@@ -1,0 +1,7 @@
+# workstation after Jenkins main #3 (2026-10-19T11:27:58Z)
+app localhost:5000/lastmile-delivery:ff1cac19ee86 revision=ff1cac19ee86cfde8ca09b6019222fbd6abdb674 health=healthy started=2026-10-19T11:27:06.381092547Z
+["localhost:5000/lastmile-delivery@sha256:7f1051da382c0faee86f200a1a6cd555efaf003fdf94c9e62838ed7028a265e3"]
+readiness via host: {"status":"UP"} HTTP 200
+db: 6 | 2026-10-18 22:15:06.867254+00
+db: 15
+db container started=2026-10-18T22:14:44.1935399Z

@@ -60,9 +60,9 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T13.2 | Syntax check, check mode, first run | T13.1 | Done | run log |
 | T14.1 | Second run idempotency | T13.2 | Done | run log |
 | T14.2 | Health + rollback to previous tag | T14.1, T12 | Done | rollback log |
-| T15.1 | Full end-to-end run | T1–T14 | Ready | logs |
-| T15.2 | Final docs, troubleshooting, security, limitations | T15.1 | In Progress | docs |
-| T15.3 | Evidence INDEX, demo runbook, viva Q&A | T15.2 | In Progress | `docs/evidence/INDEX.md` |
+| T15.1 | Full end-to-end run | T1–T14 | Done | logs |
+| T15.2 | Final docs, troubleshooting, security, limitations | T15.1 | Done | docs |
+| T15.3 | Evidence INDEX, demo runbook, viva Q&A | T15.2 | Done | `docs/evidence/INDEX.md` |
 
 ## Milestone plan (no calendar dates — supply them to add a timeline)
 
