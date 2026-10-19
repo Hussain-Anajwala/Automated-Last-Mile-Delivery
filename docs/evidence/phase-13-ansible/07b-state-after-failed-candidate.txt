@@ -1,0 +1,4 @@
+records: current=0ac1a53c836f previous=e3b9d31cae5b
+lastmile-app-1 localhost:5000/lastmile-delivery:e3b9d31cae5b Up 4 seconds (health: starting)
+readiness via nginx:  HTTP 000no response
+app image localhost:5000/lastmile-delivery:e3b9d31cae5b revision=e3b9d31cae5bd48eb1bfbaf3db56e21f0ddc56e3 health=starting

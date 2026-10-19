@@ -1,0 +1,224 @@
+# 2026-10-19T02:31:01Z ansible-playbook site.yml --check --diff -e lastmile_image_tag=0ac1a53c836f
+
+PLAY [Configure LastMile target node] ******************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [lastmile-target]
+
+TASK [Refuse to run against anything that is not Ubuntu] ***********************
+ok: [lastmile-target]
+
+TASK [Require an explicit image tag (no 'latest')] *****************************
+ok: [lastmile-target]
+
+TASK [base : Install base packages] ********************************************
+The following additional packages will be installed:
+  iptables libip4tc2 libip6tc2 libnetfilter-conntrack3 libnfnetlink0
+  libnftables1 libnftnl11 nftables
+Suggested packages:
+  firewalld
+The following NEW packages will be installed:
+  iptables libip4tc2 libip6tc2 libnetfilter-conntrack3 libnfnetlink0
+  libnftables1 libnftnl11 nftables ufw
+0 upgraded, 9 newly installed, 0 to remove and 275 not upgraded.
+changed: [lastmile-target]
+
+TASK [docker_engine : Create the apt keyrings directory] ***********************
+ok: [lastmile-target]
+
+TASK [docker_engine : Install Docker's repository signing key] *****************
+changed: [lastmile-target]
+
+TASK [docker_engine : Add Docker's apt repository] *****************************
+--- before
++++ after: /etc/apt/sources.list.d/docker.list
+@@ -0,0 +1 @@
++deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu noble stable
+
+changed: [lastmile-target]
+
+TASK [docker_engine : Install Docker Engine and the Compose plugin] ************
+[ERROR]: Task failed: Module failed: No package matching 'docker-ce' is available
+Origin: /home/hussain/lastmile-ansible/ansible/roles/docker_engine/tasks/main.yml:27:3
+
+25 # In --check mode the repository file above is not really written, so apt cannot see the packages
+26 # yet on a fresh target; tolerate that (and the dependent service task) only in check mode.
+27 - name: Install Docker Engine and the Compose plugin
+     ^ column 3
+
+fatal: [lastmile-target]: FAILED! => 
+    changed: false
+    msg: No package matching 'docker-ce' is available
+...ignoring
+
+TASK [docker_engine : Configure the Docker daemon (logging limits; trusted host-only registry)] ***
+--- before
++++ after: /home/hussain/.ansible/tmp/ansible-local-3418jx6z91ar/tmp6r_kjgp4/daemon.json.j2
+@@ -0,0 +1,7 @@
++{
++  "log-driver": "json-file",
++  "log-opts": { "max-size": "10m", "max-file": "3" },
++  "bip": "10.213.0.1/24",
++  "default-address-pools": [{"base": "10.213.64.0/18", "size": 24}],
++  "insecure-registries": ["localhost:5000"]
++}
+
+changed: [lastmile-target]
+
+TASK [docker_engine : Ensure Docker is enabled and running] ********************
+[ERROR]: Task failed: Module failed: Could not find the requested service docker: host
+Origin: /home/hussain/lastmile-ansible/ansible/roles/docker_engine/tasks/main.yml:41:3
+
+39   notify: Restart docker
+40
+41 - name: Ensure Docker is enabled and running
+     ^ column 3
+
+fatal: [lastmile-target]: FAILED! => 
+    changed: false
+    msg: 'Could not find the requested service docker: host'
+...ignoring
+
+RUNNING HANDLER [docker_engine : Restart docker] *******************************
+[ERROR]: Task failed: Module failed: Could not find the requested service docker: host
+Origin: /home/hussain/lastmile-ansible/ansible/roles/docker_engine/handlers/main.yml:1:3
+
+1 - name: Restart docker
+    ^ column 3
+
+fatal: [lastmile-target]: FAILED! => 
+    changed: false
+    msg: 'Could not find the requested service docker: host'
+...ignoring
+
+TASK [lastmile_app : Require deployment secrets from the control node environment or vault] ***
+ok: [lastmile-target]
+
+TASK [lastmile_app : Create the application group] *****************************
+changed: [lastmile-target]
+
+TASK [lastmile_app : Create the application user (no login shell, no password, no docker group)] ***
+changed: [lastmile-target]
+[WARNING]: failed to look up group lastmile. Create group up to this point in real play
+
+TASK [lastmile_app : Create application directories] ***************************
+--- before
++++ after
+@@ -1,3 +1,3 @@
+     path: /opt/lastmile
+-    state: absent
++    state: directory
+ 
+
+changed: [lastmile-target] => (item={'path': '/opt/lastmile', 'mode': '0750'})
+--- before
++++ after
+@@ -1,3 +1,3 @@
+     path: /opt/lastmile/releases
+-    state: absent
++    state: directory
+ 
+
+changed: [lastmile-target] => (item={'path': '/opt/lastmile/releases', 'mode': '0750'})
+
+TASK [lastmile_app : Install the Compose definition (same file the Jenkins pipeline uses)] ***
+--- before
++++ after: /home/hussain/lastmile-ansible/deploy/compose.yaml
+@@ -0,0 +1,69 @@
++# Application stack: Nginx (published) -> app (internal) -> PostgreSQL (internal).
++#
++# Images are selected by explicit, immutable tags (no "latest"):
++#   LASTMILE_IMAGE / LASTMILE_NGINX_IMAGE   e.g. localhost:5000/lastmile-delivery
++#   LASTMILE_IMAGE_TAG                      e.g. the 12-character commit SHA
++# Secrets come from the environment (Jenkins credentials or a git-ignored .env), never from Git.
++name: lastmile
++
++services:
++  db:
++    image: postgres:17.11-alpine3.24
++    restart: unless-stopped
++    environment:
++      POSTGRES_DB: ${LASTMILE_DB_NAME:-lastmile}
++      POSTGRES_USER: ${LASTMILE_DB_USER:-lastmile}
++      POSTGRES_PASSWORD: ${LASTMILE_DB_PASSWORD:?LASTMILE_DB_PASSWORD must be set}
++    volumes:
++      - pgdata:/var/lib/postgresql/data
++    healthcheck:
++      test: ["CMD-SHELL", "pg_isready -U \"$${POSTGRES_USER}\" -d \"$${POSTGRES_DB}\""]
++      interval: 5s
++      timeout: 3s
++      retries: 20
++    networks:
++      - backend
++
++  app:
++    image: ${LASTMILE_IMAGE:-localhost:5000/lastmile-delivery}:${LASTMILE_IMAGE_TAG:?LASTMILE_IMAGE_TAG must be set}
++    restart: unless-stopped
++    environment:
++      # LASTMILE_DB_HOST defaults to the stack's own database service.
++      LASTMILE_DB_URL: jdbc:postgresql://${LASTMILE_DB_HOST:-db}:5432/${LASTMILE_DB_NAME:-lastmile}
++      LASTMILE_DB_USER: ${LASTMILE_DB_USER:-lastmile}
++      LASTMILE_DB_PASSWORD: ${LASTMILE_DB_PASSWORD:?LASTMILE_DB_PASSWORD must be set}
++      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE:-prod}
++      LASTMILE_DEMO_PASSWORD: ${LASTMILE_DEMO_PASSWORD:-}
++    depends_on:
++      db:
++        condition: service_healthy
++    read_only: true
++    tmpfs:
++      - /tmp
++    cap_drop:
++      - ALL
++    security_opt:
++      - no-new-privileges:true
++    mem_limit: 768m
++    networks:
++      - backend
++      - frontend
++
++  nginx:
++    image: ${LASTMILE_NGINX_IMAGE:-localhost:5000/lastmile-nginx}:${LASTMILE_IMAGE_TAG:?LASTMILE_IMAGE_TAG must be set}
++    restart: unless-stopped
++    ports:
++      - "127.0.0.1:${LASTMILE_HTTP_PORT:-8088}:80"
++    depends_on:
++      app:
++        condition: service_healthy
++    networks:
++      - frontend
++
++networks:
++  frontend: {}
++  backend:
++    internal: true   # the database is never reachable from outside the stack
++
++volumes:
++  pgdata: {}
+
+changed: [lastmile-target]
+
+TASK [lastmile_app : Write runtime configuration including secrets] ************
+changed: [lastmile-target]
+
+TASK [lastmile_app : Read the currently deployed release] **********************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Remember the current release] *****************************
+ok: [lastmile-target]
+
+TASK [lastmile_app : Record the current release] *******************************
+--- before
++++ after: /opt/lastmile/releases/current
+@@ -0,0 +1 @@
++0ac1a53c836f
+
+changed: [lastmile-target]
+
+TASK [lastmile_app : Report the deployed release] ******************************
+ok: [lastmile-target] => 
+    msg: 'LastMile 0ac1a53c836f healthy on lastmile-target (previous: none)'
+
+PLAY RECAP *********************************************************************
+lastmile-target            : ok=21   changed=10   unreachable=0    failed=0    skipped=9    rescued=0    ignored=3   
+
+# exit code: 0

@@ -1,0 +1,23 @@
+# Option B target (BLOCKERS B4): dedicated WSL2 distribution `lastmile-target`, created with
+# scripts/wsl-target/bootstrap-target.sh. Contains no secrets.
+# The target shares the WSL network stack with the control node and Docker Desktop:
+#   - SSH listens on 127.0.0.1:2222 inside that shared stack;
+#   - the registry is reached as localhost:5000 (verified from the target: GET /v2/ -> 200);
+#   - Nginx uses 8089 because 8088 is the workstation deployment;
+#   - ufw stays off (rules would apply to every WSL distribution, including Docker Desktop's).
+all:
+  children:
+    lastmile_targets:
+      hosts:
+        lastmile-target:
+          ansible_host: 127.0.0.1
+          ansible_port: 2222
+          ansible_user: deploy
+          ansible_ssh_private_key_file: ~/.ssh/lastmile_target_ed25519
+          ansible_python_interpreter: /usr/bin/python3
+          lastmile_registry: localhost:5000
+          lastmile_http_port: 8089
+          base_manage_firewall: false
+          docker_engine_bip: 10.213.0.1/24
+          docker_engine_default_address_pools:
+            - { base: 10.213.64.0/18, size: 24 }

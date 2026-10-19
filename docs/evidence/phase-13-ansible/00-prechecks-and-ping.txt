@@ -1,0 +1,19 @@
+# pre-checks before target changes (2026-10-19)
+syntax-check site.yml: exit 0
+ansible-lint (site, roles, tests): exit 0 — 
+render-and-validate: exit 0 — ok=9    changed=0    unreachable=0    failed=0
+negative control (tag=latest): exit 2 — ok=5    changed=0    unreachable=0    failed=1
+
+# final pre-checks after fixes
+syntax-check site.yml: exit 0
+ansible-lint (site, roles, tests): exit 0 — 
+render-and-validate: exit 0 — ok=10   changed=0    unreachable=0    failed=0
+negative control (tag=latest): exit 2 — ok=5    changed=0    unreachable=0    failed=1
+
+# ping
+lastmile-target | SUCCESS => 
+    changed: false
+    ping: pong
+ping exit=0
+        ansible_distribution_release: noble
+        ansible_distribution_version: '24.04'

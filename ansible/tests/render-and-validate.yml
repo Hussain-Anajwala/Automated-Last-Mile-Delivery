@@ -15,7 +15,10 @@
     lastmile_profile: demo
     lastmile_app_db_password: test-only-db-value
     lastmile_app_demo_password: test-only-demo-value
+    lastmile_app_db_host: db
     docker_engine_insecure_registries: ["{{ lastmile_registry }}"]
+    docker_engine_bip: ""
+    docker_engine_default_address_pools: []
     tag_pattern: '^[0-9a-f]{12}$'
   tasks:
     - name: Render daemon.json
@@ -36,6 +39,20 @@
             (lookup('ansible.builtin.template', '../roles/docker_engine/templates/daemon.json.j2',
             template_vars={'docker_engine_insecure_registries': []}) | from_json)['insecure-registries'] == []
 
+    - name: Optional bridge settings render valid JSON only when set (WSL target uses them)
+      ansible.builtin.assert:
+        that:
+          - >-
+            (lookup('ansible.builtin.template', '../roles/docker_engine/templates/daemon.json.j2',
+            template_vars={'docker_engine_bip': '10.213.0.1/24',
+            'docker_engine_default_address_pools': [{'base': '10.213.64.0/18', 'size': 24}]}) | from_json)['bip'] == '10.213.0.1/24'
+          - >-
+            (lookup('ansible.builtin.template', '../roles/docker_engine/templates/daemon.json.j2',
+            template_vars={'docker_engine_bip': '10.213.0.1/24',
+            'docker_engine_default_address_pools': [{'base': '10.213.64.0/18', 'size': 24}]})
+            | from_json)['default-address-pools'][0]['size'] == 24
+          - "'bip' not in rendered_daemon"
+
     - name: Render the runtime environment file
       ansible.builtin.set_fact:
         rendered_env: "{{ dict(lookup('ansible.builtin.template', '../roles/lastmile_app/templates/lastmile.env.j2').splitlines()
@@ -51,11 +68,17 @@
           - rendered_env.LASTMILE_IMAGE_TAG != 'latest'
           - rendered_env.COMPOSE_PROJECT_NAME == 'lastmile'
           - rendered_env.LASTMILE_HTTP_PORT == '8088'
+          - rendered_env.LASTMILE_DB_HOST == 'db'
           - rendered_env.LASTMILE_DB_PASSWORD | length > 0
           - >-
-            rendered_env.keys() | list | sort == ['COMPOSE_PROJECT_NAME', 'LASTMILE_DB_PASSWORD', 'LASTMILE_DEMO_PASSWORD',
+            rendered_env.keys() | list | sort == ['COMPOSE_PROJECT_NAME', 'LASTMILE_DB_HOST', 'LASTMILE_DB_PASSWORD', 'LASTMILE_DEMO_PASSWORD',
             'LASTMILE_HTTP_PORT', 'LASTMILE_IMAGE', 'LASTMILE_IMAGE_TAG', 'LASTMILE_NGINX_IMAGE', 'SPRING_PROFILES_ACTIVE']
       no_log: true
+
+    - name: The exact tag assertion from site.yml/rollback.yml accepts the configured tag (boolean conditional)
+      ansible.builtin.assert:
+        that:
+          - lastmile_image_tag is regex('^[0-9a-f]{12}$')
 
     - name: Image tag rule used by site.yml accepts commit tags and rejects everything else
       ansible.builtin.assert:

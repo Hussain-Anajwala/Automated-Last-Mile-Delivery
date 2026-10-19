@@ -6,3 +6,6 @@ lastmile_app_demo_password: "{{ lookup('ansible.builtin.env', 'LASTMILE_DEMO_PAS
 
 lastmile_app_compose_source: "{{ playbook_dir }}/../deploy/compose.yaml"
 lastmile_app_wait_timeout: 180
+# Database service host inside the stack. Overridden only by the recovery drill to simulate a
+# misconfigured release (the release then fails health and is not recorded as current).
+lastmile_app_db_host: db

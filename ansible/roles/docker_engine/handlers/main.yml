@@ -2,3 +2,5 @@
   ansible.builtin.service:
     name: docker
     state: restarted
+  # In --check mode on a fresh target Docker is not installed yet.
+  ignore_errors: "{{ ansible_check_mode }}"
