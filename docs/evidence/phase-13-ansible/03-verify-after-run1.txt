@@ -1,0 +1,55 @@
+== host
+lastmile-target
+Etc/UTC
+== packages
+ca-certificates 20260601~24.04.1
+containerd.io 2.4.2-2~ubuntu.24.04~noble
+curl 8.5.0-2ubuntu10
+docker-ce 5:29.9.1-1~ubuntu.24.04~noble
+docker-ce-cli 5:29.9.1-1~ubuntu.24.04~noble
+docker-compose-plugin 5.6.0-1~ubuntu.24.04~noble
+gnupg 2.4.4-2ubuntu17
+python3-requests 2.31.0+dfsg-1ubuntu1
+ufw 0.36.2-6
+== services
+docker: active / enabled
+containerd: active / enabled
+== account
+lastmile:x:999:988::/home/lastmile:/usr/sbin/nologin
+uid=999(lastmile) gid=988(lastmile) groups=988(lastmile)
+lastmile in docker group? no
+== directories and files
+drwxr-x--- root:lastmile /opt/lastmile
+drwxr-x--- root:lastmile /opt/lastmile/releases
+-rw-r----- root:lastmile /opt/lastmile/compose.yaml
+-rw------- root:root /opt/lastmile/.env
+-rw-r----- root:root /opt/lastmile/releases/current
+current release: 0ac1a53c836f
+previous release: none
+.env keys: COMPOSE_PROJECT_NAME LASTMILE_IMAGE LASTMILE_NGINX_IMAGE LASTMILE_IMAGE_TAG LASTMILE_HTTP_PORT SPRING_PROFILES_ACTIVE LASTMILE_DB_HOST LASTMILE_DB_PASSWORD LASTMILE_DEMO_PASSWORD 
+== docker daemon
+{
+  "log-driver": "json-file",
+  "log-opts": { "max-size": "10m", "max-file": "3" },
+  "bip": "10.213.0.1/24",
+  "default-address-pools": [{"base": "10.213.64.0/18", "size": 24}],
+  "insecure-registries": ["localhost:5000"]
+}
+server 29.9.1 root=/var/lib/docker insecure=[127.0.0.0/8 ::1/128]
+== containers
+NAMES              IMAGE                                           STATUS                    PORTS
+lastmile-nginx-1   localhost:5000/lastmile-nginx:0ac1a53c836f      Up 30 seconds (healthy)   127.0.0.1:8089->80/tcp
+lastmile-app-1     localhost:5000/lastmile-delivery:0ac1a53c836f   Up 41 seconds (healthy)   8080/tcp
+lastmile-db-1      postgres:17.11-alpine3.24                       Up 48 seconds (healthy)   5432/tcp
+== images (exact references and digests)
+localhost:5000/lastmile-nginx:0ac1a53c836f sha256:eb4cedc2c4b3830cf6bc57ed016064c6a8fbe9793525a1641cbf3f96d61aaa69 id=eb4cedc2c4b3
+localhost:5000/lastmile-delivery:0ac1a53c836f sha256:561e14255cc87fcaa6e3610c8507e06acada4a375222f76b5c08e4a0e45ae562 id=561e14255cc8
+== deployed revision
+localhost:5000/lastmile-delivery:0ac1a53c836f revision=0ac1a53c836f3e29fe58cb3e6b5beed61541b574 user=10001:10001 readonly=true
+== health via nginx on the target
+{"status":"UP"} HTTP 200
+login page HTTP 200
+== networks (own ranges)
+10.213.0.0/24
+lastmile_backend 10.213.64.0/24
+lastmile_frontend 10.213.65.0/24
