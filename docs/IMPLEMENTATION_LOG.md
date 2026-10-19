@@ -411,3 +411,58 @@ NEXT ACTIONS:
      (expect changed=0), pull of the exact registry tag on the target, health, rollback to the previous tag.
   3. Phase 15: end-to-end run, final docs, evidence INDEX, viva material.
 ```
+
+```text
+SESSION 2026-10-19 (resume) — reconciliation
+- Git: tree clean, branches in sync with origin; no tags, PRs or issues existed.
+- GitHub auth (B5): logged in as Hussain-Anajwala (scopes repo, workflow) in Git Bash and PowerShell, same
+  gh.exe. Earlier "not logged in" = stale session PATH + state before the user's login. B5 RESOLVED.
+- Memory before work: commit free 6.2 GB; project containers ~1 GB.
+
+SECRET GATE (issue #6, PR #13): two more fail-open paths found while preparing the test and fixed (scanner
+crash in tree mode read as "no findings"; wrong GITLEAKS path silently fell back). scripts/test-secret-gate.sh:
+10/10 checks in a throwaway repo; blocked pushes left the bare remote untouched. On older branches without the
+gate the gated commit also failed closed (exit 127), confirming nothing bypasses it.
+
+PHASE: 5 — First feature with branching
+STATUS: PASS (self-review; independent review pending teacher answer Q2)
+EVIDENCE: issue #1, PR #8 merged 0820c84; docs/evidence/phase-05-feature/, phase-06-mvp/pull-requests-and-release.md
+
+PHASE: 6 — MVP completion and Git collaboration
+STATUS: PASS (self-review; Q2 pending)
+EVIDENCE: PR #9 merged 94756f8 with review fix 566904b (88 tests); conflict demo; PRs #10–#15; merged result tree
+  c2f4ff68 tested locally (89 + 8) and identical on develop; Jenkins main #1 green and deployed; tag v0.1.0 →
+  e3b9d31 (GitHub release). Remaining: independent review only if the teacher requires it.
+
+AUDIT of Phases 7–12 (what real runs demonstrate vs. configuration only)
+| Claim | Demonstrated by | Status |
+| Jenkins detects changes and runs the right job | branch-indexing builds of ci/*, develop #1/#2, main #1 | demonstrated |
+| Maven build + archived artifact | lastmile-delivery.jar archived on green builds | demonstrated |
+| Selenium reports published; failed tests block deploy | ci/jenkins-pipeline #9 | demonstrated |
+| Image version = source commit | revision label check in main #1 (e3b9d31) | demonstrated |
+| Registry holds the image with matching digest | pushed vs Docker-Content-Digest in #13, develop, main #1 | demonstrated |
+| Deployment uses the versioned image | `Deployed localhost:5000/lastmile-delivery:e3b9d31cae5b` | demonstrated |
+| Health checks detect an unhealthy release | #15 `container lastmile-app-1 is unhealthy` | demonstrated |
+| Recovery restores the previous image | #15 ROLLBACK SUCCEEDED (workstation); target: not yet (B4) | demonstrated / blocked |
+| Jenkins data persists across rebuilds | job history intact after two container recreations | demonstrated |
+| Database data persists across redeploys | 6 deliveries / 15 history rows from 22:15 UTC still present after redeploys | demonstrated |
+| Only main deploys | develop #1/#2 `Stage "Deploy" skipped due to when conditional` | demonstrated |
+| Configured only | HTML report renders unstyled (Jenkins CSP); no webhook (by design, SCM scan instead) | noted |
+
+PHASE: 15 — End-to-end release, documentation and viva
+STATUS: IN PROGRESS (not complete)
+DONE: docs/evidence/INDEX.md, SECURITY.md, TROUBLESHOOTING.md, DEMO_RUNBOOK.md, VIVA_QA.md, PRESENTATION_OUTLINE.md;
+  memory measured during the main pipeline (phase-15-release/memory-during-main-build.txt).
+PENDING: full end-to-end run including Ansible on the managed target (B4); teacher answers Q1–Q5.
+```
+
+```text
+CHECKPOINT 2026-10-19 ~07:45 IST
+STATE: main = develop tree (e3b9d31, v0.1.0, deployed and healthy at http://127.0.0.1:8088). Phases 1, 2, 4–12 PASS;
+  3 partial (target gates); 13–14 BLOCKED (B4); 15 in progress. Open issues #5 (Ansible), #7 (Phase 15).
+  Phase 15 docs on branch docs/phase-15-release with PR open into develop (left open so a human reviewer can
+  review it if the teacher requires — D15).
+NEXT: on B4 approval follow docs/ANSIBLE_TARGET_SETUP.md (Option B steps 1–5), then ping, --check, run 1, run 2
+  (changed=0), target pull of localhost:5000/<repo>:<sha>, health, rollback.yml; record in phase-13/14 evidence;
+  then the end-to-end run for Phase 15 and tag v1.0.0.
+```

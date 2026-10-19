@@ -101,3 +101,19 @@ Format: ID — date — context — options — decision — rationale — conse
 - **Context:** Backend_Schema §8 forbids client-supplied version values "unless a deliberately documented concurrency protocol requires a token". App_Flow §5 asks that concurrent updates not silently overwrite each other.
 - **Decision:** Status, assignment and edit requests accept an optional `expectedVersion` (`version` hidden field in web forms). If it differs from the stored `@Version`, the request is rejected with 409 and nothing changes. It is only compared, never written.
 - **Consequences:** Double submissions and stale pages cannot apply a transition twice (`DeliveryWorkflowServiceTest.staleVersionIsRejected…`).
+
+## D15 — 2026-10-19 — PR review policy until the teacher answers Q2
+
+- **Context:** The teacher has not said whether a second person must review PRs (BLOCKERS B6 Q2). Implementation_Plan §5 (Phase 5) describes "open PR, review the diff, address findings, merge"; USER_SETUP_CHECKLIST treats an independent reviewer as needed only *if the course requires it*.
+- **Decision (provisional):** PRs #8–#15 were merged after a documented author self-review performed by the Claude Code assistant, labelled in every PR as **not an independent review**. No approval was faked (GitHub does not allow approving one's own PR).
+- **Consequences:** If the teacher requires an independent reviewer, a classmate/teacher reviews the remaining open PR(s) (e.g. the Phase 15 documentation PR) and may add post-merge review comments on #8/#9; the evidence index states this gap explicitly.
+
+## D16 — 2026-10-19 — Only `main` deploys
+
+- **Context:** After merging the stack, `develop` and the feature branch `ci/jenkins-pipeline` also deployed to the single local environment (review finding).
+- **Decision:** `DEPLOY_BRANCHES = ['main']`; other branches build, test and publish images (PR #14). Verified: `develop` #1/#2 logged `Stage "Deploy" skipped due to when conditional`.
+
+## D17 — 2026-10-19 — One Jenkins executor
+
+- **Context:** Two WSL VM crashes from commit-limit exhaustion; two executors could run two heavy pipelines at once.
+- **Decision:** `numExecutors: 1` (JCasC). Jenkins data persisted across the container recreation (job history intact).

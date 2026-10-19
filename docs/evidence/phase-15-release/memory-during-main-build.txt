@@ -1,0 +1,48 @@
+--- 07:30:20
+lastmile-jenkins 1.375GiB / 3GiB
+lastmile-nginx-1 10.52MiB / 7.663GiB
+lastmile-app-1 268MiB / 768MiB
+lastmile-registry 23.98MiB / 7.663GiB
+lastmile-db-1 45.03MiB / 7.663GiB
+Mem:            7847        1975        1915          68        4215        5871
+host freeCommit=1.9GB freeRAM=1.3GB vmmemWSL=2.4GB
+--- 07:30:54
+lastmile-jenkins 1.37GiB / 3GiB
+lastmile-nginx-1 10.51MiB / 7.663GiB
+lastmile-app-1 268MiB / 768MiB
+lastmile-registry 23.98MiB / 7.663GiB
+lastmile-db-1 45.08MiB / 7.663GiB
+Mem:            7847        1970        1921          68        4215        5877
+host freeCommit=1.9GB freeRAM=1.1GB vmmemWSL=2.4GB
+--- 07:31:28
+lastmile-jenkins 1.383GiB / 3GiB
+lastmile-nginx-1 10.52MiB / 7.663GiB
+lastmile-app-1 268MiB / 768MiB
+lastmile-registry 21.96MiB / 7.663GiB
+lastmile-db-1 45.02MiB / 7.663GiB
+Mem:            7847        1974        1909          68        4222        5872
+host freeCommit=1.9GB freeRAM=1.4GB vmmemWSL=2.4GB
+--- 07:32:01
+lastmile-jenkins 1.956GiB / 3GiB
+lastmile-nginx-1 10.53MiB / 7.663GiB
+lastmile-app-1 268.1MiB / 768MiB
+lastmile-registry 21.97MiB / 7.663GiB
+lastmile-db-1 45.04MiB / 7.663GiB
+Mem:            7847        2554        1285          68        4267        5292
+host freeCommit=1.2GB freeRAM=0.4GB vmmemWSL=3.0GB
+--- 07:32:35
+lastmile-jenkins 2.213GiB / 3GiB
+lastmile-nginx-1 10.52MiB / 7.663GiB
+lastmile-app-1 268MiB / 768MiB
+lastmile-registry 21.97MiB / 7.663GiB
+lastmile-db-1 45.02MiB / 7.663GiB
+Mem:            7847        2809        1025          90        4294        5037
+host freeCommit=1.1GB freeRAM=0.8GB vmmemWSL=3.2GB
+--- 07:33:09
+lastmile-jenkins 1.766GiB / 3GiB
+lastmile-nginx-1 10.54MiB / 7.663GiB
+lastmile-app-1 268MiB / 768MiB
+lastmile-registry 21.97MiB / 7.663GiB
+lastmile-db-1 45.03MiB / 7.663GiB
+Mem:            7847        2363        1408          68        4335        5483
+host freeCommit=1.1GB freeRAM=1.1GB vmmemWSL=2.8GB
