@@ -22,11 +22,14 @@
       https://download.docker.com/linux/ubuntu {{ ansible_facts['distribution_release'] }} stable
   register: docker_engine_repo
 
+# In --check mode the repository file above is not really written, so apt cannot see the packages
+# yet on a fresh target; tolerate that (and the dependent service task) only in check mode.
 - name: Install Docker Engine and the Compose plugin
   ansible.builtin.apt:
     name: "{{ docker_packages }}"
     state: present
     update_cache: "{{ docker_engine_repo is changed }}"
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Configure the Docker daemon (logging limits; trusted host-only registry)
   ansible.builtin.template:
@@ -40,6 +43,7 @@
     name: docker
     state: started
     enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Apply a pending Docker restart now (later tasks need the new daemon config)
   ansible.builtin.meta: flush_handlers

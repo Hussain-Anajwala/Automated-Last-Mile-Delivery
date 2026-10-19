@@ -24,7 +24,7 @@
       ansible.builtin.assert:
         that:
           - lastmile_image_tag is defined
-          - lastmile_image_tag | regex_search('^[0-9a-f]{12}$')
+          - lastmile_image_tag is regex('^[0-9a-f]{12}$')
         fail_msg: "Pass -e lastmile_image_tag=<12-character commit SHA>"
         quiet: true
 

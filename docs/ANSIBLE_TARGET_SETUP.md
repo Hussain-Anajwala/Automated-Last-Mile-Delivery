@@ -1,7 +1,8 @@
 # Preparing the Ansible Target (BLOCKERS B4)
 
-**Nothing in this file has been executed.** The target type needs the user's decision and approval
-(and, for Option B, the teacher's acceptance). Each step lists who acts and how to verify it.
+**Option B was executed on 2026-10-19** after the user's approval (evidence:
+`docs/evidence/phase-13-ansible/target-run-evidence.md`). The teacher's acceptance of a WSL2 target is still
+pending. Option A has not been executed.
 
 ## Common: control-node SSH key (Ubuntu/WSL, user's own account, no sudo)
 
@@ -28,17 +29,19 @@ Requires explicit user approval (adds a WSL distribution) and teacher acceptance
 
 | Step | Who | Action |
 |---|---|---|
-| 1 | Claude | Download the official Ubuntu 24.04 WSL root filesystem from `cloud-images.ubuntu.com/wsl/releases/24.04/current/` and verify it against the published `SHA256SUMS`. |
+| 1 | Claude | Download `ubuntu-noble-wsl-amd64-wsl.rootfs.tar.gz`, `SHA256SUMS`, `SHA256SUMS.gpg` from `cloud-images.ubuntu.com/wsl/releases/24.04/current/`; verify the signature with `gpgv --keyring /usr/share/keyrings/ubuntu-cloudimage-keyring.gpg SHA256SUMS.gpg SHA256SUMS` and the file with `sha256sum -c --ignore-missing SHA256SUMS`. |
 | 2 | Claude | `wsl --import lastmile-target D:\WSL\lastmile-target <rootfs.tar.gz> --version 2` (no admin needed). |
-| 3 | Claude | Inside the target as root: create user `deploy` with sudo, enable systemd in `/etc/wsl.conf`, install `openssh-server` listening on port 2222, install the public key; restart the distro. |
+| 3 | Claude | `wsl -d lastmile-target -u root -- bash -s -- "$(cat ~/.ssh/lastmile_target_ed25519.pub)" < scripts/wsl-target/bootstrap-target.sh` (user `deploy` with sudo, systemd, SSH 127.0.0.1:2222 key-only, no Windows drives/interop), then `wsl --terminate lastmile-target`. |
 | 4 | User (check) | Docker Desktop → *Settings → Resources → WSL integration*: integration **off** for `lastmile-target`, so the playbook installs its own Docker Engine there. |
-| 5 | Claude | Inventory: `ansible_host: 127.0.0.1`, `ansible_port: 2222`, `lastmile_http_port: 8089` (8088 is used by the workstation stack in the shared WSL network), `base_manage_firewall: false`, registry `localhost:5000` if reachable from the target. |
+| 5 | Claude | Inventory `ansible/inventory/wsl-target.yml` (committed, no secrets): 127.0.0.1:2222, port 8089, firewall off, Docker ranges 10.213.0.0/16, registry `localhost:5000` (verified from the target). Secrets: `~/.config/lastmile/target-secrets.env` (mode 600, outside the repo). |
+| 6 | Claude | Keep the distro running while working: `wsl -d lastmile-target -u root -- sleep infinity` in a separate session (WSL stops idle distributions, which refuses SSH). |
 
 Known limits of Option B, to state in the report: shares the WSL kernel and network stack with Docker
 Desktop and the control node (not a separate machine); ufw stays off because the firewall would affect
-every WSL distribution. A probe from the existing Ubuntu distro on 2026-10-19 showed
-`http://localhost:5000/v2/` → 200, so pulling the same `localhost:5000/...` reference is likely but
-must be verified from the target itself.
+every WSL distribution. Verified from the target itself: `http://localhost:5000/v2/` → 200, and the
+images it pulled have exactly the registry's digests.
+
+Removal (only if ever wanted): `wsl --unregister lastmile-target` deletes this distribution and nothing else.
 
 ## After either option (Claude)
 

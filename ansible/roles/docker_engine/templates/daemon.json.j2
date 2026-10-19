@@ -1,5 +1,11 @@
 {
   "log-driver": "json-file",
   "log-opts": { "max-size": "10m", "max-file": "3" },
+{% if docker_engine_bip %}
+  "bip": {{ docker_engine_bip | to_json }},
+{% endif %}
+{% if docker_engine_default_address_pools %}
+  "default-address-pools": {{ docker_engine_default_address_pools | to_json }},
+{% endif %}
   "insecure-registries": {{ docker_engine_insecure_registries | to_json }}
 }
