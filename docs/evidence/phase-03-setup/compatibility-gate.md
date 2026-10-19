@@ -11,9 +11,9 @@ Flyway migration, one Thymeleaf page, `@SpringBootTest(RANDOM_PORT)` with two te
 | G4 | Headless Selenium | **PASS** | Selenium 4.43.0, Chrome `155.0.8059.81` headless (`--headless=new`), driver resolved by Selenium Manager; assertion on DB-backed page text passed. `Tests run: 2, Failures: 0, Errors: 0, Skipped: 0` |
 | G5 | Docker Desktop / Compose functioning | **PASS (re-checked later on 2026-10-19)** | Initially blocked (B2). After the user started Docker Desktop: `docker run --rm hello-world` → `Hello from Docker!` (exit 0); server 29.4.1, later auto-updated to 29.8.2 |
 | G6 | Jenkins with Docker CLI/daemon access | **PASS** | `docker exec lastmile-jenkins docker version` → `docker cli 29.9.1 -> server 29.8.2`; successful Jenkins builds (phase-07 evidence) |
-| G7 | Local registry push/pull same reference | **PENDING (Phase 12) / BLOCKED for the target (B4)** | Docker now available; target node not yet chosen |
+| G7 | Local registry push/pull same reference | **PASS** | Jenkins pushes `localhost:5000/...:<sha>`; the WSL2 target pulled the same references with identical digests (phase-13-ansible, phase-15-release/e2e trace) |
 | G8 | WSL2 Ubuntu Ansible control node | **PASS** | User installed `Ubuntu-24.04`; `~/.venvs/ansible/bin/ansible --version` → `ansible [core 2.21.5]` (no sudo needed) |
-| G9 | SSH to isolated Ubuntu target | **BLOCKED (B4)** | No target exists |
+| G9 | SSH to isolated Ubuntu target | **PASS (WSL2 target, D20)** | key-only SSH `deploy@127.0.0.1:2222`; `ansible -m ping` → pong |
 | G10 | Ports, memory, disk | **PASS (with risk)** | 5000/8088/8090/15432 free; 5432 used by user's PostgreSQL 16 (avoided, D1); free RAM 1.9–2.9 GB of 15.8 GB; C: 9.8 GB free, D: 855 GB free |
 | G11 | GitHub CLI | **PARTIAL (B5)** | `gh version 2.102.0`; `gh auth status` → not logged in (exit 1) |
 

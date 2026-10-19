@@ -25,4 +25,6 @@ Thumbs.db
 
 # Logs and test artefacts
 *.log
+# Evidence logs are deliberate, reviewed artefacts (checked for secrets before commit).
+!docs/evidence/**/*.log
 selenium-screenshots/

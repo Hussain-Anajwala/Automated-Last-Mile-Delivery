@@ -101,3 +101,39 @@ Format: ID — date — context — options — decision — rationale — conse
 - **Context:** Backend_Schema §8 forbids client-supplied version values "unless a deliberately documented concurrency protocol requires a token". App_Flow §5 asks that concurrent updates not silently overwrite each other.
 - **Decision:** Status, assignment and edit requests accept an optional `expectedVersion` (`version` hidden field in web forms). If it differs from the stored `@Version`, the request is rejected with 409 and nothing changes. It is only compared, never written.
 - **Consequences:** Double submissions and stale pages cannot apply a transition twice (`DeliveryWorkflowServiceTest.staleVersionIsRejected…`).
+
+## D15 — 2026-10-19 — PR review policy until the teacher answers Q2
+
+- **Context:** The teacher has not said whether a second person must review PRs (BLOCKERS B6 Q2). Implementation_Plan §5 (Phase 5) describes "open PR, review the diff, address findings, merge"; USER_SETUP_CHECKLIST treats an independent reviewer as needed only *if the course requires it*.
+- **Decision (provisional):** PRs #8–#15 were merged after a documented author self-review performed by the Claude Code assistant, labelled in every PR as **not an independent review**. No approval was faked (GitHub does not allow approving one's own PR).
+- **Consequences:** If the teacher requires an independent reviewer, a classmate/teacher reviews the remaining open PR(s) (e.g. the Phase 15 documentation PR) and may add post-merge review comments on #8/#9; the evidence index states this gap explicitly.
+
+## D16 — 2026-10-19 — Only `main` deploys
+
+- **Context:** After merging the stack, `develop` and the feature branch `ci/jenkins-pipeline` also deployed to the single local environment (review finding).
+- **Decision:** `DEPLOY_BRANCHES = ['main']`; other branches build, test and publish images (PR #14). Verified: `develop` #1/#2 logged `Stage "Deploy" skipped due to when conditional`.
+
+## D17 — 2026-10-19 — One Jenkins executor
+
+- **Context:** Two WSL VM crashes from commit-limit exhaustion; two executors could run two heavy pipelines at once.
+- **Decision:** `numExecutors: 1` (JCasC). Jenkins data persisted across the container recreation (job history intact).
+
+## D18 — 2026-10-19 — Option B target configuration (user-approved)
+
+- **Context:** The user approved a dedicated WSL2 distribution `lastmile-target` (no VirtualBox; existing distributions, Docker data, PostgreSQL and Jenkins data preserved). Teacher acceptance of WSL2 as the clean node is still pending (B6 Q3).
+- **Decision:** official Ubuntu 24.04 WSL rootfs (GPG-verified checksum) imported into `D:\WSL\lastmile-target`; minimal bootstrap (deploy user, systemd, SSH 127.0.0.1:2222 key-only, no Windows drives/interop). Because the network stack is shared with Docker Desktop and the control node: Nginx on 8089, ufw off, the target's Docker engine on 10.213.0.0/16. Registry `localhost:5000`, verified from the target itself. Secrets in `~/.config/lastmile/target-secrets.env` (mode 600, outside the repo).
+- **Consequences:** a separate root filesystem, init system, SSH server and Docker engine, but not a separate machine — stated in all evidence.
+
+## D19 — 2026-10-19 — Evidence logs are tracked despite `*.log`
+
+- **Context:** `.gitignore` excluded `*.log`, so 15 raw Jenkins logs referenced by Phase 7–12 evidence were never committed (found while committing the Ansible logs).
+- **Decision:** `!docs/evidence/**/*.log`; every evidence log is checked against all known secret values and gitleaks before commit.
+
+## D20 — 2026-10-19 — Final Ansible target: the dedicated WSL2 distribution (teacher gave discretion)
+
+- **Teacher's response (exact, relayed by the student):** "Do whatever you think is right and best for your system."
+- **What this does and does not say:** it leaves the choice of target to the student. It does **not** state that a WSL2 distribution is equivalent to a virtual machine, and it is not recorded here as such.
+- **Decision:** keep the already-built and tested WSL2 distribution `lastmile-target` (D18) as the managed node; do not install VirtualBox.
+- **Technical rationale:** the workstation has 15.8 GB RAM and repeatedly ran near its Windows commit limit (two WSL VM crashes during image builds, free commit as low as 0.5–1.1 GB with Jenkins running; BLOCKERS B7). A VirtualBox VM would reserve about 2 GB more and require an administrator install. The WSL2 target adds only its own small Docker stack inside the existing WSL VM, and all six technical acceptance criteria were demonstrated on it.
+- **Separate distribution vs separate VM:** `lastmile-target` has its own root filesystem, systemd, users, SSH server, Docker Engine and data, cannot see Windows drives or run Windows programs, and is reached only over SSH. It shares the WSL2 kernel and network stack with Docker Desktop and the control node, so it is not a separate machine: its host firewall stays off and it uses its own port (8089) and Docker address ranges.
+- **Remaining academic uncertainty:** an examiner who expects a fully separate virtual machine could still regard this as a limitation; it is stated as such in `docs/KNOWN_LIMITATIONS.md` and the evidence index rather than raised with the teacher again.

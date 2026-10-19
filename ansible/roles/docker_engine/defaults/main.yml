@@ -1,2 +1,6 @@
 # Plain-HTTP registries this daemon may pull from (host-only/trusted network only).
 docker_engine_insecure_registries: []
+# Optional network ranges for this engine's bridges. Set them when the target shares a network
+# stack with another Docker engine (the WSL2 target shares it with Docker Desktop).
+docker_engine_bip: ""
+docker_engine_default_address_pools: []

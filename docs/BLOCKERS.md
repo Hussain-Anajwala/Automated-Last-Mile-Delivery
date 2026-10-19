@@ -40,17 +40,15 @@ Source audit: `docs/evidence/phase-00-audit/environment-audit.md` (2026-10-19).
 - **Success signal:** `wsl -l -v` lists `Ubuntu-24.04` as version 2; `wsl -d Ubuntu-24.04 -- uname -a` succeeds.
 - **Continues meanwhile:** Everything except Phase 3 Ansible spike and Phases 13–14.
 
-## B4 — No isolated Ubuntu target node for Ansible — OPEN (user decision + approval; teacher acceptance)
+## B4 — Isolated Ubuntu target for Ansible — RESOLVED 2026-10-19 (decision D20)
 
-- **Status 2026-10-19:** Everything that does not need the target is done: roles written, `--syntax-check` passes, `ansible-lint` passes (production profile), control node ready. Phases 13 (execution) and 14 wait for a target.
-- **Facts checked:** WSL 2.6.3; `VirtualMachinePlatform` and `HypervisorPlatform` enabled (VirtualBox can coexist with Hyper-V); no VM software installed; free commit memory 0.5–3.9 GB during work (B7).
-- **Option A — VirtualBox VM (plan's primary):** Ubuntu Server 24.04, 2 vCPU / 2 GB RAM / 20 GB disk on D:, host-only adapter (registry published only on that host-only interface). Strongest "separate node" story. Needs: VirtualBox install (admin prompt), ~2 GB RAM free (close Brave first), Ubuntu install with an SSH key.
-- **Option B — dedicated WSL2 distro `lastmile-target` (plan's fallback, recommended on this machine's memory):** separate root filesystem, own systemd, sshd and Docker Engine; created by Claude with `wsl --import` (no admin) and removable with `wsl --unregister lastmile-target`. Limits: shares the WSL kernel/network stack with Docker Desktop, so ufw stays off on this target (`base_manage_firewall: false`) and the registry must be reachable from WSL. **Needs teacher acceptance as a "clean node".**
-- **What Claude needs:** a reply choosing A or B. For B, also explicit approval to add a WSL distro (it changes WSL configuration). For A, install VirtualBox and create the VM, or ask Claude for exact click-by-click steps.
-- **Success signal:** `bash scripts/ansible-run.sh ansible -m ansible.builtin.ping lastmile_targets` → `pong`.
+- **Resolution:** the dedicated WSL2 distribution `lastmile-target` (D18) is the managed node. All six technical acceptance criteria passed (evidence: `docs/evidence/phase-13-ansible/target-run-evidence.md`, PR #17). The teacher's answer to Q3 was "Do whatever you think is right and best for your system."; on that basis, and because of the measured memory limits (B7), WSL2 was kept instead of a VirtualBox VM.
+- **Stated limitation (not a blocker):** the target is a separate distribution, not a separate VM (shared WSL2 kernel and network stack). See D20 and `docs/KNOWN_LIMITATIONS.md`.
+- **Operating note:** WSL stops idle distributions; keep `wsl -d lastmile-target -u root -- sleep infinity` running while using the target. Its stack restarts automatically when the distribution starts.
 
-## B5 — GitHub CLI not authenticated — OPEN (human action required)
+## B5 — GitHub CLI not authenticated — RESOLVED 2026-10-19
 
+- **Resolution:** The user authenticated. Verified in both Git Bash and PowerShell with the same executable (`…\WinGet\Packages\GitHub.cli_…in\gh.exe`): logged in as `Hussain-Anajwala`, scopes `repo`, `workflow`. The earlier "not logged in" result came from this session's stale PATH plus the state before login. Issues #1–#7 and PRs #8–#15 created.
 - **Update 2026-10-19:** `gh` 2.102.0 installed by Claude via `winget install --id GitHub.cli -e --scope user` (winget verified the installer hash). `gh auth status` → not logged in.
 - **Missing (original):** `gh` is not installed, so issues and pull requests cannot be created from this session. Plain `git push` may work through Git Credential Manager (not yet tested).
 - **Why user:** Installation may need approval; `gh auth login` is a browser OAuth flow the user must complete.
@@ -58,25 +56,26 @@ Source audit: `docs/evidence/phase-00-audit/environment-audit.md` (2026-10-19).
 - **Success signal:** `gh auth status` shows the account as logged in to github.com.
 - **Continues meanwhile:** Local branches and commits; pushes once credentials work. PR creation (Phase 5/6) waits for this.
 
-## B6 — Teacher-specific clarifications — OPEN (user asks teacher)
+## B6 — Teacher questions — CLOSED 2026-10-19 (Q3 answered with discretion; others kept as documented defaults)
 
-Answers change acceptance evidence, so they are recorded rather than assumed:
+The teacher answered Q3 only, and with discretion (exact words in D20). The other questions were not asked again; their defaults stand as documented choices and are listed as limitations where they might matter to an examiner.
 
-1. Is a **local** deployment URL (e.g. `http://localhost:8088`) plus screenshots acceptable, or must the app be publicly reachable? (Plan default: local.)
-2. Does the PR in Phase 5 need review by a **real second person** (classmate/teacher)? Claude cannot supply one.
-3. If no VM is possible, is an isolated **WSL2 distro** acceptable as the Ansible target? (See B4.)
-4. Is minimal **admin user management** required, or are seeded accounts with role enforcement enough? (Plan default: seeded accounts plus a read-only admin user list.)
-5. Is a Dockerized Spring Boot JAR behind Nginx acceptable, or is an external Tomcat expected? (Plan default: Dockerized JAR behind Nginx.)
+| # | Question | Provisional default in use | Affects |
+|---|---|---|---|
+| Q1 | Is a local URL (`http://127.0.0.1:8088`) plus screenshots/video acceptable, or is public hosting required? | Local only | Tasks 8, 15 |
+| Q2 | Must a real second person review pull requests? | Documented self-review with green CI (D15). The student's reading of the assignment: PRs and code review are required, a second human reviewer is not explicitly mandated. No peer approval exists or is claimed. | Tasks 5, 6 |
+| Q3 | Is a dedicated WSL2 distribution acceptable as the "clean" Ansible target, or must it be a VM? | **Answered:** "Do whatever you think is right and best for your system." → WSL2 target kept (D20) | Tasks 13, 14 |
+| Q4 | Is a read-only admin user list enough, or is full user management required? | Read-only list | Task 6 |
+| Q5 | Is a Dockerized Spring Boot app behind Nginx acceptable, or is external Tomcat mandatory? | Dockerized JAR + Nginx | Tasks 8, 11 |
 
-- **Continues meanwhile:** Everything; defaults above are used and recorded in `docs/DECISIONS_LOG.md` until answered.
+## B7 — Memory pressure on the workstation — MANAGED (no configuration change applied)
 
-## B7 — Windows commit limit nearly exhausted; WSL VM crashes under load — OPEN (human action recommended)
+- **Observed:** two WSL VM crashes during Jenkins image builds (commit limit exhausted). Since then: one Jenkins executor (D17), heavy jobs run one at a time, memory sampled during runs.
+- **Measured during the `main` pipeline (2026-10-19 07:31–07:33 IST, Selenium stage):** Jenkins container peak 2.2 GiB (limit 3 GiB); app stack ~0.35 GiB; WSL VM `used` peak 2.8 GiB plus ~4.2 GiB page cache; host `vmmemWSL` 3.2 GB; host free commit fell to **1.1 GB**. Largest host consumers at the same time: Brave ~2.8 GB, VS Code ~2.1 GB.
+- **Proposal (needs your approval; not applied):** `%UserProfile%\.wslconfig` with `[wsl2]` `memory=6GB` and `[experimental]` `autoMemoryReclaim=gradual`.
+  - Expected effect: WSL can no longer grow past 6 GB, and idle page cache is returned to Windows gradually. The measured workload (~2.8 GB used) fits with room for the 3 GiB Jenkins limit plus the app stack.
+  - Trade-off: less file cache inside WSL (slower repeated builds); if a future workload needs more than 6 GB it would hit the cap. Applying it requires `wsl --shutdown`, which stops Docker Desktop, Jenkins, the registry and the app until restarted (volumes are kept).
+  - Verify: after restart, `wsl -d Ubuntu-24.04 -- free -m` total ≈ 6 GB; rerun one pipeline while sampling host free commit (should stay higher than 1.1 GB).
+- **Measured mitigation without a configuration change (2026-10-19):** dropping the WSL page cache once (`docker run --rm --privileged alpine:3.22 sh -c 'sync; echo 1 > /proc/sys/vm/drop_caches'`) raised host free commit from 1.4 GB to 4.3 GB (`vmmemWSL` 7.3 → 4.3 GB). It was used before heavy steps; `autoMemoryReclaim=gradual` in the `.wslconfig` proposal would do this automatically. With Brave closed, free commit stayed between 3.7 and 6.1 GB during this session's work.
+- **Most effective without any change:** close Brave/other heavy apps during pipeline runs.
 
-- **Observed 2026-10-19:** Building the Jenkins image crashed the whole WSL VM (Docker + Ubuntu) twice (`wsl-bootstrap stopped with exit code 1`; Hyper-V re-created the VM NIC at 03:12:39 IST). Windows reported a commit limit of 33.2 GB with **0.5–2.5 GB free** (pagefile on C: at 17.8 GB, C: only ~10 GB free). Largest consumers: Brave ~2 GB, VS Code ~1.7 GB, the WSL VM ~2 GB. The third build attempt succeeded.
-- **Why Claude does not change it:** limiting WSL memory means editing `%UserProfile%\.wslconfig` and running `wsl --shutdown` (stops Docker, Jenkins and Ubuntu); moving the pagefile or freeing C: are Windows settings or user data. These need your approval.
-- **Recommended actions (pick any):**
-  1. Close Brave and other unneeded apps during pipeline runs (biggest immediate effect).
-  2. Approve a WSL memory cap. Claude would create `%UserProfile%\.wslconfig` containing `[wsl2]`, `memory=6GB` and `[experimental]`, `autoMemoryReclaim=gradual`, then run `wsl --shutdown` and restart Docker Desktop.
-  3. Free space on C: (e.g. Disk Cleanup) so the pagefile can grow.
-- **Verify:** PowerShell `$o=Get-CimInstance Win32_OperatingSystem; $o.FreeVirtualMemory/1MB` stays above ~4 GB during a pipeline run.
-- **Continues meanwhile:** yes, with one heavy job at a time.

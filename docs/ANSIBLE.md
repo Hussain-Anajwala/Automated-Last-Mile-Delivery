@@ -5,7 +5,7 @@
 | Role | What | Status |
 |---|---|---|
 | Control node | Ubuntu 24.04 under WSL2, `ansible-core 2.21.5` + `ansible-lint` in `~/.venvs/ansible` (`scripts/bootstrap-ansible-wsl.sh`, no sudo) | Ready |
-| Target | Isolated Ubuntu node reachable over SSH (VM preferred; dedicated WSL2 distro as fallback) | **Not yet chosen — BLOCKERS B4** |
+| Target | Dedicated WSL2 distribution `lastmile-target` (Option B, approved by the user 2026-10-19), SSH `127.0.0.1:2222`, inventory `ansible/inventory/wsl-target.yml` | **Provisioned and verified technically**; teacher acceptance of WSL2 pending (B6 Q3) |
 
 The playbook refuses to run on anything that is not Ubuntu and requires an explicit image tag.
 It must never target the Windows workstation.
@@ -31,7 +31,7 @@ Secrets (`LASTMILE_DB_PASSWORD`, `LASTMILE_DEMO_PASSWORD`) come from the control
 file with `no_log`.
 
 Idempotency: every `command` task declares `changed_when`, so a second run with the same tag
-should report `changed=0` (proof required in Phase 14 — not yet run).
+reports `changed=0` — demonstrated on the target (run 2, see below).
 
 ## Commands (Ubuntu/WSL, repository root)
 
@@ -66,4 +66,16 @@ in the `docker` group (root-equivalent and unnecessary).
 Rollback: `bash scripts/ansible-run.sh ansible-playbook rollback.yml` redeploys the tag recorded in
 `/opt/lastmile/releases/previous`. Target preparation runbooks: [ANSIBLE_TARGET_SETUP.md](ANSIBLE_TARGET_SETUP.md).
 
-No playbook has been executed against a managed host yet (BLOCKERS B4).
+## Execution on the target (2026-10-19)
+
+All six acceptance criteria passed on `lastmile-target`: `pong`; run 1 `changed=13`; deployed release
+healthy with registry-identical digests; run 2 **`changed=0`**; upgrade then `rollback.yml` back to the
+previous release (healthy); failed-candidate drill recovered with `-e lastmile_rollback_record=current`.
+Details and logs: [evidence/phase-13-ansible/target-run-evidence.md](evidence/phase-13-ansible/target-run-evidence.md).
+
+Check mode (`--check --diff`) covers configuration only: on a fresh target it cannot install Docker
+(the apt repository file is not really written), so those tasks tolerate errors in check mode only, and
+the deployment tasks are skipped in check mode.
+
+Wrapper for this target (loads secrets from `~/.config/lastmile/target-secrets.env`):
+`bash scripts/wsl-target/run-ansible.sh ansible-playbook site.yml -e lastmile_image_tag=<sha12>`.

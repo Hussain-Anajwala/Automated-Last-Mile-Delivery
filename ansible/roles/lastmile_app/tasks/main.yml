@@ -66,6 +66,7 @@
     cmd: docker compose --env-file .env -f compose.yaml pull app nginx
     chdir: "{{ lastmile_base_dir }}"
   register: lastmile_app_pull
+  when: not ansible_check_mode   # deployment steps cannot be dry-run (no real files/engine yet)
   # Compose prints "Pulled" even when nothing new was downloaded. Pulling changes no configuration;
   # a new image is reported as a change by the "up" task below (containers recreated).
   changed_when: false
@@ -75,6 +76,7 @@
     cmd: docker compose --env-file .env -f compose.yaml up -d --remove-orphans --wait --wait-timeout {{ lastmile_app_wait_timeout }}
     chdir: "{{ lastmile_base_dir }}"
   register: lastmile_app_up
+  when: not ansible_check_mode   # deployment steps cannot be dry-run (no real files/engine yet)
   changed_when: lastmile_app_up.stderr is regex('(Recreated|Created|Started)')
 
 - name: Verify readiness through Nginx on the target
@@ -82,6 +84,7 @@
     url: "http://127.0.0.1:{{ lastmile_http_port }}/api/v1/health/ready"
     return_content: true
   register: lastmile_app_readiness
+  when: not ansible_check_mode   # deployment steps cannot be dry-run (no real files/engine yet)
   until: lastmile_app_readiness.status == 200 and lastmile_app_readiness.json.status == 'UP'
   retries: 20
   delay: 3
@@ -90,6 +93,7 @@
 - name: Verify the deployed revision matches the requested image tag
   ansible.builtin.command: docker inspect --format '{{ '{{' }}index .Config.Labels "org.opencontainers.image.revision"{{ '}}' }}' lastmile-app-1
   register: lastmile_app_revision
+  when: not ansible_check_mode   # deployment steps cannot be dry-run (no real files/engine yet)
   changed_when: false
   failed_when: not lastmile_app_revision.stdout.startswith(lastmile_image_tag)
 

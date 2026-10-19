@@ -1,7 +1,7 @@
 # Evidence Index and Redaction Rules
 
-Evidence is grouped by phase: `docs/evidence/phase-NN-<name>/`. The full teacher-task-to-evidence
-map will be `docs/evidence/INDEX.md` (Phase 15).
+Evidence is grouped by phase: `docs/evidence/phase-NN-<name>/`. The teacher-task-to-evidence map is
+[`INDEX.md`](INDEX.md).
 
 ## Rules
 
@@ -25,4 +25,7 @@ map will be `docs/evidence/INDEX.md` (Phase 15).
 | 9 — Selenium | [phase-09-selenium/selenium-evidence.md](phase-09-selenium/selenium-evidence.md) |
 | 10 — Quality gate | [phase-10-quality-gate/quality-gate-evidence.md](phase-10-quality-gate/quality-gate-evidence.md) |
 | 11 — Docker | [phase-11-docker/lifecycle-transcript.md](phase-11-docker/lifecycle-transcript.md) |
-| 12 — Registry/CD | [phase-12-registry/registry-evidence.md](phase-12-registry/registry-evidence.md) |
+| 12 — Registry/CD | [phase-12-registry/registry-evidence.md](phase-12-registry/registry-evidence.md), `main-1-release-deploy.log`, `develop-1-no-deploy.log` |
+| 13 — Ansible (static only) | [phase-13-ansible/static-checks.md](phase-13-ansible/static-checks.md) |
+| 5–6 — PRs, merges, release | [phase-06-mvp/pull-requests-and-release.md](phase-06-mvp/pull-requests-and-release.md) |
+| 15 — Release (in progress) | [INDEX.md](INDEX.md), `phase-15-release/memory-during-main-build.txt` |
