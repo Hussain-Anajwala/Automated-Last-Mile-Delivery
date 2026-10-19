@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('Not found')}"></head>
+<body>
+<header th:replace="~{fragments/layout :: nav}"></header>
+<main id="main" class="container app-main">
+    <div class="app-card" data-testid="error-page" data-error="404">
+        <h1 class="page-title">Not found</h1>
+        <p>The page or delivery you requested does not exist, or you do not have access to it.</p>
+        <a class="btn btn-outline-secondary" th:href="@{/}">Back to home</a>
+    </div>
+</main>
+<th:block th:replace="~{fragments/layout :: scripts}"></th:block>
+</body>
+</html>

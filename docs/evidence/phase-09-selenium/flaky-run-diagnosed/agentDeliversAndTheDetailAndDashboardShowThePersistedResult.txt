@@ -1,0 +1,11 @@
+url: http://localhost:50347/dashboard
+title: Dashboard · LastMile Ops
+error: org.openqa.selenium.WebDriverException: unknown error: unhandled inspector error: {"code":-32000,"message":"Node with given id does not belong to the document"}
+  (Session info: chrome=155.0.8059.81)
+Build info: version: '4.43.0', revision: 'dd0f534'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.12.1'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Command: [02971c4e51a3e1d180b804d229e4a67f, isElementEnabled {id=f.16F43887AB81C2F40929BB57A2EE2743.d.51C0ADF4D5BB3C5E27AB37AE0D1B5EEB.e.11}]
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 155.0.8059.81, chrome: {chromedriverVersion: 155.0.8059.84 (5869fe313571..., userDataDir: <redacted>}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50978}, goog:processID: 40152, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50978/devtoo..., se:cdpVersion: 155.0.8059.81, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:cmtgKey: true, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Element: [[ChromeDriver: chrome on windows (02971c4e51a3e1d180b804d229e4a67f)] -> tag name: html]
+Session ID: 02971c4e51a3e1d180b804d229e4a67f

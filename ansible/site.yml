@@ -1,0 +1,34 @@
+# LastMile Ops — configure the isolated Ubuntu target and deploy a versioned release.
+#
+#   cd ansible
+#   ansible-playbook site.yml --syntax-check
+#   ansible-playbook site.yml --check --diff -e lastmile_image_tag=<sha>
+#   ansible-playbook site.yml -e lastmile_image_tag=<sha>
+#
+# Rollback = run again with the previous known-good tag (recorded on the target in
+# /opt/lastmile/releases/previous), e.g. -e lastmile_image_tag=$(ssh target cat /opt/lastmile/releases/previous)
+- name: Configure LastMile target node
+  hosts: lastmile_targets
+  become: true
+  gather_facts: true
+
+  pre_tasks:
+    - name: Refuse to run against anything that is not Ubuntu
+      ansible.builtin.assert:
+        that:
+          - ansible_facts['distribution'] == 'Ubuntu'
+        fail_msg: "Target must be the isolated Ubuntu node, found {{ ansible_facts['distribution'] }}"
+        quiet: true
+
+    - name: Require an explicit image tag (no 'latest')
+      ansible.builtin.assert:
+        that:
+          - lastmile_image_tag is defined
+          - lastmile_image_tag | regex_search('^[0-9a-f]{12}$')
+        fail_msg: "Pass -e lastmile_image_tag=<12-character commit SHA>"
+        quiet: true
+
+  roles:
+    - role: base
+    - role: docker_engine
+    - role: lastmile_app

@@ -1,0 +1,37 @@
+# Non-secret configuration of the LastMile target node. Secrets are NOT stored here:
+# lastmile_app_db_password and lastmile_app_demo_password come from the environment of the control
+# node (see roles/lastmile_app/defaults/main.yml) or from an ansible-vault file that is git-ignored.
+
+lastmile_app_user: lastmile
+lastmile_app_group: lastmile
+lastmile_base_dir: /opt/lastmile
+
+lastmile_http_port: 8088              # Nginx publishes it on 127.0.0.1 only (deploy/compose.yaml)
+lastmile_profile: demo
+
+# Images are referenced by registry + repository + immutable tag (commit SHA). Required at run time:
+#   -e lastmile_image_tag=<12-char commit sha>
+lastmile_app_repository: lastmile-delivery
+lastmile_nginx_repository: lastmile-nginx
+
+# Plain-HTTP registry on a host-only/trusted network: the target's Docker daemon must list it as
+# insecure. Never point this at a public address. (lastmile_registry is set per host in the inventory.)
+docker_engine_insecure_registries:
+  - "{{ lastmile_registry }}"
+
+# Host firewall on the target (ufw): SSH allowed, everything else inbound denied.
+base_manage_firewall: true
+base_ssh_port: 22
+
+base_packages:
+  - ca-certificates
+  - curl
+  - gnupg
+  - ufw
+  - python3-requests
+
+docker_packages:
+  - docker-ce
+  - docker-ce-cli
+  - containerd.io
+  - docker-compose-plugin

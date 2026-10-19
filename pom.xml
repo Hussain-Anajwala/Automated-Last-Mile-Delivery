@@ -22,6 +22,12 @@
         <embedded-postgres.version>2.2.2</embedded-postgres.version>
         <embedded-postgres-binaries.version>17.11.0</embedded-postgres-binaries.version>
         <bootstrap.version>5.3.8</bootstrap.version>
+        <surefire-report-plugin.version>3.5.6</surefire-report-plugin.version>
+        <!-- Selenium settings, overridable on the command line (see docs/SELENIUM_TEST_PLAN.md) -->
+        <selenium.headless>true</selenium.headless>
+        <selenium.chrome.binary></selenium.chrome.binary>
+        <selenium.noSandbox>false</selenium.noSandbox>
+        <selenium.chromedriver></selenium.chromedriver>
     </properties>
 
     <dependencyManagement>
@@ -43,6 +49,22 @@
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-thymeleaf</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity6</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
         <dependency>
@@ -58,6 +80,16 @@
             <artifactId>postgresql</artifactId>
             <scope>runtime</scope>
         </dependency>
+        <!-- Bootstrap served from the application itself (no CDN at runtime) -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-lite</artifactId>
+        </dependency>
 
         <!-- Test -->
         <dependency>
@@ -71,9 +103,20 @@
             <scope>test</scope>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>io.zonky.test</groupId>
             <artifactId>embedded-postgres</artifactId>
             <version>${embedded-postgres.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- Version managed by Spring Boot 4.1.1 (4.43.0); proven with Chrome 155 in Phase 3 -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -87,4 +130,58 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <!--
+          Browser journeys: mvnw verify -Pselenium
+          Unit/integration tests run first (surefire); Failsafe then runs *SeleniumIT. The HTML report is
+          produced in post-integration-test so it exists even when a journey fails; the verify goal
+          then fails the build.
+        -->
+        <profile>
+            <id>selenium</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <configuration>
+                            <includes>
+                                <include>**/*SeleniumIT.java</include>
+                            </includes>
+                            <systemPropertyVariables>
+                                <selenium.headless>${selenium.headless}</selenium.headless>
+                                <selenium.chrome.binary>${selenium.chrome.binary}</selenium.chrome.binary>
+                                <selenium.noSandbox>${selenium.noSandbox}</selenium.noSandbox>
+                                <selenium.chromedriver>${selenium.chromedriver}</selenium.chromedriver>
+                                <selenium.artifacts>${project.build.directory}/selenium-artifacts</selenium.artifacts>
+                            </systemPropertyVariables>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>integration-test</goal>
+                                    <goal>verify</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-report-plugin</artifactId>
+                        <version>${surefire-report-plugin.version}</version>
+                        <executions>
+                            <execution>
+                                <id>selenium-html-report</id>
+                                <phase>post-integration-test</phase>
+                                <goals>
+                                    <goal>failsafe-report-only</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

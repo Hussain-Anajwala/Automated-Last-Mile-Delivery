@@ -1,0 +1,14 @@
+# registry state 2026-10-18T23:10:49Z
+$ curl http://127.0.0.1:5000/v2/_catalog
+{"repositories":["lastmile-delivery","lastmile-nginx","spike/hello"]}
+
+$ curl http://127.0.0.1:5000/v2/lastmile-delivery/tags/list
+{"name":"lastmile-delivery","tags":["881a67f31d06","e13d79d75af7"]}
+
+$ curl http://127.0.0.1:5000/v2/lastmile-nginx/tags/list
+{"name":"lastmile-nginx","tags":["881a67f31d06","e13d79d75af7"]}
+
+$ docker inspect lastmile-app-1 (image, revision, health)
+localhost:5000/lastmile-delivery:e13d79d75af7 revision=e13d79d75af7165526dcbc2c9cc4d3bbe1cd314d health=healthy
+$ docker image inspect localhost:5000/lastmile-delivery:e13d79d75af7 --format RepoDigests
+["localhost:5000/lastmile-delivery@sha256:d9a6bcec56bdd9848c63544334d3004bdf3021c97488cd9f31506f709fbcf247"]

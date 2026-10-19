@@ -1,0 +1,29 @@
+# Local Docker Registry (TRD §3). Start: docker compose -f infra/registry/compose.yaml up -d
+#
+# Addresses (they differ per network namespace — risk R2):
+#   - Docker daemon (push/pull by the pipeline and compose):  localhost:5000  (published on 127.0.0.1 only;
+#     Docker treats localhost registries as trusted without TLS)
+#   - Jenkins container (registry API checks):                lastmile-registry:5000  (shared network)
+# Never publish this port on a non-loopback interface: the registry has no authentication.
+name: lastmile-registry
+
+services:
+  registry:
+    image: registry:3.1.2
+    container_name: lastmile-registry
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:5000:5000"
+    environment:
+      REGISTRY_STORAGE_DELETE_ENABLED: "true"
+    volumes:
+      - registry_data:/var/lib/registry
+    networks:
+      - registry
+
+networks:
+  registry:
+    name: lastmile-registry
+
+volumes:
+  registry_data: {}

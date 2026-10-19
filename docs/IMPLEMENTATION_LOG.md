@@ -106,3 +106,308 @@ EXIT CRITERIA:
 AUTO-ADVANCE: NO for infrastructure-dependent phases (7, 8, 10–14). YES for Phases 4–6 under D12
   (they depend only on G1–G4, and the user directed continued independent work).
 ```
+
+```text
+PHASE: 4 — Git/GitHub repository initialization
+STATUS: PASS (GitHub Issues mirror pending B5)
+OBJECTIVE / SCOPE: Maven skeleton + wrapper, .gitignore/.gitattributes/.env.example, issue/PR templates,
+  CONTRIBUTING, README, setup guide, develop branch, first push after secret scan.
+FILES CHANGED: pom.xml, mvnw, mvnw.cmd, .mvn/wrapper/maven-wrapper.properties, .gitattributes, .gitignore,
+  .env.example, .github/*, CONTRIBUTING.md, README.md, docs/SETUP.md, scripts/use-jdk21.ps1,
+  src/main/java/com/lastmile/{LastMileApplication,health/HealthController}.java,
+  src/main/resources/application.properties, src/test/java/com/lastmile/{support,health}/*
+DECISIONS MADE AND SOURCES: Base package com.lastmile; JAR name lastmile-delivery.jar; gitleaks 8.30.1
+  (winget, hash verified) as secret scanner; phase branches pushed as history evidence.
+COMMANDS EXECUTED WITH EXIT CODES: see docs/evidence/phase-04-repo/repository-init.md (all 0).
+TESTS AND EXACT RESULTS: Tests run: 3, Failures: 0, Errors: 0, Skipped: 0 (HealthControllerTest x2
+  against embedded PostgreSQL 17.11; HealthControllerUnitTest x1). Fresh-clone build exit 0.
+EVIDENCE PATHS / REAL URLS: https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery ;
+  docs/evidence/phase-04-repo/repository-init.md
+GIT BRANCH / COMMITS / PR / TAG: build/project-skeleton c84ea37 → main 1663370; develop created at 1663370
+KNOWN ISSUES / SECURITY NOTES: Repository is public; commit author metadata includes the configured Git
+  email. No Issues created yet (B5).
+USER ACTIONS REQUIRED: B5 gh auth login (for Issues/PRs)
+EXIT CRITERIA:
+  - Fresh clone contains no secrets: PASS (gitleaks history/staged/tree: no leaks)
+  - Initial skeleton builds with documented commands: PASS (fresh clone mvnw.cmd -B verify exit 0)
+  - README, .gitignore, .gitattributes, issue templates, branch policy: PASS
+  - Repository URL + commit history: PASS (pushed)
+  - GitHub issues: BLOCKED (B5) — templates + Git board used meanwhile
+AUTO-ADVANCE: YES (exit gate criteria pass; issue mirroring is tracked under B5)
+```
+
+```text
+PHASE: 5 — First feature with branching (delivery creation)
+STATUS: BLOCKED (PR/review/merge only) — implementation, tests and live run PASS
+OBJECTIVE / SCOPE: V1 schema, login, delivery creation with validation/code generation/history,
+  create form + detail page, focused tests, branch + push + PR.
+FILES CHANGED: see commits ba96a34, aa9b1ab (pom.xml, V1__core_schema.sql, user/security/delivery/
+  workflow/web packages, templates, static css/js, tests, DevApplication, scripts/smoke_create.py, docs)
+DECISIONS MADE AND SOURCES: D13 stacked branches while PR blocked; codes LMD-<UTC yyyyMMdd>-<seq>
+  from a PostgreSQL sequence; CHECK constraints mirror the state rules at DB level.
+COMMANDS EXECUTED WITH EXIT CODES: mvnw.cmd -B verify (1 then 0 after assertion fix; 0 after review fix);
+  LoginTest without/with fix (1 / 0); spring-boot:test-run DevApplication (ran, health 200);
+  smoke_create.py (0); gitleaks staged (0); git push feature/delivery-create (0); gh auth status (1).
+TESTS AND EXACT RESULTS: Tests run: 36, Failures: 0, Errors: 0, Skipped: 0. Live smoke: valid create 302
+  -> detail 200 CREATED + 1 history row; invalid create 200 with errors and preserved input; agent 403 on
+  form, 404 on unassigned delivery; wrong password -> /login?error.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-05-feature/{feature-evidence.md,pull-request.md,*.png};
+  branch https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery/tree/feature/delivery-create
+GIT BRANCH / COMMITS / PR / TAG: feature/delivery-create ba96a34, aa9b1ab (pushed). PR: NOT OPENED (B5).
+KNOWN ISSUES / SECURITY NOTES: No login rate limiting. Code date is UTC.
+USER ACTIONS REQUIRED: B5 gh auth login; B6.2 whether a second-person review is required.
+EXIT CRITERIA:
+  - Fresh local run creates a valid record and rejects invalid input: PASS (live smoke)
+  - Tests for valid creation, invalid fields, generated/unique code: PASS
+  - Issue + feature branch + push: branch PASS; GitHub issue BLOCKED (B5)
+  - PR, review, merge: BLOCKED (B5); self-review finding fixed with regression test
+AUTO-ADVANCE: YES for Phase 6 implementation under D12/D13 (stacked); Phase 5 remains BLOCKED until
+  the PR is opened, reviewed as required and merged.
+```
+
+```text
+PHASE: 6 — MVP completion and Git collaboration
+STATUS: BLOCKED (release tag + PR merge only) — MVP features, tests, UI review and conflict demo PASS
+OBJECTIVE / SCOPE: list/search/filter/pagination, edit, assignment/reassignment/retry, status workflow with
+  atomic history, role-scoped dashboard, admin user list, JSON API, demo data, UI review, conflict demo, tag.
+FILES CHANGED: commits dde4829, 8226f95, 9fa37b0 and this docs commit — delivery/dashboard/api/user/web/security
+  packages, templates (list, form edit mode, detail actions, dashboard, admin/users), css, tests (7 new classes),
+  scripts/smoke_api.sh, docs/API.md, docs/KNOWN_LIMITATIONS.md, evidence.
+DECISIONS MADE AND SOURCES: D9 revised (stateless API; security flaw found in own design), D14 version token,
+  DeliveryPolicy as single rule source for checks and visible controls.
+COMMANDS EXECUTED WITH EXIT CODES: mvnw.cmd -B verify (0: 82 → 84 → 85 → 86 tests as tests were added);
+  DevApplication live run (health 200); scripts/smoke_api.sh (all expected codes); Selenium screenshot capture
+  (0 after harness click fix); gitleaks staged (0, no leaks); git push feature/delivery-workflow, demo/* (0).
+TESTS AND EXACT RESULTS: Tests run: 86, Failures: 0, Errors: 0, Skipped: 0. Acceptance map A1–A7:
+  docs/evidence/phase-06-mvp/acceptance.md.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-06-mvp/{acceptance.md,api-smoke-output.txt,
+  merge-conflict-transcript.md,screenshots/*.png}; branches feature/delivery-workflow, demo/conflict-{base,a,b}
+GIT BRANCH / COMMITS / PR / TAG: feature/delivery-workflow (stacked on feature/delivery-create); conflict
+  resolution commit cbe5031 on demo/conflict-base; PRs not opened (B5); tag v0.1.0 NOT created (needs main).
+KNOWN ISSUES / SECURITY NOTES: docs/KNOWN_LIMITATIONS.md (no login rate limiting, Basic auth API, UTC display).
+USER ACTIONS REQUIRED: B5 (gh auth login) to open PRs #1 (delivery-create) and #2 (delivery-workflow), merge
+  to develop → main, then tag v0.1.0; B6.2 independent reviewer if required.
+EXIT CRITERIA:
+  - PRD acceptance targets A1–A7 pass: PASS (tests + live smoke)
+  - Application usable locally: PASS (DevApplication + screenshots desktop/mobile)
+  - Service/repository/security tests incl. denied access, terminal status, invalid transition, no-result
+    search, dashboard correctness: PASS
+  - Second feature branch + isolated conflict created and resolved: PASS (transcript)
+  - Release-ready baseline tagged: BLOCKED (B5 — PR merge to main required first)
+AUTO-ADVANCE: YES for independent work (Phase 9 Selenium depends only on T6) under D12. Phases 7, 8, 10–14
+  remain blocked on Docker (B2). Phase 6 stays BLOCKED until PRs merge and v0.1.0 is tagged.
+```
+
+```text
+PHASE: 9 — Selenium test design and local execution
+STATUS: PASS
+OBJECTIVE / SCOPE: Test plan, 5 journeys (8 tests) with data-testid locators, explicit waits, isolated data,
+  failure screenshots/HTML/URL, JUnit XML + HTML report, local execution through Maven.
+  (Run before Phases 7–8, which are blocked on Docker; Phase 9 depends only on T6 — D12.)
+FILES CHANGED: pom.xml (selenium-java test dep, `selenium` profile: failsafe + surefire-report 3.5.6),
+  src/test/java/com/lastmile/selenium/* (BrowserFactory, BrowserJourney, FailureArtifactsExtension, J1–J5),
+  docs/SELENIUM_TEST_PLAN.md, docs/evidence/phase-09-selenium/*
+DECISIONS MADE AND SOURCES: Boot-managed Selenium 4.43.0; journeys in Failsafe behind a profile so the default
+  build stays browser-free; window-marker page-load wait (after diagnosing a real flaky run).
+COMMANDS EXECUTED WITH EXIT CODES: see docs/evidence/phase-09-selenium/selenium-evidence.md
+  (first run 0; repeat 3 = 1 diagnosed; 5 consecutive = 0; deliberate defect = 1; final clean = 0).
+TESTS AND EXACT RESULTS: Tests run: 86 (unit/integration) + 8 (Selenium), Failures: 0, Errors: 0, Skipped: 0.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-09-selenium/{selenium-evidence.md,passing-report/,defect-caught/,
+  flaky-run-diagnosed/}
+GIT BRANCH / COMMITS / PR / TAG: test/selenium-journeys (pushed); PR blocked (B5)
+KNOWN ISSUES / SECURITY NOTES: Jenkins/container execution not yet proven (Phase 10, blocked on B2).
+USER ACTIONS REQUIRED: none for this phase
+EXIT CRITERIA:
+  - Test plan + 3–5 critical journeys: PASS (5 journeys, 8 tests)
+  - Stable selectors, deterministic data, explicit waits, real assertions: PASS
+  - Runs from documented command, repeatable: PASS (5 consecutive green runs after fixing diagnosed flake)
+  - Catches a known UI/workflow defect: PASS (deliberate defect → J5 failed)
+  - Failure screenshot mechanism demonstrated: PASS (defect-caught/*.png, flaky-run-diagnosed/*.png)
+  - Report published locally: PASS (target/reports/failsafe.html; JUnit XML)
+AUTO-ADVANCE: Phase 10 requires Jenkins (B2) → BLOCKED. Continue with independent Phase 11/12/13 preparation
+  (Dockerfile, Compose, Jenkinsfile, Ansible files) that can be written and statically checked without Docker.
+```
+
+```text
+PHASE: 3 — (update) infrastructure gates re-checked after user set up Docker and Ubuntu
+STATUS: BLOCKED (partial) — G5, G6, G8 now PASS; G7 pending Phase 12; G9 blocked on B4 (target choice)
+EVIDENCE: docs/evidence/phase-03-setup/compatibility-gate.md (updated rows G5–G9)
+
+PHASE: 7 — Jenkins installation and continuous integration job
+STATUS: PASS
+OBJECTIVE / SCOPE: Jenkins in the D10 topology, configured as code; repository connected; SCM-polling trigger;
+  build + unit/integration tests; archived JAR and JUnit results; deliberate red build.
+FILES CHANGED: ci/jenkins/{Dockerfile,plugins.txt,casc.yaml,compose.yaml}, Jenkinsfile,
+  scripts/jenkins-init-env.ps1, docs/CI_JENKINS.md, docs/BLOCKERS.md (B2/B3 resolved, B7 added), mvnw (+x)
+DECISIONS MADE AND SOURCES: multibranch job with 2-minute periodic scan as the SCM-polling trigger (no webhook,
+  Jenkins is localhost-only); plugin pins from the 2.580.1 update center.
+COMMANDS EXECUTED WITH EXIT CODES: docker compose build (1, 1 — WSL VM restarts; 0 on third attempt);
+  docker compose up -d (0); curl checks 403/200; builds via branch indexing (see evidence).
+TESTS AND EXACT RESULTS: Jenkins ci/jenkins-pipeline #1 SUCCESS 86/86; ci/demo-failing-build #1 FAILURE
+  (85 passed, 1 failed, exit code 1); ci/jenkins-pipeline #2 SUCCESS 86/86.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-07-jenkins/jenkins-evidence.md + logs; Jenkins UI at
+  http://127.0.0.1:8090 (local only, not a public URL)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline bf988b0, d21fe6c, 99f1369 (pushed); ci/demo-failing-build dd773f6
+KNOWN ISSUES / SECURITY NOTES: Docker socket = root-equivalent (local only). Commit-limit exhaustion (B7).
+  Built-in node executes builds (no separate agent) — acceptable for a single-user local CI.
+USER ACTIONS REQUIRED: B7 (memory) recommended; B5 for PRs.
+EXIT CRITERIA:
+  - Jenkins installed in the selected topology with reproducible config: PASS
+  - Known commit detected by Jenkins and builds successfully, repeatably: PASS (#1 d21fe6c, #2 99f1369)
+  - Build + unit/integration tests + package; artifact and reports archived: PASS
+  - Deliberately failing build exits non-zero: PASS (exit code 1, FAILURE, no artifact)
+  - No credentials in console logs: PASS (checked)
+AUTO-ADVANCE: YES → Phase 8
+```
+
+```text
+INCIDENT 2026-10-19 03:32 IST — secret-scan step did not gate a push
+WHAT HAPPENED: Commit 9ee4a53 was committed and pushed although gitleaks reported "leaks found: 23". The command
+  piped gitleaks into `tail`, so the pipeline returned tail's exit status (0) and the `&&` chain continued.
+IMPACT: None — all 23 findings were reviewed: public Jenkins plugin identifiers in
+  docs/evidence/phase-07-jenkins/installed-plugins.txt (form `<name>-api:<version>.v<build-hash>`) matching the
+  generic-api-key rule. No credential was committed or pushed. Full-history scan with the reviewed allowlist: 0 findings.
+FIX: .gitleaks.toml (default rules + one-path allowlist for that file); scripts/secret-scan.sh returns gitleaks'
+  exit status and is used as `scripts/secret-scan.sh staged && git commit …` without pipes. Verified: planted
+  random key → staged exit 1, tree exit 1; removed → exit 0. Tree mode ignores only git-ignored files
+  (ci/jenkins/.env legitimately holds the local Jenkins password).
+```
+
+```text
+PHASE: 8 — Pipeline as code and server deployment
+STATUS: PASS
+OBJECTIVE / SCOPE: Jenkinsfile with checkout, parameter validation, build/test, image packaging, deployment and
+  verification; ≥1 parameter; Nginx reverse proxy; runtime secrets; local deployed URL.
+FILES CHANGED: Jenkinsfile, Dockerfile, .dockerignore, deploy/compose.yaml, deploy/nginx/{Dockerfile,default.conf},
+  ci/jenkins/casc.yaml (credentials), scripts/jenkins-init-env.ps1, docs/DEPLOYMENT.md, docs/CI_JENKINS.md
+DECISIONS MADE AND SOURCES: Images built from the tested JAR (build once, promote); Nginx config baked into an
+  image (Docker-outside-of-Docker bind mounts resolve on the host); deploy only on listed branches; verification
+  from inside the Nginx container because the published port is bound to the Windows host loopback.
+COMMANDS EXECUTED WITH EXIT CODES: local image build (0); compose config checks (0; guards fail as designed);
+  Jenkins recreate with credentials (0); builds #5 SUCCESS, #6 FAILURE (intended), #7 SUCCESS.
+TESTS AND EXACT RESULTS: build #5: 86/86, all three containers healthy, readiness UP via Nginx, deployed
+  revision == commit 3af9df95d0b1. Host: readiness 200, login 200, redirect keeps port 8088.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-08-deploy/ (logs, screenshots, deploy-evidence.md);
+  local URL http://127.0.0.1:8088 (not public)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline 3af9df9 (pushed)
+KNOWN ISSUES / SECURITY NOTES: deployment target is Docker Desktop on the workstation; the isolated Ubuntu
+  target comes in Phases 13–14. Rollback automation comes in Phases 12/14.
+USER ACTIONS REQUIRED: none for this phase
+EXIT CRITERIA:
+  - Jenkinsfile with checkout/build/test/package/deploy/health stages: PASS
+  - ≥1 parameterized environment setting with validation: PASS (HTTP_PORT, DEPLOY_PROFILE, DEPLOY; #6/#7)
+  - Deployed behind Nginx, app port private, secrets at runtime: PASS
+  - Health/readiness verified and deployed version captured: PASS
+  - Failed build/tests do not deploy: PASS (#6 skipped all later stages, running app unchanged);
+    test-failure-specific proof follows in Phase 10 (Selenium gate)
+AUTO-ADVANCE: YES → Phase 10 (Phase 9 already PASS)
+```
+
+```text
+PHASE: 10 — Continuous testing in Jenkins
+STATUS: PASS
+OBJECTIVE / SCOPE: Selenium stage in the pipeline with published reports; failed Selenium blocks deployment;
+  deliberate defect → red; fix with regression test → green.
+FILES CHANGED: Jenkinsfile (Selenium quality gate stage), templates/deliveries/detail.html (defect + fix),
+  WebAuthorizationTest (regression), docs/CI_JENKINS.md, evidence
+DECISIONS MADE AND SOURCES: --no-sandbox for Chromium inside the unprivileged Jenkins container (browser visits
+  only the local test app); defect chosen to be invisible to MockMvc so only the browser gate can catch it.
+COMMANDS EXECUTED WITH EXIT CODES: Jenkins builds #8 SUCCESS, #9 FAILURE (intended), #10 SUCCESS;
+  local regression test with defect exit 1, after fix mvnw verify exit 0 (87 tests).
+TESTS AND EXACT RESULTS: see docs/evidence/phase-10-quality-gate/quality-gate-evidence.md
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-10-quality-gate/
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline 62d40a3, 7f3a6e4 (defect), eb87044 (fix)
+KNOWN ISSUES / SECURITY NOTES: Jenkins HTML publisher applies its default CSP, so the report renders unstyled.
+USER ACTIONS REQUIRED: none
+EXIT CRITERIA:
+  - Selenium suite runs in Jenkins with published reports: PASS (#8, #10)
+  - Reports/screenshots archived even on failure: PASS (#9 artifacts)
+  - Failed Selenium test stops deployment: PASS (#9 skipped package/deploy; deployment unchanged)
+  - Deliberate defect, failed gate, fix with regression test, green rerun: PASS
+  - Defect removed before release: PASS (eb87044)
+AUTO-ADVANCE: YES → Phase 11
+```
+
+```text
+PHASE: 11 — Docker image and container lifecycle
+STATUS: PASS
+OBJECTIVE / SCOPE: Secure multi-stage Dockerfile, non-root, healthcheck, .dockerignore, runtime configuration,
+  build/tag/run/inspect/logs/stop/start/restart/remove with a real transcript.
+FILES CHANGED: Dockerfile, .dockerignore (Phase 8 commit 3af9df9), scripts/docker-lifecycle-demo.sh, docs/DOCKER.md,
+  docs/evidence/phase-11-docker/lifecycle-transcript.md
+DECISIONS MADE AND SOURCES: package the tested JAR (build once, promote); layered extraction; JRE Alpine base;
+  readiness-based HEALTHCHECK (TRD §2: no misleading "healthy").
+COMMANDS EXECUTED WITH EXIT CODES: bash scripts/docker-lifecycle-demo.sh → exit 0 (all steps in transcript).
+TESTS AND EXACT RESULTS: container healthy after run/start/restart; readiness 200; with DB stopped readiness 503
+  and liveness 200; inspect: user 10001:10001, read-only rootfs, CapDrop ALL, port 127.0.0.1:18081, revision label
+  = commit; image 435da907d9bc, 405MB on disk; demo resources removed, deployed stack untouched.
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-11-docker/lifecycle-transcript.md
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline (this commit)
+KNOWN ISSUES / SECURITY NOTES: image size dominated by the JRE base (~212MB); jlink-trimmed runtime is future work.
+USER ACTIONS REQUIRED: none
+EXIT CRITERIA:
+  - Secure, maintainable Dockerfile (multi-stage, non-root, healthcheck, .dockerignore): PASS
+  - Traceable tag; runtime config, no secrets in layers: PASS
+  - Build/tag/run/inspect/logs/stop/start/restart/remove demonstrated: PASS
+  - Clean image starts and reaches readiness with documented configuration: PASS
+AUTO-ADVANCE: YES → Phase 12
+```
+
+```text
+PHASE: 12 — Jenkins-Docker continuous deployment with a local registry
+STATUS: PASS for the workstation deployment target; target-node pull pending Phase 14 (B4)
+OBJECTIVE / SCOPE: versioned images pushed to a local registry only after all gates, digest-verified, deployed by
+  explicit tag pulled from the registry, last-known-good recorded, automatic rollback on unhealthy candidates.
+FILES CHANGED: infra/registry/compose.yaml, Jenkinsfile (publish + deploy + rollback + FAULT_INJECTION),
+  deploy/compose.yaml (LASTMILE_DB_HOST), ci/jenkins/compose.yaml (registry network), docs/REGISTRY.md, evidence
+DECISIONS MADE AND SOURCES: identity by digest because registry names differ per namespace (risk R2);
+  rollback restores the release that was running before the deploy (immutable tag in the registry).
+COMMANDS EXECUTED WITH EXIT CODES: registry up (0); daemon push to localhost:5000 (0); Jenkins builds #13 SUCCESS,
+  #14 ABORTED (deliberate), #15 FAILURE with ROLLBACK SUCCEEDED (deliberate drill).
+TESTS AND EXACT RESULTS: see docs/evidence/phase-12-registry/registry-evidence.md
+EVIDENCE PATHS / REAL URLS: docs/evidence/phase-12-registry/ (registry served only on http://127.0.0.1:5000)
+GIT BRANCH / COMMITS / PR / TAG: ci/jenkins-pipeline e13d79d, 881a67f
+KNOWN ISSUES / SECURITY NOTES: registry has no auth/TLS — loopback only. Rollback restores the image and its
+  configuration but not database contents (forward-only migrations; see Phase 14 notes).
+USER ACTIONS REQUIRED: B4 (target) for the target-side pull
+EXIT CRITERIA:
+  - Versioned image built and pushed only after mandatory tests: PASS
+  - Registry push + pull of the exact tag, digest verified: PASS (workstation daemon); target node: BLOCKED (B4)
+  - Deploy by explicit immutable tag; last known good retained: PASS
+  - Health check after deploy; failed candidate restored to previous release: PASS (#15)
+  - Registry local/private, never publicly exposed: PASS (127.0.0.1:5000 only)
+AUTO-ADVANCE: YES → Phase 13 authoring and static checks; execution against the target BLOCKED (B4)
+```
+
+```text
+PHASE: 13 — Ansible configuration management
+STATUS: BLOCKED (execution) — specification, inventory template, roles, syntax check and lint PASS
+FILES CHANGED: ansible/{ansible.cfg,site.yml,group_vars,inventory/hosts.example.yml,roles/*}, scripts/ansible-run.sh,
+  docs/ANSIBLE.md (configuration specification), docs/BLOCKERS.md (B4 options)
+COMMANDS EXECUTED WITH EXIT CODES: ansible-playbook --syntax-check (0); ansible-lint 26.10.1 (Passed, production
+  profile, after fixing 16 findings). No run against any host.
+EXIT CRITERIA:
+  - Configuration specification, inventory, variables, roles/templates/handlers: PASS
+  - Syntax check: PASS; check mode and first real run on the isolated target: BLOCKED (B4)
+AUTO-ADVANCE: NO — Phases 13 (execution) and 14 need the target (B4). Phase 15 can only be partially prepared.
+```
+
+```text
+CHECKPOINT 2026-10-19 ~04:50 IST — where to resume
+STATE:
+  - Phases 1, 2, 4, 7, 8, 9, 10, 11 PASS. Phase 12 PASS (workstation target). Phase 3 partial (G7 target pull, G9 SSH).
+  - Phase 5 and 6: implementation PASS; PRs, merges to develop/main and tag v0.1.0 BLOCKED on B5 (gh auth).
+  - Phase 13: authored and statically checked; execution BLOCKED on B4. Phase 14 BLOCKED on B4. Phase 15 NOT STARTED.
+BRANCH STACK (open PRs in this order once gh is authenticated; each into develop, then develop -> main):
+  feature/delivery-create -> feature/delivery-workflow -> test/selenium-journeys -> ci/jenkins-pipeline
+  -> infra/ansible-provisioning (current HEAD). Not for merging: ci/demo-failing-build, demo/conflict-*.
+RUNNING LOCALLY: Jenkins http://127.0.0.1:8090 (ci/jenkins/compose.yaml), registry 127.0.0.1:5000
+  (infra/registry/compose.yaml), app http://127.0.0.1:8088 = localhost:5000/lastmile-delivery:0ac1a53c836f (healthy).
+NEXT ACTIONS:
+  1. After `gh auth login`: open PRs #1..#5 with docs/evidence/phase-05-feature/pull-request.md as the first body;
+     merge in order when checks are green (and a real reviewer has approved, if the teacher requires one);
+     tag v0.1.0 on main after the MVP PRs merge.
+  2. After the B4 decision: create/provision the target, `ansible -m ping`, `--check --diff`, run 1, run 2
+     (expect changed=0), pull of the exact registry tag on the target, health, rollback to the previous tag.
+  3. Phase 15: end-to-end run, final docs, evidence INDEX, viva material.
+```

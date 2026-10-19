@@ -25,6 +25,14 @@ local Docker Registry · Nginx · Ansible. Exact versions and sources: [docs/VER
 .\mvnw.cmd -B verify
 ```
 
+Run the app locally without Docker (embedded PostgreSQL, fictional demo data):
+
+```powershell
+$env:LASTMILE_DEMO_PASSWORD = "<local value, at least 12 characters>"
+$env:LASTMILE_SERVER_PORT = "18080"
+.\mvnw.cmd spring-boot:test-run "-Dspring-boot.run.main-class=com.lastmile.DevApplication"
+```
+
 Details, Ubuntu/WSL commands and configuration: [docs/SETUP.md](docs/SETUP.md).
 
 ## Documentation
@@ -33,9 +41,15 @@ Details, Ubuntu/WSL commands and configuration: [docs/SETUP.md](docs/SETUP.md).
 |---|---|
 | Problem, scope, acceptance criteria | [docs/PROBLEM_SCOPE.md](docs/PROBLEM_SCOPE.md), [docs/PRD.md](docs/PRD.md) |
 | Backlog, board, user stories, DoD | [docs/backlog.md](docs/backlog.md), [docs/project-board.md](docs/project-board.md), [docs/user-stories.md](docs/user-stories.md) |
-| Architecture, API, topologies | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/TRD.md](docs/TRD.md) |
+| Architecture, API, topologies | [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/API.md](docs/API.md), [docs/TRD.md](docs/TRD.md) |
+| Known limitations | [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md) |
 | Data model and API contracts | [docs/Backend_Schema.md](docs/Backend_Schema.md) |
 | UI and application flow | [docs/UI_UX_Design.md](docs/UI_UX_Design.md), [docs/App_Flow.md](docs/App_Flow.md) |
+| Selenium test plan | [docs/SELENIUM_TEST_PLAN.md](docs/SELENIUM_TEST_PLAN.md) |
+| Docker images and lifecycle | [docs/DOCKER.md](docs/DOCKER.md) |
+| Local registry and CD | [docs/REGISTRY.md](docs/REGISTRY.md) |
+| Deployment | [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) |
+| Jenkins CI/CD | [docs/CI_JENKINS.md](docs/CI_JENKINS.md) |
 | Git workflow | [docs/GIT_WORKFLOW.md](docs/GIT_WORKFLOW.md), [CONTRIBUTING.md](CONTRIBUTING.md) |
 | DevOps workflow | [docs/DEVOPS_WORKFLOW.md](docs/DEVOPS_WORKFLOW.md) |
 | 15-phase plan | [docs/Implementation_Plan.md](docs/Implementation_Plan.md) |

@@ -20,46 +20,46 @@ tickets will be mirrored to GitHub Issues and the issue numbers added here.
 | T3.1 | SRS summary, use-case, architecture, ERD, API list | T2 | Done | `docs/ARCHITECTURE.md` |
 | T3.2 | Verify and pin versions from official sources | T2 | Done | `docs/VERSIONS.md` |
 | T3.3 | JDK 21 + Maven Wrapper spike | T3.2 | Done | build log |
-| T3.4 | Docker / Compose spike | T3.2 | Blocked (B2) | `docker run hello-world` log |
-| T3.5 | Jenkins topology spike (container + Docker access) | T3.4 | Blocked (B2) | Jenkins version + `docker ps` from Jenkins |
+| T3.4 | Docker / Compose spike | T3.2 | Done | `docker run hello-world` log |
+| T3.5 | Jenkins topology spike (container + Docker access) | T3.4 | Done | Jenkins version + `docker ps` from Jenkins |
 | T3.6 | Headless Selenium spike | T3.3 | Done | headless Chrome run log |
-| T3.7 | Local registry push/pull spike | T3.4 | Blocked (B2) | push + pull log |
-| T3.8 | WSL2 Ansible control node + SSH target spike | — | Blocked (B3, B4) | `ansible -m ping` |
+| T3.7 | Local registry push/pull spike | T3.4 | Done (workstation); target pull in T14 | push + pull log |
+| T3.8 | WSL2 Ansible control node + SSH target spike | — | Partial: control node done; target Blocked (B4) | `ansible -m ping` |
 | T3.9 | Port, memory, disk inventory | — | Done | environment log |
-| T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Backlog | `mvnw verify` log |
-| T4.2 | Issue / PR templates, CONTRIBUTING | T2.3 | Backlog | `.github/` |
-| T4.3 | Secret scan and push to origin; create `develop` | T4.1 | Backlog | scan output, remote refs |
-| T5.1 | Issue: delivery creation | T4 | Backlog | issue URL (B5) |
-| T5.2 | Migration V1 + entities + repositories | T4 | Backlog | migration test |
-| T5.3 | Creation service + validation + code generator | T5.2 | Backlog | unit/integration tests |
-| T5.4 | Create form/controller + detail stub | T5.3 | Backlog | controller tests |
-| T5.5 | PR, self-review checklist, merge | T5.4 | Backlog | PR URL (B5) |
-| T6.1 | Security: login/logout, roles, seeded dev accounts | T5 | Backlog | security tests |
-| T6.2 | List/search/filter/pagination | T5 | Backlog | repository/controller tests |
-| T6.3 | Edit permitted fields | T5 | Backlog | tests |
-| T6.4 | Assignment + transition policy + history | T6.1 | Backlog | transition tests |
-| T6.5 | Dashboard aggregation | T6.4 | Backlog | count tests |
-| T6.6 | REST API v1 + health endpoints | T6.4 | Backlog | API tests |
-| T6.7 | UI shell, tokens, responsive pass, admin user list | T6.1 | Backlog | screenshots |
-| T6.8 | Isolated merge-conflict demonstration | T6.2 | Backlog | conflict transcript |
-| T6.9 | Release tag `v0.1.0` | T6.1–T6.8 | Backlog | tag |
-| T7.1 | Jenkins container with persistent volume, plugins | T3.5 | Backlog | Jenkins console |
-| T7.2 | Pipeline job from SCM with polling | T7.1 | Backlog | poll log |
-| T7.3 | Archive JAR + JUnit reports; failing build demo | T7.2 | Backlog | build logs |
-| T8.1 | `Jenkinsfile` stages + parameter | T7 | Backlog | pipeline log |
-| T8.2 | Compose deploy (Nginx → app → PostgreSQL) + health stage | T8.1, T11 | Backlog | health output |
-| T9.1 | Selenium test plan (5 journeys) | T6 | Backlog | `docs/SELENIUM_TEST_PLAN.md` |
-| T9.2 | Selenium suite + screenshot-on-failure + report | T9.1 | Backlog | report |
-| T10.1 | Selenium stage in Jenkins, publish reports always | T8, T9 | Backlog | Jenkins report |
-| T10.2 | Deliberate defect → red; fix + regression → green | T10.1 | Backlog | two runs |
-| T11.1 | Multi-stage non-root Dockerfile + healthcheck | T6 | Backlog | Dockerfile |
-| T11.2 | Container lifecycle transcript | T11.1, B2 | Backlog | transcript |
-| T12.1 | Local registry service | T3.7 | Backlog | catalog |
-| T12.2 | Pipeline: tag by SHA, push after tests, deploy by tag | T10, T12.1 | Backlog | pipeline log |
-| T13.1 | Config spec, inventory, vars, templates | T3.8 | Backlog | playbook |
-| T13.2 | Syntax check, check mode, first run | T13.1 | Backlog | run log |
-| T14.1 | Second run idempotency | T13.2 | Backlog | run log |
-| T14.2 | Health + rollback to previous tag | T14.1, T12 | Backlog | rollback log |
+| T4.1 | Maven skeleton, wrapper, `.gitignore`, `.gitattributes`, `.env.example` | T3.3 | Done | `mvnw verify` log |
+| T4.2 | Issue / PR templates, CONTRIBUTING | T2.3 | Done | `.github/` |
+| T4.3 | Secret scan and push to origin; create `develop` | T4.1 | Done | scan output, remote refs |
+| T5.1 | Issue: delivery creation | T4 | Blocked (B5) | issue URL (B5) |
+| T5.2 | Migration V1 + entities + repositories | T4 | Done | migration test |
+| T5.3 | Creation service + validation + code generator | T5.2 | Done | unit/integration tests |
+| T5.4 | Create form/controller + detail stub | T5.3 | Done | controller tests |
+| T5.5 | PR, self-review checklist, merge | T5.4 | Blocked (B5) | PR URL (B5) |
+| T6.1 | Security: login/logout, roles, seeded dev accounts | T5 | Done | security tests |
+| T6.2 | List/search/filter/pagination | T5 | Done | repository/controller tests |
+| T6.3 | Edit permitted fields | T5 | Done | tests |
+| T6.4 | Assignment + transition policy + history | T6.1 | Done | transition tests |
+| T6.5 | Dashboard aggregation | T6.4 | Done | count tests |
+| T6.6 | REST API v1 + health endpoints | T6.4 | Done | API tests |
+| T6.7 | UI shell, tokens, responsive pass, admin user list | T6.1 | Done | screenshots |
+| T6.8 | Isolated merge-conflict demonstration | T6.2 | Done | conflict transcript |
+| T6.9 | Release tag `v0.1.0` | T6.1–T6.8 | Blocked (B5) | tag |
+| T7.1 | Jenkins container with persistent volume, plugins | T3.5 | Done | Jenkins console |
+| T7.2 | Pipeline job from SCM with polling | T7.1 | Done | poll log |
+| T7.3 | Archive JAR + JUnit reports; failing build demo | T7.2 | Done | build logs |
+| T8.1 | `Jenkinsfile` stages + parameter | T7 | Done | pipeline log |
+| T8.2 | Compose deploy (Nginx → app → PostgreSQL) + health stage | T8.1, T11 | Done | health output |
+| T9.1 | Selenium test plan (5 journeys) | T6 | Done | `docs/SELENIUM_TEST_PLAN.md` |
+| T9.2 | Selenium suite + screenshot-on-failure + report | T9.1 | Done | report |
+| T10.1 | Selenium stage in Jenkins, publish reports always | T8, T9 | Done | Jenkins report |
+| T10.2 | Deliberate defect → red; fix + regression → green | T10.1 | Done | two runs |
+| T11.1 | Multi-stage non-root Dockerfile + healthcheck | T6 | Done | Dockerfile |
+| T11.2 | Container lifecycle transcript | T11.1, B2 | Done | transcript |
+| T12.1 | Local registry service | T3.7 | Done | catalog |
+| T12.2 | Pipeline: tag by SHA, push after tests, deploy by tag | T10, T12.1 | Done | pipeline log |
+| T13.1 | Config spec, inventory, vars, templates | T3.8 | Done (authoring + static checks) | playbook |
+| T13.2 | Syntax check, check mode, first run | T13.1 | Blocked (B4) | run log |
+| T14.1 | Second run idempotency | T13.2 | Blocked (B4) | run log |
+| T14.2 | Health + rollback to previous tag | T14.1, T12 | Blocked (B4) | rollback log |
 | T15.1 | Full end-to-end run | T1–T14 | Backlog | logs |
 | T15.2 | Final docs, troubleshooting, security, limitations | T15.1 | Backlog | docs |
 | T15.3 | Evidence INDEX, demo runbook, viva Q&A | T15.2 | Backlog | `docs/evidence/INDEX.md` |
