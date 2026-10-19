@@ -128,3 +128,12 @@ Format: ID — date — context — options — decision — rationale — conse
 
 - **Context:** `.gitignore` excluded `*.log`, so 15 raw Jenkins logs referenced by Phase 7–12 evidence were never committed (found while committing the Ansible logs).
 - **Decision:** `!docs/evidence/**/*.log`; every evidence log is checked against all known secret values and gitleaks before commit.
+
+## D20 — 2026-10-19 — Final Ansible target: the dedicated WSL2 distribution (teacher gave discretion)
+
+- **Teacher's response (exact, relayed by the student):** "Do whatever you think is right and best for your system."
+- **What this does and does not say:** it leaves the choice of target to the student. It does **not** state that a WSL2 distribution is equivalent to a virtual machine, and it is not recorded here as such.
+- **Decision:** keep the already-built and tested WSL2 distribution `lastmile-target` (D18) as the managed node; do not install VirtualBox.
+- **Technical rationale:** the workstation has 15.8 GB RAM and repeatedly ran near its Windows commit limit (two WSL VM crashes during image builds, free commit as low as 0.5–1.1 GB with Jenkins running; BLOCKERS B7). A VirtualBox VM would reserve about 2 GB more and require an administrator install. The WSL2 target adds only its own small Docker stack inside the existing WSL VM, and all six technical acceptance criteria were demonstrated on it.
+- **Separate distribution vs separate VM:** `lastmile-target` has its own root filesystem, systemd, users, SSH server, Docker Engine and data, cannot see Windows drives or run Windows programs, and is reached only over SSH. It shares the WSL2 kernel and network stack with Docker Desktop and the control node, so it is not a separate machine: its host firewall stays off and it uses its own port (8089) and Docker address ranges.
+- **Remaining academic uncertainty:** an examiner who expects a fully separate virtual machine could still regard this as a limitation; it is stated as such in `docs/KNOWN_LIMITATIONS.md` and the evidence index rather than raised with the teacher again.

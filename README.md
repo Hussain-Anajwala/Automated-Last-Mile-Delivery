@@ -8,9 +8,9 @@ Ansible pipeline with Selenium quality gates and rollback.
 
 ## Status
 
-Release **v0.1.0** (MVP baseline) is tagged on `main` and was deployed by Jenkins after 89 unit/integration and
-8 Selenium tests passed. Ansible execution on the managed target is still pending (see
-[docs/BLOCKERS.md](docs/BLOCKERS.md) B4). Evidence for every teacher task: [docs/evidence/INDEX.md](docs/evidence/INDEX.md).
+All 15 teacher tasks have recorded evidence: [docs/evidence/INDEX.md](docs/evidence/INDEX.md). Releases are
+tagged on `main` and deployed by Jenkins (workstation, `http://127.0.0.1:8088`, local only) and by Ansible to the
+dedicated WSL2 target `lastmile-target`. Limitations: [docs/KNOWN_LIMITATIONS.md](docs/KNOWN_LIMITATIONS.md).
 Progress log: [docs/IMPLEMENTATION_LOG.md](docs/IMPLEMENTATION_LOG.md). Nothing is marked complete
 without recorded evidence ([docs/evidence/](docs/evidence/README.md)).
 

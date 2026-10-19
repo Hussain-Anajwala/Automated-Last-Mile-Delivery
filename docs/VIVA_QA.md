@@ -99,8 +99,9 @@ rather than the exact expression; it now checks the identical one.
 **Is the WSL2 target a real separate node?**
 It has its own root filesystem, systemd, SSH server and Docker engine, and cannot see Windows drives,
 but it shares the WSL kernel and network stack with Docker Desktop. That is why its firewall is off and
-it uses its own port and Docker address ranges. Whether that satisfies the "clean node" requirement is
-the teacher's decision, which is still pending.
+it uses its own port and Docker address ranges. Asked about it, the teacher said: "Do whatever you think
+is right and best for your system." Given the measured memory limits I kept WSL2 instead of a VirtualBox VM,
+and I state the shared kernel/network as a limitation (D20).
 
 **Why not run Ansible against Windows or the control node itself?**
 The assignment asks for a managed Linux node. The playbook asserts an Ubuntu target, and the
@@ -118,7 +119,7 @@ Yes, a process one: a scan result was piped into `tail`, so a push proceeded des
 The findings were public plugin versions; nothing secret leaked. The gate now fails closed on findings,
 scanner errors or a missing scanner, with a 10-check test.
 
-**What is not finished?**
-Teacher confirmation that a WSL2 target is acceptable; an independent second-person PR review if the
-teacher requires one; one continuous end-to-end run of the final commit through to the target; any
-public hosting (none — local only).
+**What are the limitations?**
+The managed node is a WSL2 distribution rather than a separate VM; Jenkins does not trigger Ansible
+(the target deployment is a manual control-node step); reviews are self-reviews with CI, not
+second-person approvals; there is no public hosting; and rollback does not restore database contents.

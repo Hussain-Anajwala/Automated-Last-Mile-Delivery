@@ -31,7 +31,7 @@ Secrets (`LASTMILE_DB_PASSWORD`, `LASTMILE_DEMO_PASSWORD`) come from the control
 file with `no_log`.
 
 Idempotency: every `command` task declares `changed_when`, so a second run with the same tag
-should report `changed=0` (proof required in Phase 14 — not yet run).
+reports `changed=0` — demonstrated on the target (run 2, see below).
 
 ## Commands (Ubuntu/WSL, repository root)
 

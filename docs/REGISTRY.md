@@ -18,7 +18,7 @@ curl.exe http://127.0.0.1:5000/v2/lastmile-delivery/tags/list
 |---|---|---|
 | Docker daemon (push, `compose pull`) | `localhost:5000` | Port published on the Docker host loopback; Docker trusts `localhost` registries without TLS |
 | Jenkins container (registry API checks) | `lastmile-registry:5000` | `localhost` inside the container is Jenkins itself; both containers share the `lastmile-registry` network |
-| Isolated Ubuntu target (Phases 13–14) | host-only address of the workstation, set as `lastmile_registry` in the inventory | Depends on BLOCKERS B4; listed in the target daemon's `insecure-registries` |
+| WSL2 target `lastmile-target` (Phases 13–14) | `localhost:5000` | Shares the WSL network stack with Docker Desktop; verified from the target (`GET /v2/` → 200) and the pulled digests equal the pushed ones |
 
 Because names differ per namespace, identity is proven by **digest**: the pipeline compares the
 digest returned by `docker push` with the registry's `Docker-Content-Digest` header for the same tag.

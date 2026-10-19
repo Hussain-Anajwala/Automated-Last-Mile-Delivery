@@ -112,7 +112,7 @@ flowchart LR
 ```
 
 - **Local environment (Phases 8–12):** Compose project `lastmile` on Docker Desktop, deployed by Jenkins.
-- **Provisioned environment (Phases 13–14):** same Compose stack on the isolated Ubuntu target, configured by Ansible, pulling from the local registry over a host-only/trusted network. Exact registry address depends on BLOCKERS B4 and is proven in Phase 12/14 before being claimed.
+- **Provisioned environment (Phases 13–14):** the same Compose file on the WSL2 target `lastmile-target`, configured by Ansible, pulling the same `localhost:5000/...:<sha>` references (verified from the target; digests identical). Nginx on 127.0.0.1:8089 inside WSL.
 - Only Nginx publishes a port. PostgreSQL publishes nothing (D1); the app port is internal.
 
 ### 6.3 Port map
@@ -140,4 +140,4 @@ All were free on 2026-10-19 except 5432.
 | Jenkins/registry exposure | Bound to 127.0.0.1; Docker socket noted as root-equivalent |
 | Supply chain | Checksums verified for JDK/Maven/wrapper; versions pinned; BOM-managed dependencies |
 
-Unresolved decisions: BLOCKERS B4 (target), B6 (teacher questions).
+Target decision: dedicated WSL2 distribution `lastmile-target` (D18, D20); remaining limitations in `docs/KNOWN_LIMITATIONS.md`.

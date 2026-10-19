@@ -40,11 +40,11 @@ Source audit: `docs/evidence/phase-00-audit/environment-audit.md` (2026-10-19).
 - **Success signal:** `wsl -l -v` lists `Ubuntu-24.04` as version 2; `wsl -d Ubuntu-24.04 -- uname -a` succeeds.
 - **Continues meanwhile:** Everything except Phase 3 Ansible spike and Phases 13–14.
 
-## B4 — Isolated Ubuntu target for Ansible — TECHNICALLY RESOLVED 2026-10-19; academic acceptance OPEN (teacher)
+## B4 — Isolated Ubuntu target for Ansible — RESOLVED 2026-10-19 (decision D20)
 
-- **Resolution (technical):** with the user's approval, Option B was built: WSL2 distribution `lastmile-target` (decision D18). All six technical acceptance criteria passed: pong; run 1 `changed=13`; deployment healthy with registry-identical digests; run 2 `changed=0`; rollback to the previous release healthy; failed-candidate drill recovered. Evidence: `docs/evidence/phase-13-ansible/target-run-evidence.md`, PR #17.
-- **Still open:** whether the teacher accepts a WSL2 distribution as the "clean node" (B6 Q3). Until then Phases 13–14 are reported as *technically complete, academic acceptance pending*. If a VM is required, Option A in `docs/ANSIBLE_TARGET_SETUP.md` applies (needs VirtualBox and the user's approval).
-- **Operating note:** WSL stops idle distributions; keep `wsl -d lastmile-target -u root -- sleep infinity` running while using the target. The deployed stack restarts automatically when the distribution starts.
+- **Resolution:** the dedicated WSL2 distribution `lastmile-target` (D18) is the managed node. All six technical acceptance criteria passed (evidence: `docs/evidence/phase-13-ansible/target-run-evidence.md`, PR #17). The teacher's answer to Q3 was "Do whatever you think is right and best for your system."; on that basis, and because of the measured memory limits (B7), WSL2 was kept instead of a VirtualBox VM.
+- **Stated limitation (not a blocker):** the target is a separate distribution, not a separate VM (shared WSL2 kernel and network stack). See D20 and `docs/KNOWN_LIMITATIONS.md`.
+- **Operating note:** WSL stops idle distributions; keep `wsl -d lastmile-target -u root -- sleep infinity` running while using the target. Its stack restarts automatically when the distribution starts.
 
 ## B5 — GitHub CLI not authenticated — RESOLVED 2026-10-19
 
@@ -56,19 +56,19 @@ Source audit: `docs/evidence/phase-00-audit/environment-audit.md` (2026-10-19).
 - **Success signal:** `gh auth status` shows the account as logged in to github.com.
 - **Continues meanwhile:** Local branches and commits; pushes once credentials work. PR creation (Phase 5/6) waits for this.
 
-## B6 — Teacher questions (single list) — OPEN (user asks the teacher)
+## B6 — Teacher questions — CLOSED 2026-10-19 (Q3 answered with discretion; others kept as documented defaults)
 
-Provisional defaults are used until answered; none of them is treated as teacher approval.
+The teacher answered Q3 only, and with discretion (exact words in D20). The other questions were not asked again; their defaults stand as documented choices and are listed as limitations where they might matter to an examiner.
 
 | # | Question | Provisional default in use | Affects |
 |---|---|---|---|
 | Q1 | Is a local URL (`http://127.0.0.1:8088`) plus screenshots/video acceptable, or is public hosting required? | Local only | Tasks 8, 15 |
-| Q2 | Must a real second person review pull requests? | Documented self-review (D15) | Tasks 5, 6 |
-| Q3 | Is a dedicated WSL2 distribution acceptable as the "clean" Ansible target, or must it be a VM? | Recommend WSL2 (B4) — not created yet | Tasks 13, 14 |
+| Q2 | Must a real second person review pull requests? | Documented self-review with green CI (D15). The student's reading of the assignment: PRs and code review are required, a second human reviewer is not explicitly mandated. No peer approval exists or is claimed. | Tasks 5, 6 |
+| Q3 | Is a dedicated WSL2 distribution acceptable as the "clean" Ansible target, or must it be a VM? | **Answered:** "Do whatever you think is right and best for your system." → WSL2 target kept (D20) | Tasks 13, 14 |
 | Q4 | Is a read-only admin user list enough, or is full user management required? | Read-only list | Task 6 |
 | Q5 | Is a Dockerized Spring Boot app behind Nginx acceptable, or is external Tomcat mandatory? | Dockerized JAR + Nginx | Tasks 8, 11 |
 
-## B7 — Memory pressure on the workstation — OPEN (measured; user decision on .wslconfig)
+## B7 — Memory pressure on the workstation — MANAGED (no configuration change applied)
 
 - **Observed:** two WSL VM crashes during Jenkins image builds (commit limit exhausted). Since then: one Jenkins executor (D17), heavy jobs run one at a time, memory sampled during runs.
 - **Measured during the `main` pipeline (2026-10-19 07:31–07:33 IST, Selenium stage):** Jenkins container peak 2.2 GiB (limit 3 GiB); app stack ~0.35 GiB; WSL VM `used` peak 2.8 GiB plus ~4.2 GiB page cache; host `vmmemWSL` 3.2 GB; host free commit fell to **1.1 GB**. Largest host consumers at the same time: Brave ~2.8 GB, VS Code ~2.1 GB.
