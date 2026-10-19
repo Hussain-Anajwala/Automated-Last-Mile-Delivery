@@ -19,7 +19,7 @@ It must never target the Windows workstation.
 | Firewall | ufw enabled, default deny incoming, SSH allowed (allowed *before* enabling) | `base` |
 | Container runtime | Docker Engine + Compose plugin from Docker's official apt repository; service enabled and running | `docker_engine` |
 | Docker daemon | `/etc/docker/daemon.json`: log rotation 10 MB × 3; the host-only registry listed as `insecure-registries` (plain HTTP on a trusted network only); restart via handler only when the file changes | `docker_engine` |
-| Service account | system group/user `lastmile`, no login shell, member of `docker` | `lastmile_app` |
+| Service account | system group/user `lastmile`, no login shell, **not** in `docker` (that group is root-equivalent) | `lastmile_app` |
 | Directories | `/opt/lastmile` and `/opt/lastmile/releases`, `root:lastmile 0750` | `lastmile_app` |
 | Files | `/opt/lastmile/compose.yaml` (same file as the Jenkins pipeline, `0640`); `/opt/lastmile/.env` with runtime config and secrets (`root:root 0600`, `no_log`) | `lastmile_app` |
 | Ports | Nginx on `127.0.0.1:8088` of the target; app and database unpublished | compose |
@@ -56,6 +56,14 @@ Rollback: `-e lastmile_image_tag=$(ssh <target> cat /opt/lastmile/releases/previ
 | Check | Result |
 |---|---|
 | `ansible-playbook site.yml --syntax-check` | `playbook: site.yml`, exit 0 |
-| `ansible-lint --offline -p site.yml roles` (26.10.1) | `Passed: 0 failure(s), 0 warning(s)`; meets the `production` profile (after fixing 15 `var-naming` and 1 `line-length` findings) |
+| `ansible-lint --offline -p site.yml rollback.yml roles tests` (26.10.1) | exit 0, `production` profile (after fixing 15 `var-naming` and 1 `line-length` findings) |
+| `tests/render-and-validate.yml` (read-only, localhost) | exit 0, `ok=8 changed=0 failed=0`; negative control with tag `latest` → exit 2, `failed=1` |
+| `rollback.yml --syntax-check` | OK |
 
-No playbook has been executed against a target yet.
+PR review fixes: removed the unused `lastmile_http_bind` variable; the `lastmile` account is no longer
+in the `docker` group (root-equivalent and unnecessary).
+
+Rollback: `bash scripts/ansible-run.sh ansible-playbook rollback.yml` redeploys the tag recorded in
+`/opt/lastmile/releases/previous`. Target preparation runbooks: [ANSIBLE_TARGET_SETUP.md](ANSIBLE_TARGET_SETUP.md).
+
+No playbook has been executed against a managed host yet (BLOCKERS B4).

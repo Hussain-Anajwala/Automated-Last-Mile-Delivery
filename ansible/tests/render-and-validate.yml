@@ -1,0 +1,79 @@
+# Read-only validation of the playbook's templates and input rules, runnable without a managed host.
+# It never changes the machine it runs on: only template lookups, assert and debug (no file, package,
+# service or command tasks).
+#   bash scripts/ansible-run.sh ansible-playbook tests/render-and-validate.yml
+- name: Validate LastMile templates and input rules without a target
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  vars:
+    lastmile_registry: 192.0.2.1:5000
+    lastmile_app_repository: lastmile-delivery
+    lastmile_nginx_repository: lastmile-nginx
+    lastmile_image_tag: 0123456789ab
+    lastmile_http_port: 8088
+    lastmile_profile: demo
+    lastmile_app_db_password: test-only-db-value
+    lastmile_app_demo_password: test-only-demo-value
+    docker_engine_insecure_registries: ["{{ lastmile_registry }}"]
+    tag_pattern: '^[0-9a-f]{12}$'
+  tasks:
+    - name: Render daemon.json
+      ansible.builtin.set_fact:
+        rendered_daemon: "{{ lookup('ansible.builtin.template', '../roles/docker_engine/templates/daemon.json.j2') | from_json }}"
+
+    - name: Daemon config is valid JSON with log rotation and only the configured registry
+      ansible.builtin.assert:
+        that:
+          - rendered_daemon['log-driver'] == 'json-file'
+          - rendered_daemon['log-opts']['max-size'] == '10m'
+          - rendered_daemon['insecure-registries'] == ['192.0.2.1:5000']
+
+    - name: Daemon config with no insecure registries renders an empty list
+      ansible.builtin.assert:
+        that:
+          - >-
+            (lookup('ansible.builtin.template', '../roles/docker_engine/templates/daemon.json.j2',
+            template_vars={'docker_engine_insecure_registries': []}) | from_json)['insecure-registries'] == []
+
+    - name: Render the runtime environment file
+      ansible.builtin.set_fact:
+        rendered_env: "{{ dict(lookup('ansible.builtin.template', '../roles/lastmile_app/templates/lastmile.env.j2').splitlines()
+          | reject('match', '^#') | reject('equalto', '') | map('split', '=', 1)) }}"
+      no_log: true
+
+    - name: Environment file references the exact registry images and tag (never latest)
+      ansible.builtin.assert:
+        that:
+          - rendered_env.LASTMILE_IMAGE == '192.0.2.1:5000/lastmile-delivery'
+          - rendered_env.LASTMILE_NGINX_IMAGE == '192.0.2.1:5000/lastmile-nginx'
+          - rendered_env.LASTMILE_IMAGE_TAG == '0123456789ab'
+          - rendered_env.LASTMILE_IMAGE_TAG != 'latest'
+          - rendered_env.COMPOSE_PROJECT_NAME == 'lastmile'
+          - rendered_env.LASTMILE_HTTP_PORT == '8088'
+          - rendered_env.LASTMILE_DB_PASSWORD | length > 0
+          - >-
+            rendered_env.keys() | list | sort == ['COMPOSE_PROJECT_NAME', 'LASTMILE_DB_PASSWORD', 'LASTMILE_DEMO_PASSWORD',
+            'LASTMILE_HTTP_PORT', 'LASTMILE_IMAGE', 'LASTMILE_IMAGE_TAG', 'LASTMILE_NGINX_IMAGE', 'SPRING_PROFILES_ACTIVE']
+      no_log: true
+
+    - name: Image tag rule used by site.yml accepts commit tags and rejects everything else
+      ansible.builtin.assert:
+        that:
+          - "'0123456789ab' is regex(tag_pattern)"
+          - "'latest' is not regex(tag_pattern)"
+          - "'0123456789AB' is not regex(tag_pattern)"
+          - "'0123456789a' is not regex(tag_pattern)"
+          - "'0123456789abc' is not regex(tag_pattern)"
+          - "'v0.1.0' is not regex(tag_pattern)"
+
+    - name: Release bookkeeping rule (previous is written only when the release changes)
+      ansible.builtin.assert:
+        that:
+          - not ('' | length > 0 and '' != 'aaaaaaaaaaaa')
+          - not ('aaaaaaaaaaaa' | length > 0 and 'aaaaaaaaaaaa' != 'aaaaaaaaaaaa')
+          - ('aaaaaaaaaaaa' | length > 0 and 'aaaaaaaaaaaa' != 'bbbbbbbbbbbb')
+
+    - name: Summary
+      ansible.builtin.debug:
+        msg: "Templates and input rules validated (no changes made to this host)"

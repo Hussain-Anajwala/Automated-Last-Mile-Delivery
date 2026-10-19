@@ -6,8 +6,7 @@ lastmile_app_user: lastmile
 lastmile_app_group: lastmile
 lastmile_base_dir: /opt/lastmile
 
-lastmile_http_port: 8088
-lastmile_http_bind: 127.0.0.1          # change only with a firewall rule review
+lastmile_http_port: 8088              # Nginx publishes it on 127.0.0.1 only (deploy/compose.yaml)
 lastmile_profile: demo
 
 # Images are referenced by registry + repository + immutable tag (commit SHA). Required at run time:
