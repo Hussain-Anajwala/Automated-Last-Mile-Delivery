@@ -496,3 +496,16 @@ OTHER: 15 Jenkins evidence logs from Phases 7–12 had never been committed (*.l
   Memory: dropping the WSL page cache freed ~3 GB of host commit; Jenkins and the target were stopped when idle.
   Unchanged: Ubuntu-24.04 distribution, Docker Desktop data, PostgreSQL 16 service, Jenkins data, workstation release.
 ```
+
+```text
+CHECKPOINT 2026-10-19 — resume point
+STATE: v0.1.0 (e3b9d31) on main, deployed by Jenkins on the workstation (127.0.0.1:8088) and by Ansible on the
+  WSL2 target (127.0.0.1:8089 inside WSL), identical digests (docs/evidence/phase-15-release/e2e-trace-v0.1.0.md).
+  Phases 1–12 PASS; 13–14 technically PASS, academic acceptance of the WSL2 target pending (Q3); 15 in progress.
+  PR #16 (Phase 15 docs) open on purpose for a possible human review; issues #5 and #7 open.
+WAITING ON: teacher answers Q1–Q5 (docs/BLOCKERS.md B6); optional .wslconfig decision (B7).
+NEXT: when the teacher answers — record the answers; if a second reviewer is required, have PR #16 reviewed;
+  merge PR #16, release v1.0.0 through develop -> main (Jenkins main deploy), deploy the same tag to the target,
+  update docs/evidence/INDEX.md and close #5/#7. To use the target: keep `wsl -d lastmile-target -u root -- sleep
+  infinity` running, then scripts/wsl-target/run-ansible.sh.
+```
