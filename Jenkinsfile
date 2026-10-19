@@ -4,7 +4,9 @@
 // local registry only after both pass, and deployment runs only for branches in DEPLOY_BRANCHES.
 // If the deployed candidate is not healthy, the pipeline restores the release that was running
 // before (last known good) and fails the build.
-def DEPLOY_BRANCHES = ['main', 'develop', 'ci/jenkins-pipeline']
+// Single environment: only the release branch deploys. develop and feature branches still build,
+// test and publish images, so any tested commit can be deployed by tag later.
+def DEPLOY_BRANCHES = ['main']
 
 // Deploys the given app/nginx image references with the stack's runtime secrets.
 def composeUp(String appRef, String nginxRef, String dbHost) {

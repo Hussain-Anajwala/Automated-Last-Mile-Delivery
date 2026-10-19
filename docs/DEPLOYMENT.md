@@ -23,7 +23,7 @@ of the build that passed all tests; `latest` is never used.
 
 ## Deploy through Jenkins (normal path)
 
-Push to a deployment branch (`main`, `develop`, `ci/jenkins-pipeline` until PRs merge) or use
+Merge to `main` (the only deployment branch; `develop` builds, tests and publishes images) or use
 *Build with Parameters*. The pipeline builds and tests, packages both images with the commit tag,
 runs `docker compose up -d --wait`, then verifies readiness through Nginx and that the running
 app's `org.opencontainers.image.revision` label equals the commit. Any failure before *Deploy*
