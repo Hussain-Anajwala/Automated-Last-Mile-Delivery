@@ -1,8 +1,8 @@
 # Preparing the Ansible Target (decisions D18, D20)
 
 **Option B was executed on 2026-10-19** after the user's approval (evidence:
-`docs/evidence/phase-13-ansible/target-run-evidence.md`). The teacher's acceptance of a WSL2 target is still
-pending. Option A has not been executed.
+`docs/evidence/phase-13-ansible/target-run-evidence.md`). The teacher answered "Do whatever you think is right
+and best for your system." and the WSL2 target was kept (D20). Option A has not been executed.
 
 ## Common: control-node SSH key (Ubuntu/WSL, user's own account, no sudo)
 
@@ -24,8 +24,7 @@ The private key stays in `~/.ssh` (mode 600) and is never committed or shared.
 
 ## Option B — dedicated WSL2 distribution `lastmile-target` (recommended for this machine's memory)
 
-Requires explicit user approval (adds a WSL distribution) and teacher acceptance of WSL2 as the
-"clean node". Removable at any time with `wsl --unregister lastmile-target` (deletes only that distro).
+Requires explicit user approval (adds a WSL distribution); used under the teacher's discretion (D20). Removable at any time with `wsl --unregister lastmile-target` (deletes only that distro).
 
 | Step | Who | Action |
 |---|---|---|
