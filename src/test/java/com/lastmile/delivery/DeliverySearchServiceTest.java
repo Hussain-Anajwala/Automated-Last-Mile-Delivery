@@ -83,6 +83,15 @@ class DeliverySearchServiceTest {
     }
 
     @Test
+    void searchCombinedWithStatusAndAgentFiltersReturnsOnlyMatchingRows() {
+        assertThat(codes(new DeliverySearch("ord-50", DeliveryStatus.CREATED, null), dispatcher))
+                .containsExactly(unassigned.deliveryCode());
+        assertThat(codes(new DeliverySearch(null, DeliveryStatus.ASSIGNED, agent.getId()), dispatcher))
+                .containsExactly(meera.deliveryCode());
+        assertThat(codes(new DeliverySearch("sana", DeliveryStatus.DELIVERED, null), dispatcher)).isEmpty();
+    }
+
+    @Test
     void resultsArePaginatedNewestFirstAndPageSizeIsBounded() {
         var firstPage = service.search(new DeliverySearch(null, null, null), 0, 2, principal(dispatcher));
         assertThat(firstPage.getTotalElements()).isEqualTo(3);
