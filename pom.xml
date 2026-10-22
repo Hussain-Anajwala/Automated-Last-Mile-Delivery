@@ -22,6 +22,8 @@
         <embedded-postgres.version>2.2.2</embedded-postgres.version>
         <embedded-postgres-binaries.version>17.11.0</embedded-postgres-binaries.version>
         <bootstrap.version>5.3.8</bootstrap.version>
+        <!-- Google's maintained phone-numbering metadata (all regions); latest release on 2026-10-23, see D21 -->
+        <libphonenumber.version>9.0.41</libphonenumber.version>
         <surefire-report-plugin.version>3.5.6</surefire-report-plugin.version>
         <!-- Selenium settings, overridable on the command line (see docs/SELENIUM_TEST_PLAN.md) -->
         <selenium.headless>true</selenium.headless>
@@ -89,6 +91,12 @@
         <dependency>
             <groupId>org.webjars</groupId>
             <artifactId>webjars-locator-lite</artifactId>
+        </dependency>
+        <!-- Per-country phone validation and E.164 normalisation (no transitive dependencies) -->
+        <dependency>
+            <groupId>com.googlecode.libphonenumber</groupId>
+            <artifactId>libphonenumber</artifactId>
+            <version>${libphonenumber.version}</version>
         </dependency>
 
         <!-- Test -->

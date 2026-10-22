@@ -1,18 +1,24 @@
 package com.lastmile.delivery;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-/** Client-editable fields only; system-managed properties deliberately cannot be bound. */
+/**
+ * Client-editable fields only. Code, status, creator, timestamps and version are deliberately
+ * absent, so request parameters with those names are never bound.
+ */
+@ValidPhone
 public class DeliveryForm {
+
     @NotBlank(message = "Recipient name is required.")
     @Size(max = 120, message = "Recipient name must be at most 120 characters.")
     private String recipientName;
 
+    /** ISO region code of the phone number ({@code IN} by default on the web form). */
+    private String phoneCountry;
+
+    /** National number when {@link #phoneCountry} is set; rules in {@link PhoneNumbers}. */
     @NotBlank(message = "Phone number is required.")
-    @Pattern(regexp = "^$|^\\s*[0-9]{10}\\s*$",
-            message = "Enter exactly 10 digits, without a country code.")
     private String recipientPhone;
 
     @NotBlank(message = "Delivery address is required.")
@@ -25,32 +31,91 @@ public class DeliveryForm {
 
     @Size(max = 100, message = "Reference must be at most 100 characters.")
     private String referenceNumber;
+
+    /** Optional; only honoured on creation. Validated as an active AGENT by the service. */
     private Long assignedAgentId;
 
+    /** Normalises the phone to E.164; an invalid phone is a field error even if validation was bypassed. */
     public DeliveryDetails toDetails() {
-        return new DeliveryDetails(recipientName.trim(), recipientPhone.trim(), deliveryAddress.trim(),
-                deliveryCity.trim(), referenceNumber == null || referenceNumber.isBlank() ? null : referenceNumber.trim());
+        return new DeliveryDetails(
+                recipientName.trim(),
+                PhoneNumbers.toE164(phoneCountry, recipientPhone),
+                deliveryAddress.trim(),
+                deliveryCity.trim(),
+                referenceNumber == null || referenceNumber.isBlank() ? null : referenceNumber.trim());
+    }
+
+    public static DeliveryForm newForm() {
+        DeliveryForm form = new DeliveryForm();
+        form.phoneCountry = PhoneNumbers.DEFAULT_REGION;
+        return form;
     }
 
     public static DeliveryForm from(DeliveryView delivery) {
         DeliveryForm form = new DeliveryForm();
         form.recipientName = delivery.recipientName();
-        form.recipientPhone = delivery.recipientPhone();
+        PhoneNumbers.Parts phone = PhoneNumbers.split(delivery.recipientPhone());
+        form.phoneCountry = phone.region();
+        form.recipientPhone = phone.nationalNumber();
         form.deliveryAddress = delivery.deliveryAddress();
         form.deliveryCity = delivery.deliveryCity();
         form.referenceNumber = delivery.referenceNumber();
         return form;
     }
-    public String getRecipientName() { return recipientName; }
-    public void setRecipientName(String recipientName) { this.recipientName = recipientName; }
-    public String getRecipientPhone() { return recipientPhone; }
-    public void setRecipientPhone(String recipientPhone) { this.recipientPhone = recipientPhone; }
-    public String getDeliveryAddress() { return deliveryAddress; }
-    public void setDeliveryAddress(String deliveryAddress) { this.deliveryAddress = deliveryAddress; }
-    public String getDeliveryCity() { return deliveryCity; }
-    public void setDeliveryCity(String deliveryCity) { this.deliveryCity = deliveryCity; }
-    public String getReferenceNumber() { return referenceNumber; }
-    public void setReferenceNumber(String referenceNumber) { this.referenceNumber = referenceNumber; }
-    public Long getAssignedAgentId() { return assignedAgentId; }
-    public void setAssignedAgentId(Long assignedAgentId) { this.assignedAgentId = assignedAgentId; }
+
+    public String getRecipientName() {
+        return recipientName;
+    }
+
+    public void setRecipientName(String recipientName) {
+        this.recipientName = recipientName;
+    }
+
+    public String getPhoneCountry() {
+        return phoneCountry;
+    }
+
+    public void setPhoneCountry(String phoneCountry) {
+        this.phoneCountry = phoneCountry;
+    }
+
+    public String getRecipientPhone() {
+        return recipientPhone;
+    }
+
+    public void setRecipientPhone(String recipientPhone) {
+        this.recipientPhone = recipientPhone;
+    }
+
+    public String getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(String deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
+    public String getDeliveryCity() {
+        return deliveryCity;
+    }
+
+    public void setDeliveryCity(String deliveryCity) {
+        this.deliveryCity = deliveryCity;
+    }
+
+    public String getReferenceNumber() {
+        return referenceNumber;
+    }
+
+    public void setReferenceNumber(String referenceNumber) {
+        this.referenceNumber = referenceNumber;
+    }
+
+    public Long getAssignedAgentId() {
+        return assignedAgentId;
+    }
+
+    public void setAssignedAgentId(Long assignedAgentId) {
+        this.assignedAgentId = assignedAgentId;
+    }
 }

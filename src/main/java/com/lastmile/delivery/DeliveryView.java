@@ -38,6 +38,11 @@ public record DeliveryView(
         }
     }
 
+    /** The phone as people read it ({@code +91 98765 43210}); values stored before E.164 as stored. */
+    public String recipientPhoneDisplay() {
+        return PhoneNumbers.display(recipientPhone);
+    }
+
     static DeliveryView from(Delivery d, List<DeliveryStatusHistory> history) {
         var agent = d.getAssignedAgent();
         return new DeliveryView(

@@ -46,6 +46,7 @@ class DeliveryCreationControllerTest {
     private MockHttpServletRequestBuilder validPost() {
         return post("/deliveries/new")
                 .param("recipientName", "Aarav Sharma")
+                .param("phoneCountry", "IN")
                 .param("recipientPhone", "9876543210")
                 .param("deliveryAddress", "Example Street, Apartment 12")
                 .param("deliveryCity", "Mumbai")
@@ -58,8 +59,9 @@ class DeliveryCreationControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("data-testid=\"delivery-form\"")))
                 .andExpect(content().string(containsString("Ari Agent")))
-                .andExpect(content().string(containsString("India (+91)")))
-                .andExpect(content().string(containsString("United Kingdom (+44)")));
+                .andExpect(content().string(containsString("<option value=\"IN\" data-calling-code=\"91\" selected=\"selected\">India (+91)</option>")))
+                .andExpect(content().string(containsString(">United Kingdom (+44)</option>")))
+                .andExpect(content().string(containsString(">Zimbabwe (+263)</option>")));
     }
 
     @Test
@@ -119,15 +121,28 @@ class DeliveryCreationControllerTest {
 
 
     @Test
-    void phoneMustBeExactlyTenDigits() throws Exception {
-        for (String invalid : new String[]{"123456789", "12345678901", "+919876543210", "12345abc90", "123 4567890"}) {
-            mvc.perform(post("/deliveries/new").with(csrf()).with(user(TestData.principal(dispatcher)))
+    void indianPhoneMustBeExactlyTenDigitsWithoutTheCountryCode() throws Exception {
+        String[][] cases = {
+                {"987654321", "Enter exactly 10 digits for India (you entered 9)."},
+                {"98765432101", "Enter exactly 10 digits for India (you entered 11)."},
+                {"+919876543210", "Enter the number without the country code; +91 is added from the country you chose."},
+                {"919876543210", "Enter the 10-digit number without the country code 91."},
+                {"98765abc10", "Use digits only, with no spaces, letters or symbols."},
+                {"98765 43210", "Use digits only, with no spaces, letters or symbols."}};
+        for (String[] c : cases) {
+            var result = mvc.perform(post("/deliveries/new").with(csrf()).with(user(TestData.principal(dispatcher)))
                             .param("recipientName", "A")
-                            .param("recipientPhone", invalid)
+                            .param("phoneCountry", "IN")
+                            .param("recipientPhone", c[0])
                             .param("deliveryAddress", "B")
                             .param("deliveryCity", "C"))
                     .andExpect(status().isOk())
-                    .andExpect(model().attributeHasFieldErrors("deliveryForm", "recipientPhone"));
+                    .andExpect(content().string(containsString("value=\"" + c[0] + "\"")))
+                    .andReturn();
+            var errors = ((org.springframework.validation.BindingResult) result.getModelAndView().getModel()
+                    .get("org.springframework.validation.BindingResult.deliveryForm")).getFieldErrors("recipientPhone");
+            assertThat(errors).as(c[0]).singleElement()
+                    .satisfies(e -> assertThat(e.getDefaultMessage()).isEqualTo(c[1]));
             assertThat(data.count("deliveries")).isZero();
         }
         mvc.perform(validPost().with(csrf()).with(user(TestData.principal(dispatcher))))
