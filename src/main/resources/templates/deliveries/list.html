@@ -24,7 +24,7 @@
             <div class="col-6 col-md-2">
                 <label for="status" class="form-label">Status</label>
                 <select id="status" name="status" class="form-select" data-testid="filter-status" th:value="${search.status()}">
-                    <option value="">All</option>
+                    <option value="" th:selected="${search.status() == null}">All</option>
                     <option th:each="s : ${statuses}" th:value="${s}" th:text="${s.label()}"
                             th:selected="${s == search.status()}">Status</option>
                 </select>
@@ -32,7 +32,7 @@
             <div class="col-6 col-md-2" th:if="${agents != null}">
                 <label for="agentId" class="form-label">Agent</label>
                 <select id="agentId" name="agentId" class="form-select" data-testid="filter-agent" th:value="${search.agentId()}">
-                    <option value="">All</option>
+                    <option value="" th:selected="${search.agentId() == null}">All</option>
                     <option th:each="a : ${agents}" th:value="${a.id()}" th:text="${a.name()}"
                             th:selected="${a.id() == search.agentId()}">Agent</option>
                 </select>
