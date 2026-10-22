@@ -46,7 +46,7 @@ class DeliveryCreationControllerTest {
     private MockHttpServletRequestBuilder validPost() {
         return post("/deliveries/new")
                 .param("recipientName", "Aarav Sharma")
-                .param("recipientPhone", "+919876543210")
+                .param("recipientPhone", "9876543210")
                 .param("deliveryAddress", "Example Street, Apartment 12")
                 .param("deliveryCity", "Mumbai")
                 .param("referenceNumber", "ORD-1001");
@@ -57,7 +57,9 @@ class DeliveryCreationControllerTest {
         mvc.perform(get("/deliveries/new").with(user(TestData.principal(dispatcher))))
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("data-testid=\"delivery-form\"")))
-                .andExpect(content().string(containsString("Ari Agent")));
+                .andExpect(content().string(containsString("Ari Agent")))
+                .andExpect(content().string(containsString("India (+91)")))
+                .andExpect(content().string(containsString("United Kingdom (+44)")));
     }
 
     @Test
@@ -113,6 +115,24 @@ class DeliveryCreationControllerTest {
                 .get("org.springframework.validation.BindingResult.deliveryForm")).getFieldErrors("recipientPhone");
         assertThat(errors).singleElement()
                 .satisfies(e -> assertThat(e.getDefaultMessage()).isEqualTo("Phone number is required."));
+    }
+
+
+    @Test
+    void phoneMustBeExactlyTenDigits() throws Exception {
+        for (String invalid : new String[]{"123456789", "12345678901", "+919876543210", "12345abc90", "123 4567890"}) {
+            mvc.perform(post("/deliveries/new").with(csrf()).with(user(TestData.principal(dispatcher)))
+                            .param("recipientName", "A")
+                            .param("recipientPhone", invalid)
+                            .param("deliveryAddress", "B")
+                            .param("deliveryCity", "C"))
+                    .andExpect(status().isOk())
+                    .andExpect(model().attributeHasFieldErrors("deliveryForm", "recipientPhone"));
+            assertThat(data.count("deliveries")).isZero();
+        }
+        mvc.perform(validPost().with(csrf()).with(user(TestData.principal(dispatcher))))
+                .andExpect(status().is3xxRedirection());
+        assertThat(data.count("deliveries")).isEqualTo(1);
     }
 
     @Test
