@@ -29,11 +29,38 @@
                     <div id="recipientName-error" class="invalid-feedback" th:errors="*{recipientName}"></div>
                 </div>
                 <div class="col-md-6">
-                    <label for="recipientPhone" class="form-label">Phone *</label>
-                    <input th:field="*{recipientPhone}" type="tel" class="form-control" th:errorclass="is-invalid"
-                           maxlength="20" aria-describedby="recipientPhone-help recipientPhone-error"
+                    <label for="phoneCountryCode" class="form-label">Country code *</label>
+                    <select id="phoneCountryCode" name="phoneCountryCode" class="form-select"
+                            data-testid="phoneCountryCode">
+                        <option value="+91" selected>India (+91)</option>
+                        <option value="+1">United States / Canada (+1)</option>
+                        <option value="+44">United Kingdom (+44)</option>
+                        <option value="+61">Australia (+61)</option>
+                        <option value="+971">United Arab Emirates (+971)</option>
+                        <option value="+65">Singapore (+65)</option>
+                        <option value="+880">Bangladesh (+880)</option>
+                        <option value="+94">Sri Lanka (+94)</option>
+                        <option value="+977">Nepal (+977)</option>
+                        <option value="+92">Pakistan (+92)</option>
+                        <option value="+86">China (+86)</option>
+                        <option value="+81">Japan (+81)</option>
+                        <option value="+49">Germany (+49)</option>
+                        <option value="+33">France (+33)</option>
+                        <option value="+39">Italy (+39)</option>
+                        <option value="+34">Spain (+34)</option>
+                        <option value="+55">Brazil (+55)</option>
+                        <option value="+27">South Africa (+27)</option>
+                        <option value="+966">Saudi Arabia (+966)</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="recipientPhone" class="form-label">Phone number *</label>
+                    <input th:field="*{recipientPhone}" type="tel" inputmode="numeric" autocomplete="tel-national"
+                           class="form-control" th:errorclass="is-invalid" maxlength="10" minlength="10"
+                           pattern="[0-9]{10}" placeholder="10-digit phone number"
+                           aria-describedby="recipientPhone-help recipientPhone-error"
                            data-testid="recipientPhone">
-                    <div id="recipientPhone-help" class="form-text">7–15 digits, optional leading +.</div>
+                    <div id="recipientPhone-help" class="form-text">Enter exactly 10 digits, without the country code.</div>
                     <div id="recipientPhone-error" class="invalid-feedback" th:errors="*{recipientPhone}"></div>
                 </div>
             </div>
