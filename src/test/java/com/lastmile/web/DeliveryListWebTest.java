@@ -118,6 +118,10 @@ class DeliveryListWebTest {
                 .contains("· status Assigned").contains("· agent Arjun Agent")
                 .contains("value=\"ASSIGNED\" selected").contains("value=\"" + arjun.getId() + "\" selected");
         assertThat(html(get("/deliveries"), dispatcher)).doesNotContain("data-testid=\"active-filters\"");
+        String agentOnly = html(get("/deliveries").param("agentId", "" + bela.getId()), dispatcher);
+        String summary = agentOnly.substring(agentOnly.indexOf("data-testid=\"active-filters\""),
+                agentOnly.indexOf("</p>", agentOnly.indexOf("data-testid=\"active-filters\"")));
+        assertThat(summary).contains(">agent Bela Agent</span>").doesNotContain("·");
     }
 
     @Test

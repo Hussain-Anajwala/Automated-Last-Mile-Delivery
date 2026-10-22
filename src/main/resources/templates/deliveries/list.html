@@ -52,9 +52,10 @@
     <p th:if="${search.hasFilters()}" class="small text-secondary" data-testid="active-filters">
         Filtered by
         <span th:if="${search.normalizedQuery() != null}" th:text="'text “' + ${search.normalizedQuery()} + '”'">text</span>
-        <span th:if="${search.status() != null}" th:text="'· status ' + ${search.status().label()}">status</span>
+        <span th:if="${search.status() != null}"
+              th:text="${search.normalizedQuery() != null ? '· ' : ''} + 'status ' + ${search.status().label()}">status</span>
         <span th:if="${agents != null and search.agentId() != null}"
-              th:text="'· agent ' + ${agentName ?: 'ID ' + search.agentId()}">agent</span>
+              th:text="${search.normalizedQuery() != null or search.status() != null ? '· ' : ''} + 'agent ' + ${agentName ?: 'ID ' + search.agentId()}">agent</span>
     </p>
 
     <div th:if="${results.empty}" class="app-card text-center" data-testid="empty-state">

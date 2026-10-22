@@ -12,7 +12,7 @@ import com.google.i18n.phonenumbers.Phonenumber.PhoneNumber.CountryCodeSource;
 import com.lastmile.web.BusinessRuleException;
 
 /**
- * The one phone rule for web forms, the JSON API and seed data (docs/Backend_Schema.md section 4.1).
+ * The one phone rule for web forms, the JSON API and seed data (docs/Backend_Schema.md section 6.1).
  * <ul>
  *   <li>The country is an ISO 3166 region code ({@code IN}, {@code GB}, ...) because one calling code can
  *       serve several countries with different numbering plans (+1 is the US, Canada and others).</li>
