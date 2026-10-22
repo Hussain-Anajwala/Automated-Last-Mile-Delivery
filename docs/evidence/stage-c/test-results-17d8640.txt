@@ -1,0 +1,27 @@
+# Final full run on 17d86400b742 (Windows, Temurin 21.0.12.1, headless Chrome), 2026-10-23
+# command: .\mvnw.cmd -B -ntp clean verify -Pselenium   exit=0   BUILD SUCCESS
+# totals: unit/integration 147 (0 failures, 0 errors, 0 skipped); Selenium journeys 11 (0/0/0)
+# class tests failures errors skipped
+SchemaConstraintsTest 7 F0 E0 S0
+api.DeliveryApiTest 9 F0 E0 S0
+dashboard.DashboardServiceTest 3 F0 E0 S0
+delivery.DeliveryCodeGeneratorTest 2 F0 E0 S0
+delivery.DeliveryCreationControllerTest 10 F0 E0 S0
+delivery.DeliveryCreationServiceTest 6 F0 E0 S0
+delivery.DeliveryPhoneTest 7 F0 E0 S0
+delivery.DeliveryPolicyTest 9 F0 E0 S0
+delivery.DeliverySearchServiceTest 7 F0 E0 S0
+delivery.DeliveryStatusTest 6 F0 E0 S0
+delivery.DeliveryWorkflowServiceTest 12 F0 E0 S0
+delivery.PhoneNumbersTest 40 F0 E0 S0
+health.HealthControllerTest 2 F0 E0 S0
+health.HealthControllerUnitTest 1 F0 E0 S0
+security.LoginTest 4 F0 E0 S0
+selenium.J1CreateDeliverySeleniumIT 4 F0 E0 S0
+selenium.J2SearchDeliverySeleniumIT 3 F0 E0 S0
+selenium.J3AssignmentVisibilitySeleniumIT 1 F0 E0 S0
+selenium.J4AgentProgressSeleniumIT 1 F0 E0 S0
+selenium.J5RejectedActionsSeleniumIT 2 F0 E0 S0
+user.DemoDataSeederTest 2 F0 E0 S0
+web.DeliveryListWebTest 8 F0 E0 S0
+web.WebAuthorizationTest 12 F0 E0 S0
