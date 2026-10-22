@@ -14,3 +14,15 @@ document.addEventListener("submit", function (event) {
         button.setAttribute("aria-busy", "true");
     });
 });
+
+// Forms marked data-reflects-request must always show the request the server answered. When a page
+// is restored from the back/forward cache the browser keeps whatever the user last picked (e.g. the
+// filters submitted from this page), so put the controls back to their server-rendered values.
+window.addEventListener("pageshow", function (event) {
+    if (!event.persisted) {
+        return;
+    }
+    document.querySelectorAll("form[data-reflects-request]").forEach(function (form) {
+        form.reset();
+    });
+});

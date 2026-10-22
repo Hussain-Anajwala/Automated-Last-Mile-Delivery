@@ -52,7 +52,10 @@ public class DeliveryController {
         model.addAttribute("search", search);
         model.addAttribute("statuses", DeliveryStatus.values());
         if (principal.getRole().isStaff()) {
-            model.addAttribute("agents", deliveryService.assignableAgents());
+            var agents = deliveryService.assignableAgents();
+            model.addAttribute("agents", agents);
+            agents.stream().filter(a -> search.agentId() != null && a.id() == search.agentId()).findFirst()
+                    .ifPresent(a -> model.addAttribute("agentName", a.name()));
         }
         return "deliveries/list";
     }

@@ -137,6 +137,20 @@ public abstract class BrowserJourney {
                         "return window.__lmPreviousPage === undefined && document.readyState === 'complete';")));
     }
 
+    /** The visible text of the option a select currently shows (what the user sees, not the URL). */
+    protected String selected(String id) {
+        return new Select(waitFor(id)).getFirstSelectedOption().getText().trim();
+    }
+
+    /** The browser's Back button; waits until the previous history entry is showing. */
+    protected void back() {
+        String before = driver.getCurrentUrl();
+        driver.navigate().back();
+        new WebDriverWait(driver, TIMEOUT).ignoring(WebDriverException.class)
+                .until(d -> !d.getCurrentUrl().equals(before) && "complete".equals(
+                        ((JavascriptExecutor) d).executeScript("return document.readyState;")));
+    }
+
     protected String currentPath() {
         return driver.getCurrentUrl().replaceFirst("^https?://[^/]+", "");
     }
