@@ -17,6 +17,7 @@ through a reviewed issue with regression tests (Implementation_Plan risk R12).
 | JUnit Jupiter | 6.0.3 | Boot BOM | Managed |
 | Selenium Java | **4.43.0** | Boot BOM (latest upstream 4.51.0, released 2026-10-09) | Boot-managed version proven against Chrome 155 in the spike; avoids overriding the BOM |
 | Bootstrap (WebJar) | 5.3.8 | Maven Central `org.webjars:bootstrap` | Served locally, no CDN at runtime |
+| libphonenumber | 9.0.41 | Maven Central `com.googlecode.libphonenumber:libphonenumber` (latest release, published 2026-10-07; checked 2026-10-23) | Per-country phone validation and E.164 from Google's maintained metadata; no transitive dependencies (D21) |
 | Embedded PostgreSQL (tests) | `io.zonky.test:embedded-postgres` 2.2.2 + binaries BOM **17.11.0** | Maven Central | Real PostgreSQL for integration/Selenium tests without Docker; same major as runtime |
 | PostgreSQL (runtime) | `postgres:17.11-alpine3.24` | Docker Hub official image tags | Same major/minor as test binaries |
 | Runtime base image | `eclipse-temurin:21.0.12.1_1-jre-alpine-3.24` (build: `…-jdk-alpine-3.24`) | Docker Hub official image tags | Matches JDK patch |
