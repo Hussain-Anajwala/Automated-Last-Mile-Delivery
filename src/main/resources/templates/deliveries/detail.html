@@ -63,7 +63,7 @@
                     <dt class="col-sm-4">Recipient</dt>
                     <dd class="col-sm-8" data-testid="detail-recipient" th:text="${d.recipientName()}">Name</dd>
                     <dt class="col-sm-4">Phone</dt>
-                    <dd class="col-sm-8" th:text="${d.recipientPhone()}">Phone</dd>
+                    <dd class="col-sm-8" th:text="${d.recipientPhoneDisplay()}" data-testid="detail-phone">Phone</dd>
                     <dt class="col-sm-4">Address</dt>
                     <dd class="col-sm-8" th:text="${d.deliveryAddress()}">Address</dd>
                     <dt class="col-sm-4">City</dt>

@@ -534,3 +534,18 @@ FINAL BRANCHES: main = v1.0.0 (ff1cac19, deployed on both targets). develop = ma
 REVIEWS: all PRs (#8–#18) merged after documented self-review by the Claude Code assistant with green CI;
   no second human reviewer (D15).
 ```
+
+```text
+STAGE C — 2026-10-23 — filters, phone validation, Jenkins audit (branch fix/delivery-filters-phone-country-code)
+SCOPE: reused draft PR #21 (7 commits by the user); new commits on top, no force-push, not merged, not deployed.
+A FILTERS: reproduced on v1.0.0 — server results correct over HTTP; in Chrome, Back restored stale dropdown
+  values above unfiltered rows. Fixed with autocomplete="off", a pageshow reset and a server-rendered
+  applied-filters line (0bae7bb, 8f7f4bd). PR #21's selected-option changes kept; its th:value on <select> removed.
+B PHONE: libphonenumber 9.0.41, region selector (245 regions), India exactly 10 digits, per-country validity,
+  E.164 storage, legacy values untouched until saved, API backwards compatible (cf9c01b, D21). PR #21's fixed
+  19-code list and flat 10-digit rule replaced; its compacted DeliveryForm formatting restored.
+C JENKINS: no defect; only red branch is ci/demo-failing-build (intentional). Details in docs/evidence/stage-c.
+TESTS: .\mvnw.cmd -B -ntp clean verify -Pselenium on 17d8640 -> exit 0; 147 unit/integration + 11 Selenium,
+  0 failures (v1.0.0 had 89 + 8). git diff --check clean. Manual (human) browser check: not performed.
+COMMITS: 0bae7bb, cf9c01b, 8f7f4bd, 17d8640 + evidence/log commit. PR #21 stays draft.
+```

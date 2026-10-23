@@ -1,0 +1,38 @@
+# v1.0.0 (ff1cac19ee86) run locally by DevApplication on 127.0.0.1:8097 (embedded PostgreSQL, demo seed),
+# dispatcher session, real HTTP GET requests. Captured 2026-10-23. Not the deployed release; same source.
+login -> 302 http://127.0.0.1:8097/
+--- form markup (GET form action / select names):
+<form action="/deliveries" method="get" class="app-card mb-3" role="search" data-testid="search-form">
+<select id="status" name="status" class="form-select" data-testid="filter-status">
+<select id="agentId" name="agentId" class="form-select" data-testid="filter-agent">
+Arjun id=3
+==   HTTP 200  count: 6 deliveries  empty-state: 0
+   selected: 
+   rows: data-code="LMD-20261022-000006" <td>Bela Agent</td> >Failed< data-code="LMD-20261022-000005" <td>Bela Agent</td> >Delivered< data-code="LMD-20261022-000004" <td>Arjun Agent</td> >Out for delivery< data-code="LMD-20261022-000003" <td>Arjun Agent</td> >Assigned< data-code="LMD-20261022-000002" <td>Unassigned</td> >Created< data-code="LMD-20261022-000001" <td>Unassigned</td> >Created< 
+== ?status=CREATED  HTTP 200  count: 2 deliveries  empty-state: 0
+   selected: <option value="CREATED" selected="selected">Created|
+   rows: data-code="LMD-20261022-000002" <td>Unassigned</td> >Created< data-code="LMD-20261022-000001" <td>Unassigned</td> >Created< 
+== ?agentId=3  HTTP 200  count: 2 deliveries  empty-state: 0
+   selected: <option value="3" selected="selected">Arjun Agent|
+   rows: data-code="LMD-20261022-000004" <td>Arjun Agent</td> >Out for delivery< data-code="LMD-20261022-000003" <td>Arjun Agent</td> >Assigned< 
+== ?status=CREATED&agentId=3  HTTP 200  count: 0 deliveries  empty-state: 1
+   selected: <option value="CREATED" selected="selected">Created|<option value="3" selected="selected">Arjun Agent|
+   rows: 
+== ?status=ASSIGNED&agentId=3  HTTP 200  count: 1 delivery  empty-state: 0
+   selected: <option value="ASSIGNED" selected="selected">Assigned|<option value="3" selected="selected">Arjun Agent|
+   rows: data-code="LMD-20261022-000003" <td>Arjun Agent</td> >Assigned< 
+== ?q=ord-200&status=FAILED  HTTP 200  count: 1 delivery  empty-state: 0
+   selected: <option value="FAILED" selected="selected">Failed|
+   rows: data-code="LMD-20261022-000006" <td>Bela Agent</td> >Failed< 
+== ?status=LOST  HTTP 400  count:   empty-state: 0
+   selected: 
+   rows: 
+== ?agentId=abc  HTTP 400  count:   empty-state: 0
+   selected: 
+   rows: 
+== ?page=-3&size=999  HTTP 200  count: 6 deliveries  empty-state: 0
+   selected: 
+   rows: data-code="LMD-20261022-000006" <td>Bela Agent</td> >Failed< data-code="LMD-20261022-000005" <td>Bela Agent</td> >Delivered< data-code="LMD-20261022-000004" <td>Arjun Agent</td> >Out for delivery< data-code="LMD-20261022-000003" <td>Arjun Agent</td> >Assigned< data-code="LMD-20261022-000002" <td>Unassigned</td> >Created< data-code="LMD-20261022-000001" <td>Unassigned</td> >Created< 
+== ?q=ORD-2004  HTTP 200  count: 1 delivery  empty-state: 0
+   selected: 
+   rows: data-code="LMD-20261022-000004" <td>Arjun Agent</td> >Out for delivery< 

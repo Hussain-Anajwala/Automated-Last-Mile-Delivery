@@ -14,7 +14,10 @@
            data-testid="list-create-delivery">Create delivery</a>
     </div>
 
-    <form th:action="@{/deliveries}" method="get" class="app-card mb-3" role="search" data-testid="search-form">
+    <!-- autocomplete="off" + data-reflects-request: the controls must show the filters the server applied,
+         never values the browser restores on Back/Reload (see app.js and the J2 journey). -->
+    <form th:action="@{/deliveries}" method="get" class="app-card mb-3" role="search" data-testid="search-form"
+          autocomplete="off" data-reflects-request>
         <div class="row g-2 align-items-end">
             <div class="col-md-5">
                 <label for="q" class="form-label">Search</label>
@@ -24,7 +27,7 @@
             <div class="col-6 col-md-2">
                 <label for="status" class="form-label">Status</label>
                 <select id="status" name="status" class="form-select" data-testid="filter-status">
-                    <option value="">All</option>
+                    <option value="" th:selected="${search.status() == null}">All</option>
                     <option th:each="s : ${statuses}" th:value="${s}" th:text="${s.label()}"
                             th:selected="${s == search.status()}">Status</option>
                 </select>
@@ -32,7 +35,7 @@
             <div class="col-6 col-md-2" th:if="${agents != null}">
                 <label for="agentId" class="form-label">Agent</label>
                 <select id="agentId" name="agentId" class="form-select" data-testid="filter-agent">
-                    <option value="">All</option>
+                    <option value="" th:selected="${search.agentId() == null}">All</option>
                     <option th:each="a : ${agents}" th:value="${a.id()}" th:text="${a.name()}"
                             th:selected="${a.id() == search.agentId()}">Agent</option>
                 </select>
@@ -46,6 +49,14 @@
 
     <p class="text-secondary" data-testid="result-count" aria-live="polite"
        th:text="${results.totalElements} + (${results.totalElements} == 1 ? ' delivery' : ' deliveries')">0 deliveries</p>
+    <p th:if="${search.hasFilters()}" class="small text-secondary" data-testid="active-filters">
+        Filtered by
+        <span th:if="${search.normalizedQuery() != null}" th:text="'text “' + ${search.normalizedQuery()} + '”'">text</span>
+        <span th:if="${search.status() != null}"
+              th:text="${search.normalizedQuery() != null ? '· ' : ''} + 'status ' + ${search.status().label()}">status</span>
+        <span th:if="${agents != null and search.agentId() != null}"
+              th:text="${search.normalizedQuery() != null or search.status() != null ? '· ' : ''} + 'agent ' + ${agentName ?: 'ID ' + search.agentId()}">agent</span>
+    </p>
 
     <div th:if="${results.empty}" class="app-card text-center" data-testid="empty-state">
         <p class="mb-2" th:text="${search.hasFilters()} ? 'No deliveries match these filters.' : 'There are no deliveries yet.'">No deliveries.</p>

@@ -29,12 +29,29 @@
                     <div id="recipientName-error" class="invalid-feedback" th:errors="*{recipientName}"></div>
                 </div>
                 <div class="col-md-6">
-                    <label for="recipientPhone" class="form-label">Phone *</label>
-                    <input th:field="*{recipientPhone}" type="tel" class="form-control" th:errorclass="is-invalid"
-                           maxlength="20" aria-describedby="recipientPhone-help recipientPhone-error"
-                           data-testid="recipientPhone">
-                    <div id="recipientPhone-help" class="form-text">7–15 digits, optional leading +.</div>
-                    <div id="recipientPhone-error" class="invalid-feedback" th:errors="*{recipientPhone}"></div>
+                    <label for="phoneCountry" class="form-label">Phone country *</label>
+                    <!-- Every region in libphonenumber's metadata; native select, so typing a name jumps to it. -->
+                    <select th:field="*{phoneCountry}" class="form-select" th:errorclass="is-invalid"
+                            aria-describedby="phoneCountry-error" data-testid="phoneCountry" data-phone-country>
+                        <option th:each="c : ${phoneCountries}" th:value="${c.region()}" th:text="${c.label()}"
+                                th:attr="data-calling-code=${c.callingCode()}">India (+91)</option>
+                    </select>
+                    <div id="phoneCountry-error" class="invalid-feedback" th:errors="*{phoneCountry}"></div>
+                </div>
+                <div class="col-md-6">
+                    <label for="recipientPhone" class="form-label">Phone number *</label>
+                    <div class="input-group has-validation">
+                        <span class="input-group-text" data-testid="phoneCallingCode" data-phone-calling-code
+                              th:text="${phoneCallingCode}">+91</span>
+                        <input th:field="*{recipientPhone}" type="tel" inputmode="numeric" autocomplete="tel-national"
+                               class="form-control" th:errorclass="is-invalid" maxlength="17"
+                               aria-describedby="recipientPhone-help recipientPhone-error"
+                               data-testid="recipientPhone">
+                        <div id="recipientPhone-error" class="invalid-feedback" th:errors="*{recipientPhone}"
+                             data-testid="recipientPhone-error"></div>
+                    </div>
+                    <div id="recipientPhone-help" class="form-text">Digits only, without the country code.
+                        India: exactly 10 digits.</div>
                 </div>
             </div>
         </fieldset>

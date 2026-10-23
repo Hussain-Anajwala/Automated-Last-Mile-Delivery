@@ -1,22 +1,24 @@
 package com.lastmile.delivery;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 /**
  * Client-editable fields only. Code, status, creator, timestamps and version are deliberately
  * absent, so request parameters with those names are never bound.
  */
+@ValidPhone
 public class DeliveryForm {
 
     @NotBlank(message = "Recipient name is required.")
     @Size(max = 120, message = "Recipient name must be at most 120 characters.")
     private String recipientName;
 
+    /** ISO region code of the phone number ({@code IN} by default on the web form). */
+    private String phoneCountry;
+
+    /** National number when {@link #phoneCountry} is set; rules in {@link PhoneNumbers}. */
     @NotBlank(message = "Phone number is required.")
-    // Empty input is left to @NotBlank so the user sees one message, not two.
-    @Pattern(regexp = "^$|^\\s*\\+?[0-9]{7,15}\\s*$", message = "Enter 7 to 15 digits, optionally starting with +.")
     private String recipientPhone;
 
     @NotBlank(message = "Delivery address is required.")
@@ -33,19 +35,28 @@ public class DeliveryForm {
     /** Optional; only honoured on creation. Validated as an active AGENT by the service. */
     private Long assignedAgentId;
 
+    /** Normalises the phone to E.164; an invalid phone is a field error even if validation was bypassed. */
     public DeliveryDetails toDetails() {
         return new DeliveryDetails(
                 recipientName.trim(),
-                recipientPhone.trim(),
+                PhoneNumbers.toE164(phoneCountry, recipientPhone),
                 deliveryAddress.trim(),
                 deliveryCity.trim(),
                 referenceNumber == null || referenceNumber.isBlank() ? null : referenceNumber.trim());
     }
 
+    public static DeliveryForm newForm() {
+        DeliveryForm form = new DeliveryForm();
+        form.phoneCountry = PhoneNumbers.DEFAULT_REGION;
+        return form;
+    }
+
     public static DeliveryForm from(DeliveryView delivery) {
         DeliveryForm form = new DeliveryForm();
         form.recipientName = delivery.recipientName();
-        form.recipientPhone = delivery.recipientPhone();
+        PhoneNumbers.Parts phone = PhoneNumbers.split(delivery.recipientPhone());
+        form.phoneCountry = phone.region();
+        form.recipientPhone = phone.nationalNumber();
         form.deliveryAddress = delivery.deliveryAddress();
         form.deliveryCity = delivery.deliveryCity();
         form.referenceNumber = delivery.referenceNumber();
@@ -58,6 +69,14 @@ public class DeliveryForm {
 
     public void setRecipientName(String recipientName) {
         this.recipientName = recipientName;
+    }
+
+    public String getPhoneCountry() {
+        return phoneCountry;
+    }
+
+    public void setPhoneCountry(String phoneCountry) {
+        this.phoneCountry = phoneCountry;
     }
 
     public String getRecipientPhone() {

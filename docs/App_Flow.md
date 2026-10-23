@@ -30,7 +30,7 @@ Unauthenticated protected requests redirect to login for browser pages or return
 
 1. An authenticated `ADMIN` or `DISPATCHER` opens the creation form.
 2. User enters recipient name, phone, address, city and optional order/reference value; assignment is optional.
-3. Server validates required fields, lengths and basic phone format, verifies any assigned agent exists, is active and has role `AGENT`, and checks uniqueness constraints.
+3. Server validates required fields, lengths and the phone number for the chosen country (India by default: exactly 10 digits; Backend_Schema.md §6.1), verifies any assigned agent exists, is active and has role `AGENT`, and checks uniqueness constraints.
 4. Server creates a generated delivery code and initializes status to `CREATED`.
 5. Record and initial status-history entry are persisted transactionally.
 6. UI displays success and navigates to the new detail page.

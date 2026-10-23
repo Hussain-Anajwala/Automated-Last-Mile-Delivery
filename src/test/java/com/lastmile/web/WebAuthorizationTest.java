@@ -167,6 +167,17 @@ class WebAuthorizationTest {
     }
 
     @Test
+    void selectedStatusAndAgentFiltersRemainSelectedInTheForm() throws Exception {
+        mvc.perform(get("/deliveries")
+                        .param("status", "CREATED")
+                        .param("agentId", String.valueOf(otherAgent.getId()))
+                        .with(user(principal(dispatcher))))
+                .andExpect(status().isOk())
+                .andExpect(content().string(containsString("value=\"CREATED\" selected")))
+                .andExpect(content().string(containsString("value=\"" + otherAgent.getId() + "\" selected")));
+    }
+
+    @Test
     void unknownStatusFilterIsABadRequestNotAServerError() throws Exception {
         mvc.perform(get("/deliveries").param("status", "LOST").with(user(principal(dispatcher))))
                 .andExpect(status().isBadRequest());

@@ -25,7 +25,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class DeliveryController {
 
     private static final String[] EDITABLE_FIELDS = {
-            "recipientName", "recipientPhone", "deliveryAddress", "deliveryCity", "referenceNumber", "assignedAgentId"};
+            "recipientName", "phoneCountry", "recipientPhone", "deliveryAddress", "deliveryCity", "referenceNumber", "assignedAgentId"};
 
     private final DeliveryService deliveryService;
 
@@ -52,14 +52,17 @@ public class DeliveryController {
         model.addAttribute("search", search);
         model.addAttribute("statuses", DeliveryStatus.values());
         if (principal.getRole().isStaff()) {
-            model.addAttribute("agents", deliveryService.assignableAgents());
+            var agents = deliveryService.assignableAgents();
+            model.addAttribute("agents", agents);
+            agents.stream().filter(a -> search.agentId() != null && a.id() == search.agentId()).findFirst()
+                    .ifPresent(a -> model.addAttribute("agentName", a.name()));
         }
         return "deliveries/list";
     }
 
     @GetMapping("/new")
     public String newForm(Model model) {
-        model.addAttribute("deliveryForm", new DeliveryForm());
+        model.addAttribute("deliveryForm", DeliveryForm.newForm());
         return showForm(model, null);
     }
 
@@ -146,6 +149,10 @@ public class DeliveryController {
 
     private String showForm(Model model, DeliveryView editing) {
         model.addAttribute("editing", editing);
+        model.addAttribute("phoneCountries", PhoneNumbers.countries());
+        if (model.getAttribute("deliveryForm") instanceof DeliveryForm form) {
+            model.addAttribute("phoneCallingCode", PhoneNumbers.callingCodeLabel(form.getPhoneCountry()));
+        }
         if (editing == null) {
             model.addAttribute("agents", deliveryService.assignableAgents());
         }
