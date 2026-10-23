@@ -32,3 +32,42 @@ Rule and storage: `docs/Backend_Schema.md` §6.1, decision D21. Tests: `PhoneNum
 | all other branches incl. `main` #3, `develop` #6, PR #21 #2 | green | non-`main` builds log `Stage "Deploy" skipped due to when conditional` | as designed |
 
 Queue empty, nothing building. No Jenkins configuration change was needed.
+
+## D. Owner-reported manual Chrome verification
+
+The project owner reports that all nine checks below passed in Chrome against the isolated preview at
+`http://127.0.0.1:8091`. The preview app image at the time was
+`localhost:5000/lastmile-delivery:c98c2ead24ea`, built from full source SHA
+`c98c2ead24ead580a3f7fc2690a11e275f3d8abc`.
+
+| # | Owner-reported check | Result |
+|---|---|---|
+| 1 | Combined status and agent filters | Passed |
+| 2 | Text search and combined filters | Passed |
+| 3 | Empty state and Reset | Passed |
+| 4 | Pagination preserves filters | Passed |
+| 5 | Browser Back/Forward keeps controls, rows, and applied-filter summary consistent | Passed |
+| 6 | Indian phone-number validation | Passed |
+| 7 | International phone-number validation | Passed |
+| 8 | Editing recovers the saved country and national number | Passed |
+| 9 | Cancelling an edit preserves the stored phone number | Passed |
+
+These are results reported by the project owner; Codex did not perform or observe these manual browser
+checks and no screenshots, browser-console logs, or HTTP traces were supplied. The manual checks apply to
+the `c98c2ead` application source only. Documentation synchronization with `develop` does not change
+application source; a refreshed preview will use the final merged commit's candidate image, but no new
+human browser run is claimed for that image.
+
+## E. Jenkins feature build #3 on the tested candidate
+
+Verified from the local Jenkins API and build console on 2026-10-23: build
+[`fix/delivery-filters-phone-country-code` #3](http://localhost:8090/job/lastmile-delivery/job/fix%252Fdelivery-filters-phone-country-code/3/)
+checked out full SHA `c98c2ead24ead580a3f7fc2690a11e275f3d8abc` and completed **SUCCESS**. Maven reported
+147 unit/integration tests and 11 Selenium tests, with 0 failures, 0 errors, and 0 skips in each suite.
+The `lastmile-delivery:c98c2ead24ea` image digest was
+`sha256:39354f7dd90bf7e3287dd8eec6c4f73d74f13b0536861a1292f418b8befbb22d`; the
+`lastmile-nginx:c98c2ead24ea` digest was
+`sha256:630f57bd6f5fd8195865952842aeeb41502e0100a86039bca52b785aee7fe84c`. Jenkins verified each
+registry digest matched its locally built image. The feature-branch `Deploy` stage was skipped as intended.
+This is historical automated evidence for `c98c2ead`; it is not a Jenkins result for the later merged
+commit.
