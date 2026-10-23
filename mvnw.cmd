@@ -88,12 +88,27 @@ if (-not (Test-Path -Path $MAVEN_M2_PATH)) {
     New-Item -Path $MAVEN_M2_PATH -ItemType Directory | Out-Null
 }
 
-$MAVEN_WRAPPER_DISTS = $null
-if ((Get-Item $MAVEN_M2_PATH).Target[0] -eq $null) {
-  $MAVEN_WRAPPER_DISTS = "$MAVEN_M2_PATH/wrapper/dists"
-} else {
-  $MAVEN_WRAPPER_DISTS = (Get-Item $MAVEN_M2_PATH).Target[0] + "/wrapper/dists"
+function Get-MavenWrapperDistsPath($M2Item, [string]$M2Path) {
+  $targetProperty = $M2Item.PSObject.Properties['Target']
+  if ($null -ne $targetProperty) {
+    $targets = @($targetProperty.Value)
+    if ($targets.Count -gt 0) {
+      $targetPath = [string]$targets[0]
+      if (-not [string]::IsNullOrWhiteSpace($targetPath)) {
+        if (-not [System.IO.Path]::IsPathRooted($targetPath)) {
+          $targetPath = Join-Path (Split-Path -Parent $M2Item.FullName) $targetPath
+        }
+        if (Test-Path -LiteralPath $targetPath -PathType Container) {
+          $resolvedTargetPath = (Resolve-Path -LiteralPath $targetPath).Path
+          return Join-Path $resolvedTargetPath "wrapper/dists"
+        }
+      }
+    }
+  }
+  return Join-Path $M2Path "wrapper/dists"
 }
+
+$MAVEN_WRAPPER_DISTS = Get-MavenWrapperDistsPath (Get-Item -LiteralPath $MAVEN_M2_PATH) $MAVEN_M2_PATH
 
 $MAVEN_HOME_PARENT = "$MAVEN_WRAPPER_DISTS/$distributionUrlNameMain"
 $MAVEN_HOME_NAME = ([System.Security.Cryptography.SHA256]::Create().ComputeHash([byte[]][char[]]$distributionUrl) | ForEach-Object {$_.ToString("x2")}) -join ''
