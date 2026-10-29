@@ -547,5 +547,44 @@ B PHONE: libphonenumber 9.0.41, region selector (245 regions), India exactly 10 
 C JENKINS: no defect; only red branch is ci/demo-failing-build (intentional). Details in docs/evidence/stage-c.
 TESTS: .\mvnw.cmd -B -ntp clean verify -Pselenium on 17d8640 -> exit 0; 147 unit/integration + 11 Selenium,
   0 failures (v1.0.0 had 89 + 8). git diff --check clean. Manual (human) browser check: not performed.
-COMMITS: 0bae7bb, cf9c01b, 8f7f4bd, 17d8640 + evidence/log commit. PR #21 stays draft.
+COMMITS: 0bae7bb, cf9c01b, 8f7f4bd, 17d8640 + evidence/log commit. PR #21 stays draft (historical entry recorded prior to merge; PR #21 was subsequently merged to develop in 9eacdda).
+```
+
+```text
+POST-MERGE INTEGRATION VERIFICATION — PR #21 / PR #22
+AUDIT DATE: 2026-10-24 (IST)
+SOURCE: Maintainer-confirmed authenticated Jenkins Console Output for lastmile-delivery/develop #8;
+  image manifests and local Docker image metadata independently checked during this audit.
+PR #21: merged to develop as 9eacdda6ea64a48574c04c2fa043aea7b739c806.
+PR #22: Windows Maven Wrapper Target handling; merged to develop as
+  27b6e96241076b72ea464ce8dbf8bf94ff14c174 (PR head d094bbe9c215c5327c916a1ea8ef2ff2116307a9).
+JENKINS: develop build #8 checked out the exact merge SHA 27b6e96241076b72ea464ce8dbf8bf94ff14c174;
+  147 unit/integration + 11 Selenium tests, 0 failures, 0 errors, 0 skips; both Maven stages and the
+  final pipeline result passed (`BUILD SUCCESS`; `Finished: SUCCESS`). JUnit results and artifacts were
+  recorded and fingerprints archived.
+IMAGES: lastmile-delivery:27b6e9624107 digest sha256:a51187a3b7c721b582fe917d22d5b214a324bf3d0d14724614349d8914295597;
+  lastmile-nginx:27b6e9624107 digest sha256:a79e9624e443b3df109706d193b175096217530e05e167634519de9c3b367120.
+  Jenkins reported local/registry digest equality; this audit confirmed both tags, matching local
+  repo digests, and revision labels for the full merge SHA. App image user is 10001:10001.
+DEPLOY: skipped by the branch condition on develop; no deployment occurred (passing CI candidate).
+SERVICES / HEALTH NOTE: Compose app stack services (app, nginx, db) enforce Docker HEALTHCHECK directives
+  and report healthy status; auxiliary tools (Jenkins, local registry) lack Docker container health checks
+  and are verified running via HTTP endpoints (Jenkins /login 200, Registry /v2/ 200), not labeled as
+  container-healthy.
+WRAPPER SCOPE: Windows `mvnw.cmd -v` passed locally. The helper passed simulated absent, null, empty,
+  relative and absolute Target cases. Jenkins ran `./mvnw` on Linux; this does not prove Windows symlink
+  behavior. No real Windows symlink test was completed because local privileges prevented creating one.
+WARNINGS (non-fatal): Chromium 155 has no matching Selenium CDP implementation; the failure-artifact
+  glob was empty (expected on a passing run because FailureArtifactsExtension writes only on failure,
+  while the Selenium HTML report was archived); the HTML report lacks parent-project URL and Test Source
+  XRef links; Docker's legacy builder is deprecated; Jenkins has no Checks API publisher and used its
+  default Git installation because the configured installation was unavailable. None failed build #8.
+  Follow-up: enable BuildKit/buildx in the Jenkins build environment before relying on a Docker release
+  that removes the legacy builder. The report links and optional GitHub Checks publisher are usability
+  improvements; the configured Git tool mismatch is harmless while the fallback works, but should be
+  aligned when Jenkins tooling is next maintained. The CDP warning merits action only if tests require
+  DevTools-specific behavior.
+EVIDENCE NOTE: build #8 was inspected in the authenticated Jenkins UI by the maintainer; its raw console
+  output is not committed in this repository. The test and artifact claims above are attributed to that
+  inspection, not inferred from the matching image tree or registry tag.
 ```
