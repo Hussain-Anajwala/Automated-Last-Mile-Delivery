@@ -18,18 +18,18 @@
             Delivery code, status and timestamps are set by the system.</p>
     </div>
 
-    <!-- Error Summary Banner -->
-    <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger mb-4" role="alert"
-         data-testid="form-error-summary" tabindex="-1">
-        Please correct the highlighted fields.
-        <ul class="mb-0 small" th:if="${#fields.hasGlobalErrors()}">
-            <li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Error</li>
-        </ul>
-    </div>
-
     <form th:action="${editing} ? @{/deliveries/{id}/edit(id=${editing.id()})} : @{/deliveries/new}"
           th:object="${deliveryForm}" method="post" novalidate data-once class="app-card" data-testid="delivery-form">
         <input type="hidden" name="version" th:if="${editing}" th:value="${editing.version()}">
+
+        <!-- Error Summary Banner (Must be inside form for Thymeleaf #fields binding) -->
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger mb-4" role="alert"
+             data-testid="form-error-summary" tabindex="-1">
+            Please correct the highlighted fields.
+            <ul class="mb-0 small" th:if="${#fields.hasGlobalErrors()}">
+                <li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Error</li>
+            </ul>
+        </div>
 
         <!-- Recipient Information -->
         <fieldset class="border-bottom pb-4 mb-4">
