@@ -3,8 +3,16 @@
 <head th:replace="~{fragments/layout :: head('Sign in')}"></head>
 <body class="app-login">
 <main id="main" class="login-card">
-    <h1 class="h4 mb-1">LastMile Ops</h1>
-    <p class="text-secondary mb-4">Sign in to manage deliveries.</p>
+    <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-circle mb-3" style="width: 48px; height: 48px;">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M16.5 9.4 7.55 4.24a1.78 1.78 0 0 0-2.5 1.55v12.42a1.78 1.78 0 0 0 2.5 1.55L16.5 14.6a1.78 1.78 0 0 0 0-3.2z"/>
+                <path d="m21 16-4-2.5v-3L21 8"/>
+            </svg>
+        </div>
+        <h1 class="h4 mb-1 fw-bold">LastMile Ops</h1>
+        <p class="text-secondary small mb-0">Sign in to manage deliveries.</p>
+    </div>
 
     <div th:if="${param.error}" class="alert alert-danger" role="alert" data-testid="login-error">
         Invalid email or password.
@@ -17,15 +25,19 @@
         <div class="mb-3">
             <label for="username" class="form-label">Email</label>
             <input type="email" id="username" name="username" class="form-control" autocomplete="username"
-                   required autofocus data-testid="login-email">
+                   required autofocus data-testid="login-email" placeholder="name@lastmile.test">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Password</label>
             <input type="password" id="password" name="password" class="form-control"
                    autocomplete="current-password" required data-testid="login-password">
         </div>
-        <button type="submit" class="btn btn-primary w-100" data-testid="login-submit">Sign in</button>
+        <button type="submit" class="btn btn-primary w-100 py-2 fw-medium" data-testid="login-submit">Sign in</button>
     </form>
+
+    <div class="mt-4 pt-3 border-top text-center text-muted small">
+        Automated Last-Mile Delivery Platform
+    </div>
 </main>
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 </body>

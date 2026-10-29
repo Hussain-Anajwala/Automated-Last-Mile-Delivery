@@ -4,44 +4,67 @@
 <body>
 <header th:replace="~{fragments/layout :: nav}"></header>
 <main id="main" class="container app-main" th:with="s=${summary}">
-    <h1 class="page-title">Dashboard</h1>
-    <p class="text-secondary" data-testid="dashboard-scope"
-       th:text="${s.scope() == 'MY_ASSIGNMENTS'} ? 'Summary of deliveries assigned to you.' : 'Summary of all deliveries.'">Summary</p>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
+        <div>
+            <h1 class="page-title mb-1">Dashboard</h1>
+            <p class="text-secondary mb-0" data-testid="dashboard-scope"
+               th:text="${s.scope() == 'MY_ASSIGNMENTS'} ? 'Summary of deliveries assigned to you.' : 'Summary of all deliveries.'">Summary</p>
+        </div>
+        <div sec:authorize="hasAnyRole('ADMIN','DISPATCHER')">
+            <a th:href="@{/deliveries/new}" class="btn btn-primary d-inline-flex align-items-center gap-2 shadow-sm">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <span>Create delivery</span>
+            </a>
+        </div>
+    </div>
 
+    <!-- Status Metric Cards -->
     <div class="row g-3 mb-4">
         <div class="col-6 col-md-4 col-xl-2">
             <a class="app-card metric-card d-block text-decoration-none" th:href="@{/deliveries}" data-testid="metric-total">
                 <div class="metric-label">Total</div>
-                <div class="metric-value" data-testid="metric-value" th:text="${s.total()}">0</div>
+                <div class="metric-value text-dark" data-testid="metric-value" th:text="${s.total()}">0</div>
             </a>
         </div>
         <div class="col-6 col-md-4 col-xl-2" th:each="st : ${statuses}">
             <a class="app-card metric-card d-block text-decoration-none" th:href="@{/deliveries(status=${st})}"
                th:attr="data-testid='metric-' + ${#strings.toLowerCase(st)}">
                 <div class="metric-label" th:text="${st.label()}">Status</div>
-                <div class="metric-value" data-testid="metric-value" th:text="${s.count(st)}">0</div>
+                <div class="metric-value text-dark" data-testid="metric-value" th:text="${s.count(st)}">0</div>
             </a>
         </div>
     </div>
 
+    <!-- Recent Deliveries Section -->
     <section class="app-card" aria-labelledby="recent-heading">
-        <div class="d-flex justify-content-between align-items-center mb-2">
-            <h2 id="recent-heading" class="h5 mb-0">Recent deliveries</h2>
-            <a th:href="@{/deliveries}" class="small">View all</a>
+        <div class="d-flex justify-content-between align-items-center pb-3 mb-2 border-bottom">
+            <div>
+                <h2 id="recent-heading" class="h5 mb-0 fw-semibold">Recent deliveries</h2>
+                <div class="text-secondary small">Latest activity across assignments</div>
+            </div>
+            <a th:href="@{/deliveries}" class="btn btn-sm btn-outline-secondary">View all deliveries</a>
         </div>
-        <p th:if="${s.recent().isEmpty()}" class="text-secondary mb-0" data-testid="recent-empty">
-            No deliveries yet.
-            <a sec:authorize="hasAnyRole('ADMIN','DISPATCHER')" th:href="@{/deliveries/new}">Create the first one.</a>
-        </p>
+
+        <div th:if="${s.recent().isEmpty()}" class="py-4 text-center" data-testid="recent-empty">
+            <p class="text-secondary mb-2">No deliveries yet.</p>
+            <a sec:authorize="hasAnyRole('ADMIN','DISPATCHER')" th:href="@{/deliveries/new}" class="btn btn-sm btn-primary">Create the first one</a>
+        </div>
+
         <ul th:unless="${s.recent().isEmpty()}" class="list-unstyled mb-0" data-testid="recent-list">
-            <li th:each="d : ${s.recent()}" class="d-flex flex-wrap gap-2 align-items-center py-2 border-top">
-                <a th:href="@{/deliveries/{id}(id=${d.id()})}" th:text="${d.deliveryCode()}">LMD</a>
-                <span th:text="${d.recipientName()} + ', ' + ${d.deliveryCity()}">Name, City</span>
-                <span th:replace="~{fragments/layout :: status(${d.status()})}"></span>
+            <li th:each="d : ${s.recent()}" class="d-flex flex-wrap justify-content-between align-items-center py-2 px-2 rounded-2 hover-bg">
+                <div class="d-flex align-items-center gap-3">
+                    <a th:href="@{/deliveries/{id}(id=${d.id()})}" class="code-badge text-decoration-none" th:text="${d.deliveryCode()}">LMD</a>
+                    <span class="text-dark fw-medium" th:text="${d.recipientName()} + ', ' + ${d.deliveryCity()}">Name, City</span>
+                </div>
+                <div>
+                    <span th:replace="~{fragments/layout :: status(${d.status()})}"></span>
+                </div>
             </li>
         </ul>
     </section>
 </main>
+
+<footer th:replace="~{fragments/layout :: footer}"></footer>
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 </body>
 </html>
