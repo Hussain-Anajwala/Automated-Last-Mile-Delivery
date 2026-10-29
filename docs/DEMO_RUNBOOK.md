@@ -32,6 +32,8 @@ their password is `LASTMILE_DEMO_PASSWORD` in `ci/jenkins/.env`.
 2. Show the test report (unit + Selenium) and the archived JAR.
 3. Show `ci/jenkins-pipeline` builds #9 (red Selenium gate, deploy skipped) and #10 (fixed).
 4. Show build #15 (fault injection → automatic rollback).
+5. Show `develop` build #8 for `27b6e96241076b72ea464ce8dbf8bf94ff14c174`: 147 unit/integration and 11 Selenium tests,
+   digest-verified `27b6e9624107` app/Nginx images, and Deploy skipped. This is a CI candidate, not a deployment.
 
 ## 3. Containers and registry (3 min)
 
