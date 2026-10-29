@@ -9,13 +9,13 @@
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4">
         <div>
             <h1 class="page-title mb-1">Deliveries</h1>
-            <p class="text-secondary mb-0" sec:authorize="hasRole('AGENT')">Deliveries assigned to you for dispatch and completion.</p>
-            <p class="text-secondary mb-0" sec:authorize="hasAnyRole('ADMIN','DISPATCHER')">Manage, assign, and track last-mile packages.</p>
+            <p class="text-secondary small mb-0" sec:authorize="hasRole('AGENT')">Deliveries assigned to you.</p>
+            <p class="text-secondary small mb-0" sec:authorize="hasAnyRole('ADMIN','DISPATCHER')">Manage, assign, and track last-mile packages.</p>
         </div>
         <div sec:authorize="hasAnyRole('ADMIN','DISPATCHER')">
-            <a th:href="@{/deliveries/new}" class="btn btn-primary d-inline-flex align-items-center gap-2 shadow-sm"
+            <a th:href="@{/deliveries/new}" class="btn btn-primary btn-sm d-inline-flex align-items-center gap-2"
                data-testid="list-create-delivery">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
                 <span>Create delivery</span>
             </a>
         </div>
@@ -26,17 +26,17 @@
           autocomplete="off" data-reflects-request>
         <div class="row g-3 align-items-end">
             <div th:class="${agents != null} ? 'col-12 col-md-4 col-lg-4' : 'col-12 col-md-6 col-lg-6'">
-                <label for="q" class="form-label fw-medium text-secondary small">Search</label>
+                <label for="q" class="form-label small fw-medium text-secondary mb-1">Search</label>
                 <div class="input-group">
                     <span class="input-group-text bg-white border-end-0 text-muted">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     </span>
                     <input id="q" name="q" type="search" class="form-control border-start-0 ps-0" th:value="${search.q()}" maxlength="100"
                            placeholder="Code, recipient, or reference" data-testid="search-q">
                 </div>
             </div>
             <div th:class="${agents != null} ? 'col-6 col-md-3 col-lg-3' : 'col-12 col-md-3 col-lg-3'">
-                <label for="status" class="form-label fw-medium text-secondary small">Status</label>
+                <label for="status" class="form-label small fw-medium text-secondary mb-1">Status</label>
                 <select id="status" name="status" class="form-select" data-testid="filter-status">
                     <option value="" th:selected="${search.status() == null}">All</option>
                     <option th:each="s : ${statuses}" th:value="${s}" th:text="${s.label()}"
@@ -44,7 +44,7 @@
                 </select>
             </div>
             <div class="col-6 col-md-3 col-lg-3" th:if="${agents != null}">
-                <label for="agentId" class="form-label fw-medium text-secondary small">Agent</label>
+                <label for="agentId" class="form-label small fw-medium text-secondary mb-1">Agent</label>
                 <select id="agentId" name="agentId" class="form-select" data-testid="filter-agent">
                     <option value="" th:selected="${search.agentId() == null}">All</option>
                     <option th:each="a : ${agents}" th:value="${a.id()}" th:text="${a.name()}"
@@ -60,7 +60,7 @@
 
     <!-- Results Header & Active Filter Tags -->
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3 px-1">
-        <p class="text-secondary fw-medium mb-0 small" data-testid="result-count" aria-live="polite"
+        <p class="text-secondary small mb-0" data-testid="result-count" aria-live="polite"
            th:text="${results.totalElements} + (${results.totalElements} == 1 ? ' delivery' : ' deliveries')">0 deliveries</p>
         <p th:if="${search.hasFilters()}" class="small text-secondary mb-0" data-testid="active-filters">
             Filtered by
@@ -74,62 +74,62 @@
 
     <!-- Empty State -->
     <div th:if="${results.empty}" class="app-card text-center py-5" data-testid="empty-state">
-        <div class="text-muted mb-3">
-            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <div class="text-muted mb-2">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
                 <line x1="3.27" y1="6.96" x2="12" y2="12.01"></line>
                 <line x1="12" y1="22.08" x2="12" y2="12"></line>
             </svg>
         </div>
-        <p class="mb-3 text-secondary fw-medium" th:text="${search.hasFilters()} ? 'No deliveries match these filters.' : 'There are no deliveries yet.'">No deliveries.</p>
+        <p class="mb-3 text-secondary small" th:text="${search.hasFilters()} ? 'No deliveries match these filters.' : 'There are no deliveries yet.'">No deliveries.</p>
         <a th:if="${search.hasFilters()}" th:href="@{/deliveries}" class="btn btn-outline-secondary btn-sm">Reset filters</a>
     </div>
 
     <!-- Deliveries Table -->
-    <div th:unless="${results.empty}" class="app-card p-0 table-responsive border shadow-sm">
+    <div th:unless="${results.empty}" class="app-card p-0 table-responsive">
         <table class="table table-hover align-middle mb-0" data-testid="delivery-table">
             <caption class="visually-hidden">Deliveries</caption>
             <thead>
             <tr>
-                <th scope="col">Code</th>
+                <th scope="col" class="ps-3">Code</th>
                 <th scope="col">Recipient</th>
                 <th scope="col">City</th>
                 <th scope="col">Reference</th>
                 <th scope="col">Agent</th>
                 <th scope="col">Status</th>
-                <th scope="col">Created</th>
+                <th scope="col" class="pe-3">Created</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="d : ${results.content}" data-testid="delivery-row" th:attr="data-code=${d.deliveryCode()}">
-                <td class="code-cell">
-                    <a th:href="@{/deliveries/{id}(id=${d.id()})}" th:text="${d.deliveryCode()}"
-                       class="code-badge text-decoration-none" data-testid="delivery-link">LMD</a>
+                <td class="code-cell ps-3">
+                    <a th:href="@{/deliveries/{id}(id=${d.id()})}" class="code-badge text-primary text-decoration-none fw-semibold"
+                       data-testid="delivery-link" th:text="${d.deliveryCode()}">LMD-00000000-000000</a>
                 </td>
-                <td class="fw-medium text-dark" th:text="${d.recipientName()}">Name</td>
+                <td class="text-dark" th:text="${d.recipientName()}">Recipient</td>
                 <td class="text-secondary" th:text="${d.deliveryCity()}">City</td>
-                <td class="text-secondary small font-monospace" th:text="${d.referenceNumber() ?: '—'}">Ref</td>
-                <td>
-                    <span th:if="${d.assignedAgentName()}" class="badge text-bg-light border text-secondary fw-medium" th:text="${d.assignedAgentName()}">Agent</span>
-                    <span th:unless="${d.assignedAgentName()}" class="text-muted small fst-italic">Unassigned</span>
+                <td class="text-secondary" th:text="${d.referenceNumber() ?: '—'}">REF</td>
+                <td class="text-secondary" th:text="${d.assignedAgentName() ?: 'Unassigned'}">Agent</td>
+                <td class="status-cell">
+                    <span th:replace="~{fragments/layout :: status(${d.status()})}"></span>
                 </td>
-                <td class="status-cell"><span th:replace="~{fragments/layout :: status(${d.status()})}"></span></td>
-                <td class="text-secondary small"><time th:datetime="${d.createdAt()}" th:text="${#temporals.format(d.createdAt(), 'dd MMM yyyy')}">date</time></td>
+                <td class="text-secondary small pe-3">
+                    <time th:datetime="${d.createdAt()}" th:text="${#temporals.format(d.createdAt(), 'dd MMM yyyy')}">date</time>
+                </td>
             </tr>
             </tbody>
         </table>
     </div>
 
     <!-- Pagination -->
-    <nav th:if="${results.totalPages > 1}" aria-label="Pagination" class="mt-4 d-flex justify-content-center" data-testid="pagination">
+    <nav th:if="${results.totalPages > 1}" aria-label="Pagination" class="mt-4" data-testid="pagination">
         <ul class="pagination pagination-sm mb-0">
             <li class="page-item" th:classappend="${results.first} ? 'disabled'">
                 <a class="page-link" th:href="@{/deliveries(q=${search.q()},status=${search.status()},agentId=${search.agentId()},page=${results.number - 1},size=${results.size})}"
                    data-testid="page-prev">Previous</a>
             </li>
             <li class="page-item disabled">
-                <span class="page-link bg-white text-secondary"
-                      th:text="'Page ' + (${results.number} + 1) + ' of ' + ${results.totalPages}">Page 1 of 1</span>
+                <span class="page-link" th:text="'Page ' + ${results.number + 1} + ' of ' + ${results.totalPages}">Page 1 of 1</span>
             </li>
             <li class="page-item" th:classappend="${results.last} ? 'disabled'">
                 <a class="page-link" th:href="@{/deliveries(q=${search.q()},status=${search.status()},agentId=${search.agentId()},page=${results.number + 1},size=${results.size})}"
@@ -138,7 +138,6 @@
         </ul>
     </nav>
 </main>
-
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 </body>

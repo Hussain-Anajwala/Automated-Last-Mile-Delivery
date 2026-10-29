@@ -1,47 +1,71 @@
-/* LastMile Ops design tokens (docs/UI_UX_Design.md section 3). Pages use these, not ad-hoc values. */
+/* LastMile Ops — Design Tokens & Core Styles */
 :root {
-    --lm-text: #1b2a3a;
-    --lm-text-muted: #556274;
+    /* Neutrals: Clean slate palette */
+    --lm-background: #f8fafc;
     --lm-surface: #ffffff;
-    --lm-background: #f1f4f8;
-    --lm-border: #d6dde6;
-    --lm-primary: #1f5fae;
-    --lm-primary-dark: #174a88;
-    --lm-primary-light: #e8f1fc;
-    --lm-header: #14263b;
+    --lm-surface-subtle: #f8fafc;
+    --lm-border: #e2e8f0;
+    --lm-border-subtle: #f1f5f9;
 
-    --lm-success-bg: #e3f4e8; --lm-success-fg: #17602f;
-    --lm-warning-bg: #fff2d6; --lm-warning-fg: #7a4b00;
-    --lm-info-bg: #e3edfa;    --lm-info-fg: #1b4f8f;
-    --lm-danger-bg: #fbe4e4;  --lm-danger-fg: #8e1c1c;
-    --lm-neutral-bg: #e8ebef; --lm-neutral-fg: #3b4654;
+    /* Typography & Content Colors */
+    --lm-text: #0f172a;           /* Slate 900 */
+    --lm-text-secondary: #475569; /* Slate 600 */
+    --lm-text-muted: #64748b;     /* Slate 500 — WCAG AA compliant on white (>4.5:1) */
 
-    --lm-space-1: 4px; --lm-space-2: 8px; --lm-space-3: 12px;
-    --lm-space-4: 16px; --lm-space-5: 24px; --lm-space-6: 32px;
-    --lm-radius: 8px;
-    --lm-radius-sm: 6px;
-    --lm-shadow: 0 1px 3px rgba(20, 38, 59, 0.08);
-    --lm-shadow-md: 0 4px 12px rgba(20, 38, 59, 0.08);
-    --lm-focus: 0 0 0 3px rgba(31, 95, 174, 0.35);
+    /* Logistics Primary Accent: Professional, authoritative navy blue */
+    --lm-primary: #1d4ed8;        /* Blue 700 */
+    --lm-primary-dark: #1e40af;   /* Blue 800 */
+    --lm-primary-light: #eff6ff;  /* Blue 50 */
+    --lm-header: #0f172a;         /* Deep slate navigation bar */
 
-    --bs-primary: var(--lm-primary);
+    /* Semantic Status Palette (Muted, accessible operational states) */
+    --lm-status-created-bg: #f1f5f9;   --lm-status-created-fg: #475569;   --lm-status-created-border: #cbd5e1;
+    --lm-status-assigned-bg: #eff6ff;  --lm-status-assigned-fg: #1d4ed8;  --lm-status-assigned-border: #bfdbfe;
+    --lm-status-out-bg: #fefce8;       --lm-status-out-fg: #854d0e;       --lm-status-out-border: #fef08a;
+    --lm-status-delivered-bg: #f0fdf4; --lm-status-delivered-fg: #15803d; --lm-status-delivered-border: #bbf7d0;
+    --lm-status-failed-bg: #fef2f2;    --lm-status-failed-fg: #b91c1c;    --lm-status-failed-border: #fecaca;
+
+    /* Sizing, Spacing & Geometry */
+    --lm-space-1: 4px;
+    --lm-space-2: 8px;
+    --lm-space-3: 12px;
+    --lm-space-4: 16px;
+    --lm-space-5: 24px;
+    --lm-space-6: 32px;
+    --lm-radius: 6px;
+    --lm-radius-sm: 4px;
+    --lm-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --lm-focus: 0 0 0 3px rgba(29, 78, 216, 0.2);
+
+    /* Bootstrap Overrides */
+    --bs-body-bg: var(--lm-background);
     --bs-body-color: var(--lm-text);
-    --bs-body-font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bs-body-font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bs-primary: var(--lm-primary);
 }
 
 body {
-    background: var(--lm-background);
+    background-color: var(--lm-background);
     color: var(--lm-text);
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    font-size: 0.9375rem;
+    line-height: 1.5;
 }
 
+/* Button overrides */
 .btn-primary {
     --bs-btn-bg: var(--lm-primary);
     --bs-btn-border-color: var(--lm-primary);
     --bs-btn-hover-bg: var(--lm-primary-dark);
     --bs-btn-hover-border-color: var(--lm-primary-dark);
+    --bs-btn-focus-shadow-rgb: 29, 78, 216;
+}
+
+.btn {
+    border-radius: var(--lm-radius-sm);
+    font-weight: 500;
 }
 
 :focus-visible {
@@ -56,27 +80,36 @@ body {
     z-index: 1000;
     background: var(--lm-surface);
     padding: var(--lm-space-2) var(--lm-space-3);
-    border-radius: var(--lm-radius);
+    border-radius: var(--lm-radius-sm);
+    border: 1px solid var(--lm-border);
 }
 
+/* Navigation bar */
 .app-navbar {
-    background: var(--lm-header);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: var(--lm-header);
+    border-bottom: 1px solid #1e293b;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
-.app-navbar .nav-link, .app-navbar .app-user {
-    color: #e6edf5;
+.app-navbar .nav-link {
+    color: #cbd5e1;
+    font-size: 0.875rem;
     font-weight: 500;
-    font-size: 0.9375rem;
-    padding: 0.5rem 0.875rem;
+    padding: 0.4rem 0.75rem;
     border-radius: var(--lm-radius-sm);
-    transition: background-color 0.15s ease, color 0.15s ease;
+    transition: color 0.15s ease, background-color 0.15s ease;
 }
 .app-navbar .nav-link:hover {
     color: #ffffff;
-    background-color: rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.08);
+}
+.app-navbar .nav-link.active {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.12);
 }
 .app-navbar .navbar-toggler {
-    border-color: rgba(255, 255, 255, 0.5);
+    border-color: rgba(255, 255, 255, 0.2);
+    padding: 0.25rem 0.5rem;
 }
 .app-navbar .navbar-toggler-icon {
     filter: invert(1);
@@ -84,11 +117,13 @@ body {
 .app-brand {
     color: #ffffff;
     font-weight: 600;
-    font-size: 1.125rem;
+    font-size: 1rem;
     letter-spacing: -0.01em;
     display: inline-flex;
     align-items: center;
     gap: 8px;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 .app-brand:hover {
     color: #ffffff;
@@ -98,92 +133,147 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(255, 255, 255, 0.08);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 999px;
-    padding: 4px 12px;
+    font-size: 0.8125rem;
 }
 
+/* Main container & headings */
 .app-main {
-    padding-top: var(--lm-space-5);
-    padding-bottom: var(--lm-space-6);
+    padding-top: var(--lm-space-4);
+    padding-bottom: var(--lm-space-5);
     flex: 1 0 auto;
 }
 .page-title {
-    font-size: 1.5rem;
+    font-size: 1.375rem;
     font-weight: 600;
-    letter-spacing: -0.02em;
-    margin-bottom: var(--lm-space-2);
+    letter-spacing: -0.01em;
+    color: var(--lm-text);
+    margin-bottom: var(--lm-space-1);
 }
 
-.app-card, .app-section {
+/* Clean cards & sections — no heavy shadows or multiple nested boxes */
+.app-card {
     background: var(--lm-surface);
     border: 1px solid var(--lm-border);
     border-radius: var(--lm-radius);
-    box-shadow: var(--lm-shadow);
-    padding: var(--lm-space-5);
+    padding: var(--lm-space-4);
 }
 .app-section {
+    background: var(--lm-surface);
+    border: 1px solid var(--lm-border);
+    border-radius: var(--lm-radius);
+    padding: var(--lm-space-4);
     margin-bottom: var(--lm-space-4);
 }
 .app-section legend {
-    font-size: 1rem;
+    font-size: 0.9375rem;
     font-weight: 600;
-    float: none;
-    width: auto;
-    margin-bottom: var(--lm-space-3);
     color: var(--lm-text);
+    float: none;
+    width: 100%;
+    margin-bottom: var(--lm-space-3);
 }
 
-/* Definition lists with clean dividers */
+/* Definition lists for key-value views */
 .app-dl dt {
     color: var(--lm-text-muted);
     font-weight: 500;
-    font-size: 0.875rem;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #f1f4f8;
+    font-size: 0.8125rem;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--lm-border-subtle);
 }
 .app-dl dd {
     overflow-wrap: anywhere;
-    font-weight: 500;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #f1f4f8;
+    font-weight: 400;
+    font-size: 0.875rem;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--lm-border-subtle);
     margin-bottom: 0;
 }
 .app-dl dt:last-of-type, .app-dl dd:last-of-type {
     border-bottom: none;
 }
 
-/* Status badges always carry text; colour is secondary (WCAG: not colour alone). */
+/* Status badges: Restrained, compact, accessible with status dot */
 .status-badge {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 3px 10px;
-    border-radius: 999px;
-    font-size: 0.8125rem;
-    font-weight: 600;
-    border: 1px solid currentColor;
+    gap: 5px;
+    padding: 2px 8px;
+    border-radius: var(--lm-radius-sm);
+    font-size: 0.75rem;
+    font-weight: 500;
+    line-height: 1.35;
     white-space: nowrap;
-    line-height: 1.25;
+    border: 1px solid transparent;
 }
 .status-badge::before {
+    content: "";
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background-color: currentColor;
+}
+.status-created {
+    background: var(--lm-status-created-bg);
+    color: var(--lm-status-created-fg);
+    border-color: var(--lm-status-created-border);
+}
+.status-assigned {
+    background: var(--lm-status-assigned-bg);
+    color: var(--lm-status-assigned-fg);
+    border-color: var(--lm-status-assigned-border);
+}
+.status-out_for_delivery {
+    background: var(--lm-status-out-bg);
+    color: var(--lm-status-out-fg);
+    border-color: var(--lm-status-out-border);
+}
+.status-delivered {
+    background: var(--lm-status-delivered-bg);
+    color: var(--lm-status-delivered-fg);
+    border-color: var(--lm-status-delivered-border);
+}
+.status-failed {
+    background: var(--lm-status-failed-bg);
+    color: var(--lm-status-failed-fg);
+    border-color: var(--lm-status-failed-border);
+}
+
+/* User account status (Admin page) */
+.user-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+.user-status-active {
+    color: #15803d;
+}
+.user-status-active::before {
     content: "";
     display: inline-block;
     width: 6px;
     height: 6px;
     border-radius: 50%;
-    background-color: currentColor;
+    background-color: #16a34a;
 }
-.status-created { background: var(--lm-neutral-bg); color: var(--lm-neutral-fg); }
-.status-assigned { background: var(--lm-info-bg); color: var(--lm-info-fg); }
-.status-out_for_delivery { background: var(--lm-warning-bg); color: var(--lm-warning-fg); }
-.status-delivered { background: var(--lm-success-bg); color: var(--lm-success-fg); }
-.status-failed { background: var(--lm-danger-bg); color: var(--lm-danger-fg); }
+.user-status-inactive {
+    color: #64748b;
+}
+.user-status-inactive::before {
+    content: "";
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: #94a3b8;
+}
 
-/* Timeline */
+/* Status History Timeline */
 .app-timeline {
     list-style: none;
     padding-left: 0;
@@ -192,89 +282,87 @@ body {
 }
 .app-timeline li {
     position: relative;
-    border-left: 2px solid var(--lm-border);
-    padding: 0 0 var(--lm-space-4) 18px;
+    border-left: 1.5px solid var(--lm-border);
+    padding: 0 0 var(--lm-space-3) 16px;
 }
 .app-timeline li::before {
     content: "";
     position: absolute;
-    left: -6px;
-    top: 6px;
-    width: 10px;
-    height: 10px;
+    left: -5px;
+    top: 5px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    background: var(--lm-primary);
+    background: #94a3b8;
     border: 2px solid var(--lm-surface);
+}
+.app-timeline li:first-child::before {
+    background: var(--lm-primary);
 }
 .app-timeline li:last-child {
     border-left-color: transparent;
     padding-bottom: 0;
 }
 
-/* Login screen */
+/* Login screen — Simple, balanced, minimal */
 .app-login {
     display: flex;
     min-height: 100vh;
     align-items: center;
     justify-content: center;
     padding: var(--lm-space-4);
-    background: linear-gradient(180deg, #eaf0f8 0%, var(--lm-background) 100%);
+    background: var(--lm-background);
 }
 .login-card {
     width: 100%;
-    max-width: 400px;
+    max-width: 380px;
     background: var(--lm-surface);
     border: 1px solid var(--lm-border);
     border-radius: var(--lm-radius);
-    box-shadow: var(--lm-shadow-md);
-    padding: var(--lm-space-6);
+    padding: 28px;
 }
 
-/* Metric cards with accent borders */
-.metric-value {
-    font-size: 2rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    font-variant-numeric: tabular-nums;
-    margin-top: 4px;
-}
+/* Metric cards: Restrained, uniform, cohesive — NO rainbow borders, NO lift animations */
 .metric-card {
+    background: var(--lm-surface);
+    border: 1px solid var(--lm-border);
+    border-radius: var(--lm-radius);
+    padding: 14px 16px;
     color: var(--lm-text);
-    padding: var(--lm-space-4);
-    border-top: 3px solid var(--lm-border);
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, transform 0.1s ease-in-out;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
 }
 .metric-card:hover {
-    border-top-color: var(--lm-primary);
-    box-shadow: var(--lm-shadow-md);
-    transform: translateY(-1px);
+    border-color: #94a3b8;
+    background-color: #fcfdfe;
 }
-.metric-card[data-testid="metric-total"] { border-top-color: var(--lm-primary); }
-.metric-card[data-testid="metric-created"] { border-top-color: #64748b; }
-.metric-card[data-testid="metric-assigned"] { border-top-color: var(--lm-info-fg); }
-.metric-card[data-testid="metric-out_for_delivery"] { border-top-color: var(--lm-warning-fg); }
-.metric-card[data-testid="metric-delivered"] { border-top-color: var(--lm-success-fg); }
-.metric-card[data-testid="metric-failed"] { border-top-color: var(--lm-danger-fg); }
 .metric-label {
     color: var(--lm-text-muted);
     font-size: 0.8125rem;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+.metric-value {
+    font-size: 1.625rem;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+    color: var(--lm-text);
+    line-height: 1.2;
 }
 
-/* Action sub-panels */
+/* Action sub-panels on Delivery detail */
 .action-panel-group {
     background: #f8fafc;
     border: 1px solid var(--lm-border);
     border-radius: var(--lm-radius-sm);
-    padding: var(--lm-space-4);
+    padding: var(--lm-space-3) var(--lm-space-4);
 }
 
-/* Table styling */
+/* Operational Tables: Compact, readable, clear headers */
 .table > :not(caption) > * > * {
-    padding: 0.875rem 1rem;
+    padding: 0.65rem 0.85rem;
     border-bottom-color: var(--lm-border);
+    font-size: 0.875rem;
 }
 .table thead th {
     background-color: #f8fafc;
@@ -282,8 +370,8 @@ body {
     font-size: 0.75rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 2px solid var(--lm-border);
+    letter-spacing: 0.04em;
+    border-bottom: 1px solid var(--lm-border);
 }
 .table tbody tr:hover {
     background-color: #f8fafc;
@@ -291,10 +379,13 @@ body {
 .table .code-cell, .table .status-cell {
     white-space: nowrap;
 }
+
+/* Monospace font: Reserved STRICTLY for delivery codes and reference numbers */
 .code-badge {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    font-weight: 600;
-    font-size: 0.875rem;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--lm-text);
 }
 
 /* Active filter indicator chips */
@@ -302,10 +393,10 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    padding: 2px 10px;
-    background: var(--lm-info-bg);
-    color: var(--lm-info-fg);
-    border-radius: 999px;
-    font-size: 0.8125rem;
+    padding: 2px 8px;
+    background: var(--lm-status-assigned-bg);
+    color: var(--lm-status-assigned-fg);
+    border-radius: var(--lm-radius-sm);
+    font-size: 0.75rem;
     font-weight: 500;
 }

@@ -17,13 +17,13 @@
     <!-- Header with Code & Status -->
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-4 pb-2 border-bottom">
         <div class="d-flex flex-wrap align-items-center gap-3">
-            <h1 class="page-title mb-0 font-monospace" data-testid="delivery-code" th:text="${d.deliveryCode()}">LMD-00000000-000000</h1>
+            <h1 class="page-title mb-0 code-badge fs-5" data-testid="delivery-code" th:text="${d.deliveryCode()}">LMD-00000000-000000</h1>
             <span th:replace="~{fragments/layout :: status(${d.status()})}"></span>
         </div>
         <div th:if="${actions.canEdit()}">
             <a th:href="@{/deliveries/{id}/edit(id=${d.id()})}" class="btn btn-outline-secondary btn-sm d-inline-flex align-items-center gap-1"
                data-testid="edit-delivery">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
                 <span>Edit details</span>
             </a>
         </div>
@@ -31,16 +31,16 @@
 
     <!-- Workflow Actions Panel -->
     <section th:if="${actions.canEdit() or actions.canAssign() or !actions.statusTargets().isEmpty()}"
-             class="app-card mb-4 border shadow-sm" aria-labelledby="actions-heading" data-testid="actions-panel">
+             class="app-card mb-4" aria-labelledby="actions-heading" data-testid="actions-panel">
         <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
-            <h2 id="actions-heading" class="h6 mb-0 fw-semibold text-uppercase letter-spacing-1 text-secondary">Workflow Actions</h2>
+            <h2 id="actions-heading" class="h6 mb-0 fw-semibold text-secondary">Workflow actions</h2>
         </div>
-        <div class="row g-4">
+        <div class="row g-3">
             <!-- Status Update Action -->
             <div class="col-md-6" th:unless="${actions.statusTargets().isEmpty()}">
                 <div class="action-panel-group h-100">
-                    <h3 class="h6 fw-semibold mb-2">Update status</h3>
-                    <p class="text-secondary small mb-3">Advance this package along the delivery lifecycle.</p>
+                    <h3 class="h6 fw-semibold mb-1">Update status</h3>
+                    <p class="text-secondary small mb-3">Advance package along the delivery lifecycle.</p>
                     <form th:each="target : ${actions.statusTargets()}" th:action="@{/deliveries/{id}/status(id=${d.id()})}"
                           method="post" class="mb-2" data-once th:attr="data-testid='status-form-' + ${#strings.toLowerCase(target)}">
                         <input type="hidden" name="newStatus" th:value="${target}">
@@ -51,7 +51,7 @@
                                       placeholder="State reason (e.g. Recipient unavailable, incorrect address)"
                                       data-testid="failure-reason"></textarea>
                         </th:block>
-                        <button type="submit" class="btn"
+                        <button type="submit" class="btn btn-sm"
                                 th:classappend="${target.name() == 'FAILED'} ? 'btn-outline-danger' : 'btn-primary'"
                                 th:attr="data-testid='status-' + ${#strings.toLowerCase(target)}"
                                 th:text="${target.name() == 'FAILED'} ? 'Mark as failed' : 'Mark as ' + ${#strings.toLowerCase(target.label())}">
@@ -63,19 +63,19 @@
             <!-- Agent Assignment Action -->
             <div class="col-md-6" th:if="${actions.canAssign()}">
                 <div class="action-panel-group h-100">
-                    <h3 class="h6 fw-semibold mb-2" th:text="${d.status().name() == 'ASSIGNED'} ? 'Reassign agent' : (${d.status().name() == 'FAILED'} ? 'Retry: assign an agent' : 'Assign agent')">Assign agent</h3>
-                    <p class="text-secondary small mb-3">Select the courier responsible for delivering this package.</p>
+                    <h3 class="h6 fw-semibold mb-1" th:text="${d.status().name() == 'ASSIGNED'} ? 'Reassign agent' : (${d.status().name() == 'FAILED'} ? 'Retry: assign an agent' : 'Assign agent')">Assign agent</h3>
+                    <p class="text-secondary small mb-3">Select the courier responsible for this delivery.</p>
                     <form th:action="@{/deliveries/{id}/assignment(id=${d.id()})}" method="post" data-once data-testid="assignment-form">
                         <input type="hidden" name="version" th:value="${d.version()}">
-                        <div class="mb-3">
+                        <div class="mb-2">
                             <label for="agentId" class="form-label small fw-medium visually-hidden">Agent</label>
                             <div class="d-flex gap-2">
-                                <select id="agentId" name="agentId" class="form-select" required data-testid="assign-agent">
+                                <select id="agentId" name="agentId" class="form-select form-select-sm" required data-testid="assign-agent">
                                     <option value="">Choose an agent</option>
                                     <option th:each="a : ${agents}" th:value="${a.id()}" th:text="${a.name()}"
                                             th:selected="${a.id() == d.assignedAgentId()}">Agent</option>
                                 </select>
-                                <button type="submit" class="btn btn-primary px-3 text-nowrap" data-testid="assign-submit">Assign</button>
+                                <button type="submit" class="btn btn-sm btn-primary px-3 text-nowrap" data-testid="assign-submit">Assign</button>
                             </div>
                         </div>
                     </form>
@@ -88,35 +88,34 @@
     <div class="row g-4">
         <!-- Package Details -->
         <section class="col-lg-7" aria-labelledby="details-heading">
-            <div class="app-card border shadow-sm h-100">
+            <div class="app-card h-100">
                 <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                    <h2 id="details-heading" class="h6 mb-0 fw-semibold text-uppercase text-secondary">Package Details</h2>
+                    <h2 id="details-heading" class="h6 mb-0 fw-semibold text-secondary">Package details</h2>
                 </div>
                 <dl class="row mb-0 app-dl">
                     <dt class="col-sm-4">Recipient</dt>
-                    <dd class="col-sm-8 text-dark fw-semibold" data-testid="detail-recipient" th:text="${d.recipientName()}">Name</dd>
+                    <dd class="col-sm-8 text-dark fw-medium" data-testid="detail-recipient" th:text="${d.recipientName()}">Name</dd>
                     <dt class="col-sm-4">Phone</dt>
-                    <dd class="col-sm-8 font-monospace text-dark" th:text="${d.recipientPhoneDisplay()}" data-testid="detail-phone">Phone</dd>
+                    <dd class="col-sm-8 text-dark" th:text="${d.recipientPhoneDisplay()}" data-testid="detail-phone">Phone</dd>
                     <dt class="col-sm-4">Address</dt>
-                    <dd class="col-sm-8 text-dark" th:text="${d.deliveryAddress()}">Address</dd>
+                    <dd class="col-sm-8 text-dark" data-testid="detail-address" th:text="${d.deliveryAddress()}">Address</dd>
                     <dt class="col-sm-4">City</dt>
                     <dd class="col-sm-8 text-dark" th:text="${d.deliveryCity()}">City</dd>
                     <dt class="col-sm-4">Reference</dt>
-                    <dd class="col-sm-8 font-monospace" data-testid="detail-reference" th:text="${d.referenceNumber() ?: '—'}">—</dd>
-                    <dt class="col-sm-4">Assigned agent</dt>
-                    <dd class="col-sm-8" data-testid="detail-agent">
-                        <span th:if="${d.assignedAgentName()}" class="badge text-bg-light border text-secondary fw-semibold" th:text="${d.assignedAgentName()}">Agent</span>
-                        <span th:unless="${d.assignedAgentName()}" class="text-muted fst-italic">Not assigned</span>
+                    <dd class="col-sm-8" data-testid="detail-reference">
+                        <span class="code-badge text-secondary" th:text="${d.referenceNumber() ?: '—'}">—</span>
                     </dd>
+                    <dt class="col-sm-4">Assigned agent</dt>
+                    <dd class="col-sm-8 text-dark" data-testid="detail-agent" th:text="${d.assignedAgentName() ?: 'Not assigned'}">—</dd>
                     <dt class="col-sm-4" th:if="${d.failureReason()}">Failure reason</dt>
-                    <dd class="col-sm-8 text-danger fw-medium" th:if="${d.failureReason()}" th:text="${d.failureReason()}">Reason</dd>
+                    <dd class="col-sm-8 text-danger" th:if="${d.failureReason()}" th:text="${d.failureReason()}">Reason</dd>
                     <dt class="col-sm-4">Created</dt>
                     <dd class="col-sm-8 text-secondary">
                         <time th:datetime="${d.createdAt()}" th:text="${#temporals.format(d.createdAt(), 'dd MMM yyyy HH:mm') + ' UTC'}">time</time>
-                        by <span class="fw-medium text-dark" th:text="${d.createdByName()}">user</span>
+                        by <span th:text="${d.createdByName()}">user</span>
                     </dd>
                     <dt class="col-sm-4" th:if="${d.deliveredAt()}">Delivered</dt>
-                    <dd class="col-sm-8 text-success fw-semibold" th:if="${d.deliveredAt()}"
+                    <dd class="col-sm-8 text-success" th:if="${d.deliveredAt()}"
                         th:text="${#temporals.format(d.deliveredAt(), 'dd MMM yyyy HH:mm') + ' UTC'}">time</dd>
                 </dl>
             </div>
@@ -124,30 +123,28 @@
 
         <!-- Status History Timeline -->
         <section class="col-lg-5" aria-labelledby="history-heading">
-            <div class="app-card border shadow-sm h-100">
+            <div class="app-card h-100">
                 <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
-                    <h2 id="history-heading" class="h6 mb-0 fw-semibold text-uppercase text-secondary">Status History</h2>
-                    <span class="badge rounded-pill text-bg-light border small text-muted" th:text="${d.history().size()} + ' updates'">0 updates</span>
+                    <h2 id="history-heading" class="h6 mb-0 fw-semibold text-secondary">Status history</h2>
                 </div>
-                <ol class="app-timeline mt-2" data-testid="status-history">
+                <ol class="app-timeline" data-testid="status-history">
                     <li th:each="h : ${d.history()}" data-testid="history-entry">
-                        <div class="mb-1">
-                            <span th:if="${h.previousStatus()}" class="text-secondary small" th:text="${h.previousStatus().label()} + ' → '">Prev →</span>
-                            <span class="fw-semibold text-dark" th:text="${h.newStatus().label()}">New</span>
+                        <div>
+                            <span th:if="${h.previousStatus()}" th:text="${h.previousStatus().label()} + ' → '">Prev →</span>
+                            <strong th:text="${h.newStatus().label()}">New</strong>
                         </div>
-                        <div class="small text-secondary mb-1">
-                            <span class="fw-medium text-dark" th:text="${h.changedByName()}">Actor</span> ·
+                        <div class="small text-secondary">
+                            <span th:text="${h.changedByName()}">Actor</span> ·
                             <time th:datetime="${h.changedAt()}"
                                   th:text="${#temporals.format(h.changedAt(), 'dd MMM yyyy HH:mm') + ' UTC'}">time</time>
                         </div>
-                        <div class="small text-danger bg-danger-subtle p-2 rounded-1 mt-1" th:if="${h.reason()}" th:text="${h.reason()}">Reason</div>
+                        <div class="small text-danger mt-1" th:if="${h.reason()}" th:text="${h.reason()}">Reason</div>
                     </li>
                 </ol>
             </div>
         </section>
     </div>
 </main>
-
 <footer th:replace="~{fragments/layout :: footer}"></footer>
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 </body>
