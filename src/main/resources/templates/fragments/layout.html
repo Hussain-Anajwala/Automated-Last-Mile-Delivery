@@ -12,14 +12,21 @@
 <header th:fragment="nav" class="app-header">
     <a class="visually-hidden-focusable app-skip" href="#main">Skip to main content</a>
     <nav class="navbar navbar-expand-md app-navbar" aria-label="Main navigation">
-        <div class="container-fluid">
-            <a class="navbar-brand app-brand" th:href="@{/}">LastMile Ops</a>
+        <div class="container-fluid px-3 px-lg-4">
+            <a class="navbar-brand app-brand" th:href="@{/}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="color: #60a5fa;">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12"></line>
+                </svg>
+                <span>LastMile Ops</span>
+            </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
                     aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
-                <ul class="navbar-nav me-auto" sec:authorize="isAuthenticated()">
+                <ul class="navbar-nav me-auto mb-2 mb-md-0" sec:authorize="isAuthenticated()">
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/dashboard}" data-testid="nav-dashboard">Dashboard</a>
                     </li>
@@ -33,12 +40,12 @@
                         <a class="nav-link" th:href="@{/admin/users}" data-testid="nav-users">Users</a>
                     </li>
                 </ul>
-                <div class="d-flex align-items-center gap-3" sec:authorize="isAuthenticated()">
-                    <span class="app-user" data-testid="current-user">
+                <div class="d-flex align-items-center gap-3 pt-2 pt-md-0" sec:authorize="isAuthenticated()">
+                    <div class="app-user text-light small" data-testid="current-user">
                         <span sec:authentication="principal.fullName">User</span>
-                        <span class="badge text-bg-light" sec:authentication="principal.role">ROLE</span>
-                    </span>
-                    <form th:action="@{/logout}" method="post">
+                        <span class="badge bg-secondary-subtle text-secondary-emphasis border ms-1" style="font-size: 0.7rem;" sec:authentication="principal.role">ROLE</span>
+                    </div>
+                    <form th:action="@{/logout}" method="post" class="m-0">
                         <button type="submit" class="btn btn-sm btn-outline-light" data-testid="logout">Sign out</button>
                     </form>
                 </div>
@@ -48,14 +55,20 @@
 </header>
 
 <div th:fragment="flash">
-    <div th:if="${successMessage}" class="alert alert-success" role="status" data-testid="flash-success"
+    <div th:if="${successMessage}" class="alert alert-success py-2 px-3 small mb-4" role="status" data-testid="flash-success"
          th:text="${successMessage}">Saved.</div>
-    <div th:if="${errorMessage}" class="alert alert-danger" role="alert" data-testid="flash-error"
+    <div th:if="${errorMessage}" class="alert alert-danger py-2 px-3 small mb-4" role="alert" data-testid="flash-error"
          th:text="${errorMessage}">Error.</div>
 </div>
 
 <span th:fragment="status(status)" class="status-badge" th:classappend="'status-' + ${#strings.toLowerCase(status)}"
       th:attr="data-status=${status}" data-testid="status-badge" th:text="${status.label()}">Created</span>
+
+<footer th:fragment="footer" class="py-3 mt-auto text-center border-top">
+    <div class="container-fluid text-muted small" style="font-size: 0.8125rem;">
+        LastMile Ops · Automated Last-Mile Delivery Management Platform
+    </div>
+</footer>
 
 <th:block th:fragment="scripts">
     <script th:src="@{/webjars/bootstrap/js/bootstrap.bundle.min.js}"></script>

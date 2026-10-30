@@ -1,0 +1,63 @@
+== before release (target on the previous release) (11:28:32Z)
+records: current=e3b9d31cae5b previous=0ac1a53c836f
+app localhost:5000/lastmile-delivery:e3b9d31cae5b revision=e3b9d31cae5bd48eb1bfbaf3db56e21f0ddc56e3 health=starting started=2026-10-19T11:28:49.081857658Z
+localhost:5000/lastmile-delivery:0ac1a53c836f sha256:561e14255cc87fcaa6e3610c8507e06acada4a375222f76b5c08e4a0e45ae562
+localhost:5000/lastmile-delivery:e3b9d31cae5b sha256:64eb5a335df32135b23a4a12e21521851aad276b2ccf7aa7dea550731f1a0466
+localhost:5000/lastmile-nginx:0ac1a53c836f sha256:eb4cedc2c4b3830cf6bc57ed016064c6a8fbe9793525a1641cbf3f96d61aaa69
+localhost:5000/lastmile-nginx:e3b9d31cae5b sha256:f88d4fb53f4d9cb49e0a170835b859f0ca6500f6ae296794a9d31988a4c3810e
+readiness via nginx:  HTTP 000
+psql: error: connection to server on socket "/var/run/postgresql/.s.PGSQL.5432" failed: No such file or directory
+	Is the server running locally and accepting connections on that socket?
+db container started=2026-10-19T11:28:48.787728866Z
+== after upgrade to ff1cac19ee86 (11:30:11Z)
+records: current=ff1cac19ee86 previous=e3b9d31cae5b
+app localhost:5000/lastmile-delivery:ff1cac19ee86 revision=ff1cac19ee86cfde8ca09b6019222fbd6abdb674 health=healthy started=2026-10-19T11:29:44.257081903Z
+localhost:5000/lastmile-delivery:0ac1a53c836f sha256:561e14255cc87fcaa6e3610c8507e06acada4a375222f76b5c08e4a0e45ae562
+localhost:5000/lastmile-delivery:e3b9d31cae5b sha256:64eb5a335df32135b23a4a12e21521851aad276b2ccf7aa7dea550731f1a0466
+localhost:5000/lastmile-delivery:ff1cac19ee86 sha256:7f1051da382c0faee86f200a1a6cd555efaf003fdf94c9e62838ed7028a265e3
+localhost:5000/lastmile-nginx:0ac1a53c836f sha256:eb4cedc2c4b3830cf6bc57ed016064c6a8fbe9793525a1641cbf3f96d61aaa69
+localhost:5000/lastmile-nginx:e3b9d31cae5b sha256:f88d4fb53f4d9cb49e0a170835b859f0ca6500f6ae296794a9d31988a4c3810e
+localhost:5000/lastmile-nginx:ff1cac19ee86 sha256:3e47ae1772dabc0e75b0308ae5844329d0188de8784e8c17cac6c6c5fbfd0f85
+readiness via nginx: {"status":"UP"} HTTP 200
+db: 6 | 2026-10-19 02:33:56.026016+00
+db: 15
+db container started=2026-10-19T11:28:48.787728866Z
+== after second run (idempotency) (11:30:34Z)
+records: current=ff1cac19ee86 previous=e3b9d31cae5b
+app localhost:5000/lastmile-delivery:ff1cac19ee86 revision=ff1cac19ee86cfde8ca09b6019222fbd6abdb674 health=healthy started=2026-10-19T11:29:44.257081903Z
+localhost:5000/lastmile-delivery:0ac1a53c836f sha256:561e14255cc87fcaa6e3610c8507e06acada4a375222f76b5c08e4a0e45ae562
+localhost:5000/lastmile-delivery:e3b9d31cae5b sha256:64eb5a335df32135b23a4a12e21521851aad276b2ccf7aa7dea550731f1a0466
+localhost:5000/lastmile-delivery:ff1cac19ee86 sha256:7f1051da382c0faee86f200a1a6cd555efaf003fdf94c9e62838ed7028a265e3
+localhost:5000/lastmile-nginx:0ac1a53c836f sha256:eb4cedc2c4b3830cf6bc57ed016064c6a8fbe9793525a1641cbf3f96d61aaa69
+localhost:5000/lastmile-nginx:e3b9d31cae5b sha256:f88d4fb53f4d9cb49e0a170835b859f0ca6500f6ae296794a9d31988a4c3810e
+localhost:5000/lastmile-nginx:ff1cac19ee86 sha256:3e47ae1772dabc0e75b0308ae5844329d0188de8784e8c17cac6c6c5fbfd0f85
+readiness via nginx: {"status":"UP"} HTTP 200
+db: 6 | 2026-10-19 02:33:56.026016+00
+db: 15
+db container started=2026-10-19T11:28:48.787728866Z
+== after rollback (expect e3b9d31cae5b) (11:31:16Z)
+records: current=e3b9d31cae5b previous=ff1cac19ee86
+app localhost:5000/lastmile-delivery:e3b9d31cae5b revision=e3b9d31cae5bd48eb1bfbaf3db56e21f0ddc56e3 health=healthy started=2026-10-19T11:30:49.352847872Z
+localhost:5000/lastmile-delivery:0ac1a53c836f sha256:561e14255cc87fcaa6e3610c8507e06acada4a375222f76b5c08e4a0e45ae562
+localhost:5000/lastmile-delivery:e3b9d31cae5b sha256:64eb5a335df32135b23a4a12e21521851aad276b2ccf7aa7dea550731f1a0466
+localhost:5000/lastmile-delivery:ff1cac19ee86 sha256:7f1051da382c0faee86f200a1a6cd555efaf003fdf94c9e62838ed7028a265e3
+localhost:5000/lastmile-nginx:0ac1a53c836f sha256:eb4cedc2c4b3830cf6bc57ed016064c6a8fbe9793525a1641cbf3f96d61aaa69
+localhost:5000/lastmile-nginx:e3b9d31cae5b sha256:f88d4fb53f4d9cb49e0a170835b859f0ca6500f6ae296794a9d31988a4c3810e
+localhost:5000/lastmile-nginx:ff1cac19ee86 sha256:3e47ae1772dabc0e75b0308ae5844329d0188de8784e8c17cac6c6c5fbfd0f85
+readiness via nginx: {"status":"UP"} HTTP 200
+db: 6 | 2026-10-19 02:33:56.026016+00
+db: 15
+db container started=2026-10-19T11:28:48.787728866Z
+== after roll-forward (expect ff1cac19ee86) (11:32:10Z)
+records: current=ff1cac19ee86 previous=e3b9d31cae5b
+app localhost:5000/lastmile-delivery:ff1cac19ee86 revision=ff1cac19ee86cfde8ca09b6019222fbd6abdb674 health=healthy started=2026-10-19T11:31:43.367969508Z
+localhost:5000/lastmile-delivery:0ac1a53c836f sha256:561e14255cc87fcaa6e3610c8507e06acada4a375222f76b5c08e4a0e45ae562
+localhost:5000/lastmile-delivery:e3b9d31cae5b sha256:64eb5a335df32135b23a4a12e21521851aad276b2ccf7aa7dea550731f1a0466
+localhost:5000/lastmile-delivery:ff1cac19ee86 sha256:7f1051da382c0faee86f200a1a6cd555efaf003fdf94c9e62838ed7028a265e3
+localhost:5000/lastmile-nginx:0ac1a53c836f sha256:eb4cedc2c4b3830cf6bc57ed016064c6a8fbe9793525a1641cbf3f96d61aaa69
+localhost:5000/lastmile-nginx:e3b9d31cae5b sha256:f88d4fb53f4d9cb49e0a170835b859f0ca6500f6ae296794a9d31988a4c3810e
+localhost:5000/lastmile-nginx:ff1cac19ee86 sha256:3e47ae1772dabc0e75b0308ae5844329d0188de8784e8c17cac6c6c5fbfd0f85
+readiness via nginx: {"status":"UP"} HTTP 200
+db: 6 | 2026-10-19 02:33:56.026016+00
+db: 15
+db container started=2026-10-19T11:28:48.787728866Z

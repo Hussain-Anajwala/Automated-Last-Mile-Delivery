@@ -15,7 +15,7 @@ network. Health endpoints are public.
 | GET | `/health/live` | — | public | 200 `{"status":"UP"}` |
 | GET | `/health/ready` | — | public | 200 UP, or 503 `{"status":"DOWN"}` when the DB is unreachable |
 | GET | `/deliveries` | `q`, `status`, `agentId`, `page` (0-based), `size` (1–50, default 10) | authenticated; agents are always limited to their own deliveries | 200 page |
-| POST | `/deliveries` | `recipientName`, `recipientPhone`, `deliveryAddress`, `deliveryCity`, `referenceNumber?`, `assignedAgentId?` | ADMIN, DISPATCHER | 201 + `Location` |
+| POST | `/deliveries` | `recipientName`, `phoneCountry?`, `recipientPhone`, `deliveryAddress`, `deliveryCity`, `referenceNumber?`, `assignedAgentId?` | ADMIN, DISPATCHER | 201 + `Location` |
 | GET | `/deliveries/{id}` | — | staff; agents only if assigned | 200 delivery with history |
 | PUT | `/deliveries/{id}` | same fields as create (assignment ignored); `?expectedVersion=` optional | ADMIN, DISPATCHER | 200 |
 | PATCH | `/deliveries/{id}/assignment` | `{"agentId":3,"expectedVersion":1}` | ADMIN, DISPATCHER | 200 |
@@ -25,6 +25,12 @@ network. Health endpoints are public.
 Code, status, creator, timestamps and version are always server-managed; if the client sends them
 they are ignored. `expectedVersion` is an optional optimistic-concurrency token: send the `version`
 you last read, and a stale value returns 409 instead of applying a change twice (decision D14).
+
+Phone numbers (Backend_Schema.md §6.1, decision D21): send `phoneCountry` (ISO region, e.g. `"IN"`, `"GB"`) with
+the national number in `recipientPhone`; India needs exactly 10 digits, other countries follow their own numbering
+rules. Without `phoneCountry`, `recipientPhone` may be E.164 (`"+447400123456"`) or an Indian 10-digit number, as
+before. Invalid numbers return 400 with a `recipientPhone` field error. Responses always return E.164
+(`"+919876543210"`).
 
 ## Errors
 

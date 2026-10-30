@@ -32,30 +32,50 @@ their password is `LASTMILE_DEMO_PASSWORD` in `ci/jenkins/.env`.
 2. Show the test report (unit + Selenium) and the archived JAR.
 3. Show `ci/jenkins-pipeline` builds #9 (red Selenium gate, deploy skipped) and #10 (fixed).
 4. Show build #15 (fault injection → automatic rollback).
+5. Show `develop` build #8 for `27b6e96241076b72ea464ce8dbf8bf94ff14c174`: 147 unit/integration and 11 Selenium tests,
+   digest-verified `27b6e9624107` app/Nginx images, and Deploy skipped. This is a CI candidate, not a deployment.
 
 ## 3. Containers and registry (3 min)
 
 ```powershell
 curl.exe http://127.0.0.1:5000/v2/lastmile-delivery/tags/list
-docker inspect lastmile-app-1 --format "{{.Config.Image}} {{.Config.User}} {{index .Config.Labels \"org.opencontainers.image.revision\"}}"
-git log -1 --format=%H main          # equals the revision label after a main deployment
+docker inspect lastmile-app-1 --format '{{.Config.Image}} {{.Config.User}} {{index .Config.Labels \"org.opencontainers.image.revision\"}}'   # single quotes outside: works in Windows PowerShell 5.1
+git rev-parse "v1.0.0^{commit}"      # ff1cac19ee86cfde8ca09b6019222fbd6abdb674 = the revision label above
 ```
 
-## 4. Ansible (3 min) — Ubuntu/WSL terminal
+## 4. Ansible (3 min) — Ubuntu/WSL terminal, repository root
+
+Current release on both targets (verified 2026-10-23): `ff1cac19ee86` (= `v1.0.0`). The target's
+release records read `current=ff1cac19ee86`, `previous=e3b9d31cae5b` (`v0.1.0`). Its Nginx listens on
+`127.0.0.1:8089` (8088 is the workstation deployment); it also answers from Windows at
+http://127.0.0.1:8089.
 
 ```bash
-# separate window, keeps the target running:  wsl -d lastmile-target -u root -- sleep infinity
-bash scripts/wsl-target/run-ansible.sh ansible -m ansible.builtin.ping lastmile_targets
-bash scripts/wsl-target/run-ansible.sh ansible-playbook site.yml -e lastmile_image_tag=0ac1a53c836f   # already deployed: expect changed=0
-bash scripts/wsl-target/run-ansible.sh ansible-playbook rollback.yml
+# separate window first, keeps the target running:  wsl -d lastmile-target -u root -- sleep infinity
+bash scripts/wsl-target/run-ansible.sh ansible -m ansible.builtin.ping lastmile_targets          # expect: pong
+bash scripts/wsl-target/run-ansible.sh ansible-playbook site.yml -e lastmile_image_tag=ff1cac19ee86   # idempotency: expect changed=0
+curl -s http://127.0.0.1:8089/api/v1/health/ready                                               # expect: {"status":"UP"}
 ```
 
-Then show `docs/evidence/phase-13-ansible/target-run-evidence.md` (run 1 vs run 2, rollback, drill)
-and say that the teacher's acceptance of the WSL2 target is pending.
+**Optional — intentional version change (only if time allows).** This *changes the running version on the
+target* to the previous release `e3b9d31cae5b` (`v0.1.0`) and must be followed by the roll-forward so the
+target ends on `v1.0.0` again. Database contents are not changed by either step (proven in
+`docs/evidence/phase-15-release/target-state.txt`). The workstation is not affected.
+
+```bash
+bash scripts/wsl-target/run-ansible.sh ansible-playbook rollback.yml                             # INTENTIONAL: v1.0.0 -> v0.1.0 (e3b9d31cae5b), expect changed=4
+bash scripts/wsl-target/run-ansible.sh ansible-playbook site.yml -e lastmile_image_tag=ff1cac19ee86   # ROLL FORWARD: back to v1.0.0, expect changed=4
+```
+
+If you skip the optional part, show the recorded run instead: `docs/evidence/phase-15-release/release-v1.0.0-evidence.md`
+(upgrade `changed=4`, second run `changed=0`, rollback and roll-forward) and
+`docs/evidence/phase-13-ansible/target-run-evidence.md` (first run `changed=13`, failed-candidate drill).
+On the target choice: the teacher said "Do whatever you think is right and best for your system."; the
+target is a separate WSL2 distribution, not a separate VM (D20).
 
 ## 5. Git (1 min)
 
-PRs #8–#14 with review notes, `demo/conflict-*` resolution, tag `v0.1.0`.
+PRs #8–#19 with their self-review notes, `demo/conflict-*` resolution, releases `v0.1.0` and `v1.0.0` (`main` = `v1.0.0`).
 
 ## If something fails during the demo
 

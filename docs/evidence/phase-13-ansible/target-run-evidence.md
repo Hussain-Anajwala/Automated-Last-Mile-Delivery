@@ -1,8 +1,11 @@
 # Phases 13–14 — Ansible on the Option B target (2026-10-19)
 
 **Technical status:** all six acceptance criteria below passed on the dedicated WSL2 distribution
-`lastmile-target` (approved by the user). **Academic status:** whether a WSL2 distribution is
-acceptable as the "clean node" is **still awaiting the teacher's confirmation** (BLOCKERS B6 Q3).
+`lastmile-target` (approved by the user). **Academic status (as written on the day of the run):** whether a
+WSL2 distribution is acceptable as the "clean node" was still awaiting the teacher's confirmation.
+*Update 2026-10-19:* the teacher answered "Do whatever you think is right and best for your system."; the
+WSL2 target was kept (decision D20). The target now runs `v1.0.0` (`ff1cac19ee86`) — see
+`docs/evidence/phase-15-release/release-v1.0.0-evidence.md`.
 
 Control node: `Ubuntu-24.04` (WSL2), ansible-core 2.21.5, run through `scripts/wsl-target/run-ansible.sh`
 (secrets loaded from `~/.config/lastmile/target-secrets.env`, mode 600, never printed).

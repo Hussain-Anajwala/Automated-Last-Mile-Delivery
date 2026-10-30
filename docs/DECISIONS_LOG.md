@@ -137,3 +137,21 @@ Format: ID — date — context — options — decision — rationale — conse
 - **Technical rationale:** the workstation has 15.8 GB RAM and repeatedly ran near its Windows commit limit (two WSL VM crashes during image builds, free commit as low as 0.5–1.1 GB with Jenkins running; BLOCKERS B7). A VirtualBox VM would reserve about 2 GB more and require an administrator install. The WSL2 target adds only its own small Docker stack inside the existing WSL VM, and all six technical acceptance criteria were demonstrated on it.
 - **Separate distribution vs separate VM:** `lastmile-target` has its own root filesystem, systemd, users, SSH server, Docker Engine and data, cannot see Windows drives or run Windows programs, and is reached only over SSH. It shares the WSL2 kernel and network stack with Docker Desktop and the control node, so it is not a separate machine: its host firewall stays off and it uses its own port (8089) and Docker address ranges.
 - **Remaining academic uncertainty:** an examiner who expects a fully separate virtual machine could still regard this as a limitation; it is stated as such in `docs/KNOWN_LIMITATIONS.md` and the evidence index rather than raised with the teacher again.
+
+## D21 — 2026-10-23 — Phone numbers: per-country rules from libphonenumber, stored as E.164
+
+- **Context:** v1.0.0 accepted any 7–15 digits with an optional `+`. Requested: India (+91) by default with exactly
+  10 national digits, a selector covering countries worldwide, server-side validation shared by the web form and
+  API, and no corruption of existing data. A universal 10-digit rule contradicts worldwide support (national
+  lengths differ), and a hand-written list of calling codes cannot carry each country's numbering rules.
+- **Decision:** add `com.googlecode.libphonenumber:libphonenumber` **9.0.41** (latest on Maven Central, published
+  2026-10-07; no transitive dependencies) and keep one rule in `PhoneNumbers` (Backend_Schema.md §6.1): the form
+  sends an ISO region (`phoneCountry`, default `IN`) and the national number; India exactly 10 digits; every
+  country valid under the metadata; an embedded country code is refused explicitly; storage is E.164 in the
+  existing column; the API keeps accepting requests without `phoneCountry`.
+- **Rejected:** a 10-digit rule for every country (wrong outside India); PR #21's fixed list of 19 calling codes
+  (incomplete, unbound to the server, cannot tell +1 countries apart); migrating existing rows (silent data
+  change — legacy values stay as stored until a user saves the delivery).
+- **Consequences:** the metadata decides validity, so some 10-digit Indian inputs that look arbitrary are valid
+  fixed-line numbers (for example `1234567890`), while others are refused (`0123456789`). Updating the library
+  updates the numbering data; pin and re-test like any dependency.

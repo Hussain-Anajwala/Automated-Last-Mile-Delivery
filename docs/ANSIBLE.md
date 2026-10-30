@@ -5,7 +5,7 @@
 | Role | What | Status |
 |---|---|---|
 | Control node | Ubuntu 24.04 under WSL2, `ansible-core 2.21.5` + `ansible-lint` in `~/.venvs/ansible` (`scripts/bootstrap-ansible-wsl.sh`, no sudo) | Ready |
-| Target | Dedicated WSL2 distribution `lastmile-target` (Option B, approved by the user 2026-10-19), SSH `127.0.0.1:2222`, inventory `ansible/inventory/wsl-target.yml` | **Provisioned and verified technically**; teacher acceptance of WSL2 pending (B6 Q3) |
+| Target | Dedicated WSL2 distribution `lastmile-target` (Option B, approved by the user 2026-10-19), SSH `127.0.0.1:2222`, inventory `ansible/inventory/wsl-target.yml` | **Provisioned and verified**; chosen under the teacher's discretion (D20); a WSL2 distribution, not a separate VM |
 
 The playbook refuses to run on anything that is not Ubuntu and requires an explicit image tag.
 It must never target the Windows workstation.
@@ -22,7 +22,7 @@ It must never target the Windows workstation.
 | Service account | system group/user `lastmile`, no login shell, **not** in `docker` (that group is root-equivalent) | `lastmile_app` |
 | Directories | `/opt/lastmile` and `/opt/lastmile/releases`, `root:lastmile 0750` | `lastmile_app` |
 | Files | `/opt/lastmile/compose.yaml` (same file as the Jenkins pipeline, `0640`); `/opt/lastmile/.env` with runtime config and secrets (`root:root 0600`, `no_log`) | `lastmile_app` |
-| Ports | Nginx on `127.0.0.1:8088` of the target; app and database unpublished | compose |
+| Ports | Nginx on `127.0.0.1:{{ lastmile_http_port }}` of the target — default 8088, set to **8089** for the WSL2 target in `inventory/wsl-target.yml` (8088 is the workstation deployment in the shared WSL network); app and database unpublished | compose |
 | Release | images `<registry>/lastmile-delivery:<sha12>` and `<registry>/lastmile-nginx:<sha12>` pulled by exact tag; `up --wait`; readiness checked via Nginx; deployed revision checked against the tag | `lastmile_app` |
 | Release record | `/opt/lastmile/releases/current` and `previous` (rollback = rerun with the previous tag) | `lastmile_app` |
 

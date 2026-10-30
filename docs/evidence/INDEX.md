@@ -1,6 +1,6 @@
 # Evidence Index — 15 Teacher Tasks
 
-Status meanings: **Verified** = observed in a real run and recorded; **Blocked** = cannot be shown
+Final state: release `v1.0.0` (2026-10-19). Status meanings: **Verified** = observed in a real run and recorded; **Blocked** = cannot be shown
 yet, with the reason; **Pending** = not done yet. Nothing here is claimed without a file, log, PR,
 image or command result behind it. Repository: https://github.com/Hussain-Anajwala/Automated-Last-Mile-Delivery
 
@@ -15,12 +15,12 @@ image or command result behind it. Repository: https://github.com/Hussain-Anajwa
 | 7 | Jenkins CI job | Verified | `phase-07-jenkins/` — SCM-scan-triggered green builds, archived JAR, JUnit, deliberately failing build exit 1 |
 | 8 | Pipeline as code and deployment | Verified (local URL) | `Jenkinsfile`, `phase-08-deploy/` — deploy behind Nginx, parameter evidence (#6 rejected, #7 port 8089), screenshots. URL is local: `http://127.0.0.1:8088` (Q1) |
 | 9 | Selenium design and local run | Verified | `docs/SELENIUM_TEST_PLAN.md`, `phase-09-selenium/` — 5 journeys/8 tests, flake diagnosed and fixed, 5 consecutive green runs, defect caught with screenshot, HTML report |
-| 10 | Continuous testing in Jenkins | Verified | `phase-10-quality-gate/` — #9 red at Selenium gate with nothing packaged/deployed, fix + regression test, #10 green |
+| 10 | Continuous testing in Jenkins | Verified | `phase-10-quality-gate/` — #9 red at Selenium gate with nothing packaged/deployed, fix + regression test, #10 green; post-merge `develop` #8 verified on exact PR #22 merge SHA with 147 + 11 tests, candidate image digests and Deploy skipped (details and evidence source in `docs/IMPLEMENTATION_LOG.md`; Jenkins console is local and not committed) |
 | 11 | Docker image and lifecycle | Verified | `Dockerfile`, `docs/DOCKER.md`, `phase-11-docker/lifecycle-transcript.md` |
 | 12 | Jenkins→Docker CD with local registry | Verified | `phase-12-registry/` — digest match pushed vs registry, deploy by registry tag, fault-injected candidate rolled back automatically; the WSL2 target pulled the same references with identical digests (`phase-15-release/e2e-trace-v0.1.0.md`) |
 | 13 | Ansible configuration management | Verified (WSL2 target, D20) | `ansible/`, `docs/ANSIBLE.md`, `phase-13-ansible/target-run-evidence.md`: pre-checks, dry run, `pong`, run 1 (`changed=13`), independent verification of packages, account, files and services. Target is a separate WSL2 distribution, not a VM (limitation) |
 | 14 | Provisioning, idempotency, health, rollback on the target | Verified (WSL2 target, D20) | `phase-13-ansible/`: exact registry images pulled (digests equal), readiness 200, run 2 **`changed=0`**, upgrade → `rollback.yml` → previous release healthy, failed-candidate drill recovered (logs `02`–`09`); data preservation re-checked in the final release (`phase-15-release/`) |
-| 15 | End-to-end release, documentation, viva | **In progress** | Docs: `docs/SECURITY.md`, `docs/TROUBLESHOOTING.md`, `docs/DEMO_RUNBOOK.md`, `docs/VIVA_QA.md`, `docs/PRESENTATION_OUTLINE.md`. End-to-end trace of `v0.1.0` (commit → Jenkins gates → registry digests → workstation deploy → Ansible target with identical digests, healthy): `phase-15-release/e2e-trace-v0.1.0.md`. Still pending: teacher answers Q1–Q5 and final sign-off (Jenkins does not trigger Ansible; the target step is a manual control-node run) |
+| 15 | End-to-end release, documentation, viva | Verified | Release `v1.0.0` (`ff1cac19`): Jenkins main #3 (89 + 8 tests, digests), workstation deploy, Ansible target upgrade / `changed=0` / rollback / roll-forward with identical digests and preserved data — `phase-15-release/release-v1.0.0-evidence.md`; earlier trace `e2e-trace-v0.1.0.md`; docs: `SECURITY.md`, `TROUBLESHOOTING.md`, `DEMO_RUNBOOK.md`, `VIVA_QA.md`, `PRESENTATION_OUTLINE.md`. The viva and presentation themselves are delivered by the student |
 
 ## Cross-cutting evidence
 
@@ -29,5 +29,5 @@ image or command result behind it. Repository: https://github.com/Hussain-Anajwa
 | Secret handling | `.gitleaks.toml`, `scripts/secret-scan.sh`, `scripts/safe-push.sh`, `scripts/test-secret-gate.sh`; incident record in `docs/IMPLEMENTATION_LOG.md` (2026-10-19 03:32 IST) |
 | Data persistence | Deployed database kept its 6 deliveries / 15 history rows (created 22:15 UTC) across many app redeploys; Jenkins job history survived container recreation (recorded in the implementation log) |
 | Decisions | `docs/DECISIONS_LOG.md` (D1–D20) |
-| Raw logs | All Jenkins and Ansible console logs are committed under `docs/evidence/**` (they were silently excluded by `*.log` until D19) |
+| Raw logs | Historical Jenkins and Ansible console logs are committed under `docs/evidence/**` (they were silently excluded by `*.log` until D19); post-merge Jenkins `develop` #8 was verified in the authenticated UI but its console is not archived here (see `docs/IMPLEMENTATION_LOG.md`) |
 | Open items | `docs/BLOCKERS.md` |

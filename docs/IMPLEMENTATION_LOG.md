@@ -509,3 +509,82 @@ NEXT: when the teacher answers — record the answers; if a second reviewer is r
   update docs/evidence/INDEX.md and close #5/#7. To use the target: keep `wsl -d lastmile-target -u root -- sleep
   infinity` running, then scripts/wsl-target/run-ansible.sh.
 ```
+
+```text
+FINAL — 2026-10-19
+TEACHER RESPONSE (Q3, exact): "Do whatever you think is right and best for your system." -> WSL2 target kept (D20);
+  recorded as discretion, not as a statement that WSL2 equals a VM; remaining uncertainty listed as a limitation.
+
+PHASE: 13 — Ansible configuration management                       STATUS: PASS (WSL2 target, D20)
+PHASE: 14 — Provisioning, idempotency, health, recovery            STATUS: PASS (WSL2 target, D20)
+  Evidence re-checked from the committed logs: pong; run 1 changed=13; registry-identical digests; readiness 200;
+  run 2 changed=0; rollback healthy; failed-candidate recovery; data preservation re-proved during the v1.0.0
+  release with saved output (the earlier rollback data check had only been summarised).
+
+PHASE: 15 — End-to-end release, documentation and viva              STATUS: PASS (technical deliverables)
+  PR #16 merged fba69706 after self-review + Jenkins docs/phase-15-release #4 (89 + 8). Release PR #18 merged
+  ff1cac19 (main tree = tested tree). Jenkins main #2 failed on transient DNS before checkout; main #3 passed
+  (89 + 8), published, deployed. Ansible target: upgrade changed=4, second run changed=0, rollback to v0.1.0 and
+  roll-forward healthy, digests identical, data preserved. Tag v1.0.0 -> ff1cac19 (annotated, gated push).
+  Evidence: docs/evidence/phase-15-release/release-v1.0.0-evidence.md. The viva/presentation are delivered by
+  the student (materials: VIVA_QA.md, PRESENTATION_OUTLINE.md, DEMO_RUNBOOK.md).
+
+FINAL BRANCHES: main = v1.0.0 (ff1cac19, deployed on both targets). develop = main + post-release evidence.
+  Release tags: v0.1.0 (e3b9d31), v1.0.0 (ff1cac19). Not for merging: ci/demo-failing-build, demo/conflict-*.
+REVIEWS: all PRs (#8–#18) merged after documented self-review by the Claude Code assistant with green CI;
+  no second human reviewer (D15).
+```
+
+```text
+STAGE C — 2026-10-23 — filters, phone validation, Jenkins audit (branch fix/delivery-filters-phone-country-code)
+SCOPE: reused draft PR #21 (7 commits by the user); new commits on top, no force-push, not merged, not deployed.
+A FILTERS: reproduced on v1.0.0 — server results correct over HTTP; in Chrome, Back restored stale dropdown
+  values above unfiltered rows. Fixed with autocomplete="off", a pageshow reset and a server-rendered
+  applied-filters line (0bae7bb, 8f7f4bd). PR #21's selected-option changes kept; its th:value on <select> removed.
+B PHONE: libphonenumber 9.0.41, region selector (245 regions), India exactly 10 digits, per-country validity,
+  E.164 storage, legacy values untouched until saved, API backwards compatible (cf9c01b, D21). PR #21's fixed
+  19-code list and flat 10-digit rule replaced; its compacted DeliveryForm formatting restored.
+C JENKINS: no defect; only red branch is ci/demo-failing-build (intentional). Details in docs/evidence/stage-c.
+TESTS: .\mvnw.cmd -B -ntp clean verify -Pselenium on 17d8640 -> exit 0; 147 unit/integration + 11 Selenium,
+  0 failures (v1.0.0 had 89 + 8). git diff --check clean. Manual (human) browser check: not performed.
+COMMITS: 0bae7bb, cf9c01b, 8f7f4bd, 17d8640 + evidence/log commit. PR #21 stays draft (historical entry recorded prior to merge; PR #21 was subsequently merged to develop in 9eacdda).
+```
+
+```text
+POST-MERGE INTEGRATION VERIFICATION — PR #21 / PR #22
+AUDIT DATE: 2026-10-24 (IST)
+SOURCE: Maintainer-confirmed authenticated Jenkins Console Output for lastmile-delivery/develop #8;
+  image manifests and local Docker image metadata independently checked during this audit.
+PR #21: merged to develop as 9eacdda6ea64a48574c04c2fa043aea7b739c806.
+PR #22: Windows Maven Wrapper Target handling; merged to develop as
+  27b6e96241076b72ea464ce8dbf8bf94ff14c174 (PR head d094bbe9c215c5327c916a1ea8ef2ff2116307a9).
+JENKINS: develop build #8 checked out the exact merge SHA 27b6e96241076b72ea464ce8dbf8bf94ff14c174;
+  147 unit/integration + 11 Selenium tests, 0 failures, 0 errors, 0 skips; both Maven stages and the
+  final pipeline result passed (`BUILD SUCCESS`; `Finished: SUCCESS`). JUnit results and artifacts were
+  recorded and fingerprints archived.
+IMAGES: lastmile-delivery:27b6e9624107 digest sha256:a51187a3b7c721b582fe917d22d5b214a324bf3d0d14724614349d8914295597;
+  lastmile-nginx:27b6e9624107 digest sha256:a79e9624e443b3df109706d193b175096217530e05e167634519de9c3b367120.
+  Jenkins reported local/registry digest equality; this audit confirmed both tags, matching local
+  repo digests, and revision labels for the full merge SHA. App image user is 10001:10001.
+DEPLOY: skipped by the branch condition on develop; no deployment occurred (passing CI candidate).
+SERVICES / HEALTH NOTE: Compose app stack services (app, nginx, db) enforce Docker HEALTHCHECK directives
+  and report healthy status; auxiliary tools (Jenkins, local registry) lack Docker container health checks
+  and are verified running via HTTP endpoints (Jenkins /login 200, Registry /v2/ 200), not labeled as
+  container-healthy.
+WRAPPER SCOPE: Windows `mvnw.cmd -v` passed locally. The helper passed simulated absent, null, empty,
+  relative and absolute Target cases. Jenkins ran `./mvnw` on Linux; this does not prove Windows symlink
+  behavior. No real Windows symlink test was completed because local privileges prevented creating one.
+WARNINGS (non-fatal): Chromium 155 has no matching Selenium CDP implementation; the failure-artifact
+  glob was empty (expected on a passing run because FailureArtifactsExtension writes only on failure,
+  while the Selenium HTML report was archived); the HTML report lacks parent-project URL and Test Source
+  XRef links; Docker's legacy builder is deprecated; Jenkins has no Checks API publisher and used its
+  default Git installation because the configured installation was unavailable. None failed build #8.
+  Follow-up: enable BuildKit/buildx in the Jenkins build environment before relying on a Docker release
+  that removes the legacy builder. The report links and optional GitHub Checks publisher are usability
+  improvements; the configured Git tool mismatch is harmless while the fallback works, but should be
+  aligned when Jenkins tooling is next maintained. The CDP warning merits action only if tests require
+  DevTools-specific behavior.
+EVIDENCE NOTE: build #8 was inspected in the authenticated Jenkins UI by the maintainer; its raw console
+  output is not committed in this repository. The test and artifact claims above are attributed to that
+  inspection, not inferred from the matching image tree or registry tag.
+```
