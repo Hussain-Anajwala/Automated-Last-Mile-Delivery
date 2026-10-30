@@ -4,33 +4,45 @@
 <body>
 <header th:replace="~{fragments/layout :: nav}"></header>
 <main id="main" class="container app-main">
-    <h1 class="page-title" th:text="${editing} ? 'Edit ' + ${editing.deliveryCode()} : 'Create delivery'">Create delivery</h1>
-    <p class="text-secondary" th:text="${editing} ? 'Only recipient, address and reference details can be edited. Status and assignment are changed from the delivery page.' : 'Delivery code, status and timestamps are set by the system.'">
-        Delivery code, status and timestamps are set by the system.</p>
+    <!-- Breadcrumb -->
+    <nav aria-label="breadcrumb" class="mb-3">
+        <ol class="breadcrumb small mb-0">
+            <li class="breadcrumb-item"><a th:href="@{/deliveries}" class="text-decoration-none">Deliveries</a></li>
+            <li class="breadcrumb-item active" aria-current="page" th:text="${editing} ? 'Edit ' + ${editing.deliveryCode()} : 'New Delivery'">New</li>
+        </ol>
+    </nav>
+
+    <div class="mb-4">
+        <h1 class="page-title mb-1" th:text="${editing} ? 'Edit ' + ${editing.deliveryCode()} : 'Create delivery'">Create delivery</h1>
+        <p class="text-secondary small mb-0" th:text="${editing} ? 'Only recipient, address and reference details can be edited. Status and assignment are changed from the delivery page.' : 'Delivery code, status and timestamps are set by the system.'">
+            Delivery code, status and timestamps are set by the system.</p>
+    </div>
 
     <form th:action="${editing} ? @{/deliveries/{id}/edit(id=${editing.id()})} : @{/deliveries/new}"
-          th:object="${deliveryForm}" method="post" novalidate data-once class="app-form" data-testid="delivery-form">
+          th:object="${deliveryForm}" method="post" novalidate data-once class="app-card" data-testid="delivery-form">
         <input type="hidden" name="version" th:if="${editing}" th:value="${editing.version()}">
-        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger" role="alert"
+
+        <!-- Error Summary Banner (Must be inside form for Thymeleaf #fields binding) -->
+        <div th:if="${#fields.hasAnyErrors()}" class="alert alert-danger mb-4" role="alert"
              data-testid="form-error-summary" tabindex="-1">
             Please correct the highlighted fields.
-            <ul class="mb-0" th:if="${#fields.hasGlobalErrors()}">
+            <ul class="mb-0 small" th:if="${#fields.hasGlobalErrors()}">
                 <li th:each="err : ${#fields.globalErrors()}" th:text="${err}">Error</li>
             </ul>
         </div>
 
-        <fieldset class="app-section">
-            <legend>Recipient</legend>
+        <!-- Recipient Information -->
+        <fieldset class="border-bottom pb-4 mb-4">
+            <legend class="h6 fw-semibold text-secondary mb-3">Recipient</legend>
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label for="recipientName" class="form-label">Recipient name *</label>
+                    <label for="recipientName" class="form-label small fw-medium">Recipient name <span class="text-danger">*</span></label>
                     <input th:field="*{recipientName}" class="form-control" th:errorclass="is-invalid" maxlength="120"
-                           aria-describedby="recipientName-error" data-testid="recipientName">
+                           placeholder="Full name" aria-describedby="recipientName-error" data-testid="recipientName">
                     <div id="recipientName-error" class="invalid-feedback" th:errors="*{recipientName}"></div>
                 </div>
                 <div class="col-md-6">
-                    <label for="phoneCountry" class="form-label">Phone country *</label>
-                    <!-- Every region in libphonenumber's metadata; native select, so typing a name jumps to it. -->
+                    <label for="phoneCountry" class="form-label small fw-medium">Phone country <span class="text-danger">*</span></label>
                     <select th:field="*{phoneCountry}" class="form-select" th:errorclass="is-invalid"
                             aria-describedby="phoneCountry-error" data-testid="phoneCountry" data-phone-country>
                         <option th:each="c : ${phoneCountries}" th:value="${c.region()}" th:text="${c.label()}"
@@ -39,52 +51,52 @@
                     <div id="phoneCountry-error" class="invalid-feedback" th:errors="*{phoneCountry}"></div>
                 </div>
                 <div class="col-md-6">
-                    <label for="recipientPhone" class="form-label">Phone number *</label>
+                    <label for="recipientPhone" class="form-label small fw-medium">Phone number <span class="text-danger">*</span></label>
                     <div class="input-group has-validation">
-                        <span class="input-group-text" data-testid="phoneCallingCode" data-phone-calling-code
+                        <span class="input-group-text bg-light text-secondary small fw-medium font-monospace" data-testid="phoneCallingCode" data-phone-calling-code
                               th:text="${phoneCallingCode}">+91</span>
                         <input th:field="*{recipientPhone}" type="tel" inputmode="numeric" autocomplete="tel-national"
                                class="form-control" th:errorclass="is-invalid" maxlength="17"
-                               aria-describedby="recipientPhone-help recipientPhone-error"
-                               data-testid="recipientPhone">
+                               placeholder="National number digits" aria-describedby="recipientPhone-help recipientPhone-error" data-testid="recipientPhone">
                         <div id="recipientPhone-error" class="invalid-feedback" th:errors="*{recipientPhone}"
                              data-testid="recipientPhone-error"></div>
                     </div>
-                    <div id="recipientPhone-help" class="form-text">Digits only, without the country code.
-                        India: exactly 10 digits.</div>
+                    <div id="recipientPhone-help" class="form-text text-secondary" style="font-size: 0.75rem;">Digits only, without the country code. India: exactly 10 digits.</div>
                 </div>
             </div>
         </fieldset>
 
-        <fieldset class="app-section">
-            <legend>Delivery address</legend>
+        <!-- Destination Address -->
+        <fieldset class="border-bottom pb-4 mb-4">
+            <legend class="h6 fw-semibold text-secondary mb-3">Delivery address</legend>
             <div class="row g-3">
                 <div class="col-md-8">
-                    <label for="deliveryAddress" class="form-label">Address *</label>
+                    <label for="deliveryAddress" class="form-label small fw-medium">Address <span class="text-danger">*</span></label>
                     <input th:field="*{deliveryAddress}" class="form-control" th:errorclass="is-invalid" maxlength="500"
-                           aria-describedby="deliveryAddress-error" data-testid="deliveryAddress">
+                           placeholder="Building, street, landmark" aria-describedby="deliveryAddress-error" data-testid="deliveryAddress">
                     <div id="deliveryAddress-error" class="invalid-feedback" th:errors="*{deliveryAddress}"></div>
                 </div>
                 <div class="col-md-4">
-                    <label for="deliveryCity" class="form-label">City *</label>
+                    <label for="deliveryCity" class="form-label small fw-medium">City <span class="text-danger">*</span></label>
                     <input th:field="*{deliveryCity}" class="form-control" th:errorclass="is-invalid" maxlength="100"
-                           aria-describedby="deliveryCity-error" data-testid="deliveryCity">
+                           placeholder="City / Municipality" aria-describedby="deliveryCity-error" data-testid="deliveryCity">
                     <div id="deliveryCity-error" class="invalid-feedback" th:errors="*{deliveryCity}"></div>
                 </div>
             </div>
         </fieldset>
 
-        <fieldset class="app-section">
-            <legend th:text="${editing} ? 'Reference' : 'Reference and assignment'">Reference and assignment</legend>
+        <!-- Package & Order Details -->
+        <fieldset class="mb-4">
+            <legend class="h6 fw-semibold text-secondary mb-3" th:text="${editing} ? 'Reference' : 'Reference and assignment'">Reference and assignment</legend>
             <div class="row g-3">
                 <div class="col-md-6">
-                    <label for="referenceNumber" class="form-label">Order / reference number</label>
-                    <input th:field="*{referenceNumber}" class="form-control" th:errorclass="is-invalid" maxlength="100"
-                           aria-describedby="referenceNumber-error" data-testid="referenceNumber">
+                    <label for="referenceNumber" class="form-label small fw-medium">Order / reference number</label>
+                    <input th:field="*{referenceNumber}" class="form-control code-badge" th:errorclass="is-invalid" maxlength="100"
+                           placeholder="Optional tracking reference" aria-describedby="referenceNumber-error" data-testid="referenceNumber">
                     <div id="referenceNumber-error" class="invalid-feedback" th:errors="*{referenceNumber}"></div>
                 </div>
                 <div class="col-md-6" th:unless="${editing}">
-                    <label for="assignedAgentId" class="form-label">Assign to agent (optional)</label>
+                    <label for="assignedAgentId" class="form-label small fw-medium">Assign to agent (optional)</label>
                     <select th:field="*{assignedAgentId}" class="form-select" th:errorclass="is-invalid"
                             aria-describedby="assignedAgentId-error" data-testid="assignedAgentId">
                         <option value="">Not assigned yet</option>
@@ -95,13 +107,16 @@
             </div>
         </fieldset>
 
-        <div class="d-flex gap-2">
-            <button type="submit" class="btn btn-primary" data-testid="save-delivery">Save delivery</button>
-            <a th:href="${editing} ? @{/deliveries/{id}(id=${editing.id()})} : @{/deliveries}" class="btn btn-outline-secondary"
-               data-testid="cancel">Cancel</a>
+        <!-- Actions -->
+        <div class="d-flex align-items-center gap-2 pt-3 border-top">
+            <button type="submit" class="btn btn-primary px-4" data-testid="save-delivery"
+                    th:text="${editing} ? 'Save delivery' : 'Create delivery'">Create delivery</button>
+            <a th:href="${editing} ? @{/deliveries/{id}(id=${editing.id()})} : @{/deliveries}"
+               class="btn btn-outline-secondary" data-testid="cancel">Cancel</a>
         </div>
     </form>
 </main>
+<footer th:replace="~{fragments/layout :: footer}"></footer>
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
 </body>
 </html>

@@ -3,28 +3,37 @@
 <head th:replace="~{fragments/layout :: head('Sign in')}"></head>
 <body class="app-login">
 <main id="main" class="login-card">
-    <h1 class="h4 mb-1">LastMile Ops</h1>
-    <p class="text-secondary mb-4">Sign in to manage deliveries.</p>
+    <div class="mb-4 text-center">
+        <div class="d-inline-flex align-items-center justify-content-center text-primary mb-2">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
+                <line x1="12" y1="22.08" x2="12" y2="12"></line>
+            </svg>
+        </div>
+        <h1 class="h5 fw-semibold mb-1">LastMile Ops</h1>
+        <p class="text-secondary small mb-0">Sign in to manage deliveries</p>
+    </div>
 
-    <div th:if="${param.error}" class="alert alert-danger" role="alert" data-testid="login-error">
+    <div th:if="${param.error}" class="alert alert-danger py-2 px-3 small mb-3" role="alert" data-testid="login-error">
         Invalid email or password.
     </div>
-    <div th:if="${param.logout}" class="alert alert-info" role="status" data-testid="logout-message">
+    <div th:if="${param.logout}" class="alert alert-info py-2 px-3 small mb-3" role="status" data-testid="logout-message">
         You have been signed out.
     </div>
 
     <form th:action="@{/login}" method="post" data-once>
         <div class="mb-3">
-            <label for="username" class="form-label">Email</label>
+            <label for="username" class="form-label small fw-medium">Email address</label>
             <input type="email" id="username" name="username" class="form-control" autocomplete="username"
                    required autofocus data-testid="login-email">
         </div>
         <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label small fw-medium">Password</label>
             <input type="password" id="password" name="password" class="form-control"
                    autocomplete="current-password" required data-testid="login-password">
         </div>
-        <button type="submit" class="btn btn-primary w-100" data-testid="login-submit">Sign in</button>
+        <button type="submit" class="btn btn-primary w-100 py-2" data-testid="login-submit">Sign in</button>
     </form>
 </main>
 <th:block th:replace="~{fragments/layout :: scripts}"></th:block>
